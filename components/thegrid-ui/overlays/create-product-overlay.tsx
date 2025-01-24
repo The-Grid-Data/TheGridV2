@@ -4,7 +4,7 @@ import { ControlledOverlay } from '@/components/ui/controlled-overlay';
 import { CreateProductForm } from '../forms/product-form/create-product-form';
 
 type CreateProductOverlayProps = {
-  rootId?: string;
+  rootId: string;
   triggerNode?: React.ReactNode;
 };
 

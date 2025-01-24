@@ -1,11 +1,12 @@
 import { CodegenConfig } from '@graphql-codegen/cli';
 import { config } from 'dotenv';
+import { DocumentNode, Kind, visit } from 'graphql';
+import type { Types } from '@graphql-codegen/plugin-helpers';
 
 config();
 
 const codegenConfig: CodegenConfig = {
   schema: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT_URL,
-  // overwrite: true,
   ignoreNoDocuments: true,
   documents: [
     'lib/**/*.graphql.ts',
@@ -18,6 +19,12 @@ const codegenConfig: CodegenConfig = {
     }
   },
   generates: {
+    'lib/graphql/generated/schema.graphql': {
+      plugins: ['schema-ast'],
+      config: {
+        includeDirectives: true
+      }
+    },
     'lib/graphql/generated/': {
       preset: 'client',
       config: {
@@ -47,20 +54,22 @@ const codegenConfig: CodegenConfig = {
           String1: {
             input: 'string',
             output: 'string'
+          },
+          Float1: {
+            input: 'number',
+            output: 'number'
+          },
+          Int1: {
+            input: 'number',
+            output: 'number'
           }
         }
       }
-    },
-    'lib/graphql/generated/schema.graphql': {
-      plugins: ['schema-ast'],
-      config: {
-        includeDirectives: true
-      }
     }
+  },
+  hooks: {
+    afterOneFileWrite: ['prettier --write', 'echo']
   }
-  // hooks: {
-  //   afterOneFileWrite: ['prettier --write', 'echo']
-  // }
 };
 
 export default codegenConfig;

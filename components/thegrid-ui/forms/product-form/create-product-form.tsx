@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
-import { CProducts } from '@/lib/graphql/generated/graphql';
+import { AProducts } from '@/lib/graphql/generated/graphql';
 import { ApiError, ApiResponse, useRestApiClient } from '@/lib/rest-api/client';
 import { ProductFormFields } from './product-form-fields';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -45,7 +45,7 @@ export function CreateProductForm({
     error
   } = useMutation<ApiResponse, ApiError, FormData>({
     mutationFn: async (data: FormData) => {
-      const productData: Partial<CProducts> = {
+      const productData: Partial<AProducts> = {
         name: data.products.name,
         productTypeId: data.products.productType,
         description: data.products.description,

@@ -17,13 +17,13 @@ import ProfileLoading from './components/profile-loading';
 import ProfileNotFound from './components/profile-not-found';
 
 export const ProfileDetailQuery = graphql(`
-  query getProfileData($where: CProfileInfosBoolExp) {
+  query getProfileData($where: AProfileInfosBoolExp) {
     profileInfos(limit: 1, offset: 0, where: $where) {
       tagLine
       descriptionShort
       descriptionLong
-      ...ProfileFragment
       ...ProfileHeadingFragment
+      ...ProfileFragment
       root {
         products {
           id
@@ -107,14 +107,16 @@ export const ProfileDetail = ({ profileId, metadata }: ProfileDetailProps) => {
               <ProductCard key={product.id} product={product} />
             ))}
           <div className="flex h-full min-h-[200px] items-center justify-center rounded-lg border-2 border-dashed">
-            <CreateProductOverlay
-              triggerNode={
-                <Button variant="ghost" className="h-20 w-20" size="icon">
-                  <Plus className="h-10 w-10" />
-                </Button>
-              }
-              rootId={metadata?.id}
-            />
+            {metadata?.id && (
+              <CreateProductOverlay
+                triggerNode={
+                  <Button variant="ghost" className="h-20 w-20" size="icon">
+                    <Plus className="h-10 w-10" />
+                  </Button>
+                }
+                rootId={metadata.id}
+              />
+            )}
           </div>
         </div>
       </ProfileDataSection>

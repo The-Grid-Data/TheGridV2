@@ -20,7 +20,7 @@ import { InlineDataPoint } from './inline-data-point';
 import { ProfileDataCard, ProfileDataCardProps } from './profile-data-card';
 
 export const ProductFragment = graphql(`
-  fragment ProductFieldsFragment on CProducts {
+  fragment ProductFieldsFragment on AProducts {
     rootId
     productTypeId
     productStatusId

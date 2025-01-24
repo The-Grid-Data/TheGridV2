@@ -1,7 +1,6 @@
 'use client';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { QueryDialogButton } from '@/components/containers/query-dialog-button';
 import { siteConfig } from '@/lib/site-config';
 import {
   extractSocialUrls,
@@ -9,10 +8,9 @@ import {
   UrlTypeIconLinks
 } from '@/components/containers/url-type-icon/url-type-icon-list';
 import { FragmentType, graphql, useFragment } from '@/lib/graphql/generated';
-import { ProfileDetailQuery } from '../profile-detail';
 
 export const ProfileHeadingFragment = graphql(`
-  fragment ProfileHeadingFragment on CProfileInfos {
+  fragment ProfileHeadingFragment on AProfileInfos {
     logo
     name
     urls(order_by: { urlTypeId: Asc }) {
@@ -41,11 +39,7 @@ export type ProfileCardCardProps = {
   query: string;
 };
 
-export const ProfileHeading = ({
-  profile,
-  queryVariables,
-  query
-}: ProfileCardCardProps) => {
+export const ProfileHeading = ({ profile }: ProfileCardCardProps) => {
   const profileData = useFragment(ProfileHeadingFragment, profile);
   const validLogoUrl =
     profileData?.logo && profileData.logo.startsWith('https://');
@@ -58,8 +52,8 @@ export const ProfileHeading = ({
             {validLogoUrl && (
               <AvatarImage
                 className="object-scale-down"
-                src={profileData?.logo}
-                alt={profileData?.name}
+                src={profileData?.logo ?? ''}
+                alt={profileData?.name ?? ''}
               />
             )}
             <AvatarFallback className="bg-white">No logo</AvatarFallback>
@@ -75,13 +69,6 @@ export const ProfileHeading = ({
               ]}
             />
           </div>
-          {siteConfig.displayQueries && (
-            <QueryDialogButton
-              variables={queryVariables}
-              queryDocument={ProfileDetailQuery as unknown as string}
-              buttonLabel="View query"
-            />
-          )}
         </div>
       </div>
     </div>

@@ -2,386 +2,352 @@
 import { DocumentTypeDecoration } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
+export type MakeEmpty<
+  T extends { [key: string]: unknown },
+  K extends keyof T
+> = { [_ in K]?: never };
+export type Incremental<T> =
+  | T
+  | {
+      [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never;
+    };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: { input: string; output: string; }
-  String: { input: string; output: string; }
-  Boolean: { input: boolean; output: boolean; }
-  Int: { input: number; output: number; }
-  Float: { input: number; output: number; }
-  Date: { input: string; output: string; }
-  Float64: { input: number; output: number; }
-  Int8: { input: number; output: number; }
-  Int64: { input: number; output: number; }
-  String1: { input: string; output: string; }
+  ID: { input: string; output: string };
+  String: { input: string; output: string };
+  Boolean: { input: boolean; output: boolean };
+  Int: { input: number; output: number };
+  Float: { input: number; output: number };
+  Date: { input: string; output: string };
+  Float1: { input: number; output: number };
+  Int1: { input: number; output: number };
+  String1: { input: string; output: string };
 };
 
-export type AssetUrls = {
-  __typename?: 'AssetUrls';
-  id?: Maybe<Scalars['String1']['output']>;
-  rowId?: Maybe<Scalars['String1']['output']>;
-  tableId?: Maybe<Scalars['String1']['output']>;
-  url?: Maybe<Scalars['String1']['output']>;
-  urlType?: Maybe<CUrlTypes>;
-  urlTypeId?: Maybe<Scalars['String1']['output']>;
-};
-
-export type AssetUrlsBoolExp = {
-  _and?: InputMaybe<Array<AssetUrlsBoolExp>>;
-  _not?: InputMaybe<AssetUrlsBoolExp>;
-  _or?: InputMaybe<Array<AssetUrlsBoolExp>>;
-  id?: InputMaybe<StringBoolExp>;
-  rowId?: InputMaybe<StringBoolExp>;
-  tableId?: InputMaybe<StringBoolExp>;
-  url?: InputMaybe<StringBoolExp>;
-  urlType?: InputMaybe<CUrlTypesBoolExp>;
-  urlTypeId?: InputMaybe<StringBoolExp>;
-};
-
-export type AssetUrlsOrderBy = {
-  id?: InputMaybe<OrderBy>;
-  rowId?: InputMaybe<OrderBy>;
-  tableId?: InputMaybe<OrderBy>;
-  url?: InputMaybe<OrderBy>;
-  urlType?: InputMaybe<CUrlTypesOrderBy>;
-  urlTypeId?: InputMaybe<OrderBy>;
-};
-
-export type CAssetDeployments = {
-  __typename?: 'CAssetDeployments';
-  asset?: Maybe<CAssets>;
+export type AAssetDeployments = {
+  __typename?: 'AAssetDeployments';
+  asset?: Maybe<AAssets>;
   assetId: Scalars['String1']['output'];
   deploymentId: Scalars['String1']['output'];
   id: Scalars['String1']['output'];
-  smartContractDeployment?: Maybe<CSmartContractDeployments>;
+  smartContractDeployment?: Maybe<ASmartContractDeployments>;
 };
 
-export type CAssetDeploymentsAggExp = {
-  __typename?: 'CAssetDeploymentsAggExp';
-  _count: Scalars['Int']['output'];
-  assetId: StringAggExp;
-  deploymentId: StringAggExp;
-  id: StringAggExp;
+export type AAssetDeploymentsBoolExp = {
+  _and?: InputMaybe<Array<AAssetDeploymentsBoolExp>>;
+  _not?: InputMaybe<AAssetDeploymentsBoolExp>;
+  _or?: InputMaybe<Array<AAssetDeploymentsBoolExp>>;
+  asset?: InputMaybe<AAssetsBoolExp>;
+  assetId?: InputMaybe<StringBoolExp>;
+  deploymentId?: InputMaybe<StringBoolExp>;
+  id?: InputMaybe<StringBoolExp>;
+  smartContractDeployment?: InputMaybe<ASmartContractDeploymentsBoolExp>;
 };
 
-export type CAssetDeploymentsFilterInput = {
+export type AAssetDeploymentsFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CAssetDeploymentsOrderBy>>;
-  where?: InputMaybe<AssetDeploymentsBoolExp>;
+  order_by?: InputMaybe<Array<AAssetDeploymentsOrderBy>>;
+  where?: InputMaybe<AAssetDeploymentsBoolExp>;
 };
 
-export type CAssetDeploymentsOrderBy = {
-  asset?: InputMaybe<CAssetsOrderBy>;
+export type AAssetDeploymentsOrderBy = {
+  asset?: InputMaybe<AAssetsOrderBy>;
   assetId?: InputMaybe<OrderBy>;
   deploymentId?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
-  smartContractDeployment?: InputMaybe<CSmartContractDeploymentsOrderBy>;
+  smartContractDeployment?: InputMaybe<ASmartContractDeploymentsOrderBy>;
 };
 
-export type CAssetStandards = {
-  __typename?: 'CAssetStandards';
+export type AAssetStandards = {
+  __typename?: 'AAssetStandards';
   definition: Scalars['String1']['output'];
   id: Scalars['String1']['output'];
   name: Scalars['String1']['output'];
-  smartContractDeployments?: Maybe<Array<CSmartContractDeployments>>;
-  smartContractDeploymentsAggregate: CSmartContractDeploymentsAggExp;
+  smartContractDeployments?: Maybe<Array<ASmartContractDeployments>>;
+  smartContractDeploymentsAggregate: ASmartContractDeploymentsAggExp;
 };
 
-
-export type CAssetStandardsSmartContractDeploymentsArgs = {
+export type AAssetStandardsSmartContractDeploymentsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CSmartContractDeploymentsOrderBy>>;
-  where?: InputMaybe<CSmartContractDeploymentsBoolExp>;
+  order_by?: InputMaybe<Array<ASmartContractDeploymentsOrderBy>>;
+  where?: InputMaybe<ASmartContractDeploymentsBoolExp>;
 };
 
-
-export type CAssetStandardsSmartContractDeploymentsAggregateArgs = {
-  filter_input?: InputMaybe<CSmartContractDeploymentsFilterInput>;
+export type AAssetStandardsSmartContractDeploymentsAggregateArgs = {
+  filter_input?: InputMaybe<ASmartContractDeploymentsFilterInput>;
 };
 
-export type CAssetStandardsAggExp = {
-  __typename?: 'CAssetStandardsAggExp';
+export type AAssetStandardsAggExp = {
+  __typename?: 'AAssetStandardsAggExp';
   _count: Scalars['Int']['output'];
   definition: StringAggExp;
   id: StringAggExp;
   name: StringAggExp;
 };
 
-export type CAssetStandardsBoolExp = {
-  _and?: InputMaybe<Array<CAssetStandardsBoolExp>>;
-  _not?: InputMaybe<CAssetStandardsBoolExp>;
-  _or?: InputMaybe<Array<CAssetStandardsBoolExp>>;
+export type AAssetStandardsBoolExp = {
+  _and?: InputMaybe<Array<AAssetStandardsBoolExp>>;
+  _not?: InputMaybe<AAssetStandardsBoolExp>;
+  _or?: InputMaybe<Array<AAssetStandardsBoolExp>>;
   definition?: InputMaybe<StringBoolExp>;
   id?: InputMaybe<StringBoolExp>;
   name?: InputMaybe<StringBoolExp>;
-  smartContractDeployments?: InputMaybe<CSmartContractDeploymentsBoolExp>;
+  smartContractDeployments?: InputMaybe<ASmartContractDeploymentsBoolExp>;
 };
 
-export type CAssetStandardsFilterInput = {
+export type AAssetStandardsFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CAssetStandardsOrderBy>>;
-  where?: InputMaybe<CAssetStandardsBoolExp>;
+  order_by?: InputMaybe<Array<AAssetStandardsOrderBy>>;
+  where?: InputMaybe<AAssetStandardsBoolExp>;
 };
 
-export type CAssetStandardsOrderBy = {
+export type AAssetStandardsOrderBy = {
   definition?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
   name?: InputMaybe<OrderBy>;
 };
 
-export type CAssetStatuses = {
-  __typename?: 'CAssetStatuses';
-  assets?: Maybe<Array<CAssets>>;
-  assetsAggregate: CAssetsAggExp;
+export type AAssetStatuses = {
+  __typename?: 'AAssetStatuses';
+  assets?: Maybe<Array<AAssets>>;
+  assetsAggregate: AAssetsAggExp;
   definition: Scalars['String1']['output'];
   id: Scalars['String1']['output'];
   name: Scalars['String1']['output'];
 };
 
-
-export type CAssetStatusesAssetsArgs = {
+export type AAssetStatusesAssetsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CAssetsOrderBy>>;
-  where?: InputMaybe<CAssetsBoolExp>;
+  order_by?: InputMaybe<Array<AAssetsOrderBy>>;
+  where?: InputMaybe<AAssetsBoolExp>;
 };
 
-
-export type CAssetStatusesAssetsAggregateArgs = {
-  filter_input?: InputMaybe<CAssetsFilterInput>;
+export type AAssetStatusesAssetsAggregateArgs = {
+  filter_input?: InputMaybe<AAssetsFilterInput>;
 };
 
-export type CAssetStatusesAggExp = {
-  __typename?: 'CAssetStatusesAggExp';
+export type AAssetStatusesAggExp = {
+  __typename?: 'AAssetStatusesAggExp';
   _count: Scalars['Int']['output'];
   definition: StringAggExp;
   id: StringAggExp;
   name: StringAggExp;
 };
 
-export type CAssetStatusesBoolExp = {
-  _and?: InputMaybe<Array<CAssetStatusesBoolExp>>;
-  _not?: InputMaybe<CAssetStatusesBoolExp>;
-  _or?: InputMaybe<Array<CAssetStatusesBoolExp>>;
-  assets?: InputMaybe<CAssetsBoolExp>;
+export type AAssetStatusesBoolExp = {
+  _and?: InputMaybe<Array<AAssetStatusesBoolExp>>;
+  _not?: InputMaybe<AAssetStatusesBoolExp>;
+  _or?: InputMaybe<Array<AAssetStatusesBoolExp>>;
+  assets?: InputMaybe<AAssetsBoolExp>;
   definition?: InputMaybe<StringBoolExp>;
   id?: InputMaybe<StringBoolExp>;
   name?: InputMaybe<StringBoolExp>;
 };
 
-export type CAssetStatusesFilterInput = {
+export type AAssetStatusesFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CAssetStatusesOrderBy>>;
-  where?: InputMaybe<CAssetStatusesBoolExp>;
+  order_by?: InputMaybe<Array<AAssetStatusesOrderBy>>;
+  where?: InputMaybe<AAssetStatusesBoolExp>;
 };
 
-export type CAssetStatusesOrderBy = {
+export type AAssetStatusesOrderBy = {
   definition?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
   name?: InputMaybe<OrderBy>;
 };
 
-export type CAssetSupportTypes = {
-  __typename?: 'CAssetSupportTypes';
+export type AAssetSupportTypes = {
+  __typename?: 'AAssetSupportTypes';
   definition: Scalars['String1']['output'];
   id: Scalars['String1']['output'];
   name: Scalars['String1']['output'];
-  productAssetRelationships?: Maybe<Array<CProductAssetRelationships>>;
-  productAssetRelationshipsAggregate: CProductAssetRelationshipsAggExp;
+  productAssetRelationships?: Maybe<Array<AProductAssetRelationships>>;
+  productAssetRelationshipsAggregate: AProductAssetRelationshipsAggExp;
 };
 
-
-export type CAssetSupportTypesProductAssetRelationshipsArgs = {
+export type AAssetSupportTypesProductAssetRelationshipsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CProductAssetRelationshipsOrderBy>>;
-  where?: InputMaybe<CProductAssetRelationshipsBoolExp>;
+  order_by?: InputMaybe<Array<AProductAssetRelationshipsOrderBy>>;
+  where?: InputMaybe<AProductAssetRelationshipsBoolExp>;
 };
 
-
-export type CAssetSupportTypesProductAssetRelationshipsAggregateArgs = {
-  filter_input?: InputMaybe<CProductAssetRelationshipsFilterInput>;
+export type AAssetSupportTypesProductAssetRelationshipsAggregateArgs = {
+  filter_input?: InputMaybe<AProductAssetRelationshipsFilterInput>;
 };
 
-export type CAssetSupportTypesAggExp = {
-  __typename?: 'CAssetSupportTypesAggExp';
+export type AAssetSupportTypesAggExp = {
+  __typename?: 'AAssetSupportTypesAggExp';
   _count: Scalars['Int']['output'];
   definition: StringAggExp;
   id: StringAggExp;
   name: StringAggExp;
 };
 
-export type CAssetSupportTypesBoolExp = {
-  _and?: InputMaybe<Array<CAssetSupportTypesBoolExp>>;
-  _not?: InputMaybe<CAssetSupportTypesBoolExp>;
-  _or?: InputMaybe<Array<CAssetSupportTypesBoolExp>>;
+export type AAssetSupportTypesBoolExp = {
+  _and?: InputMaybe<Array<AAssetSupportTypesBoolExp>>;
+  _not?: InputMaybe<AAssetSupportTypesBoolExp>;
+  _or?: InputMaybe<Array<AAssetSupportTypesBoolExp>>;
   definition?: InputMaybe<StringBoolExp>;
   id?: InputMaybe<StringBoolExp>;
   name?: InputMaybe<StringBoolExp>;
-  productAssetRelationships?: InputMaybe<CProductAssetRelationshipsBoolExp>;
+  productAssetRelationships?: InputMaybe<AProductAssetRelationshipsBoolExp>;
 };
 
-export type CAssetSupportTypesFilterInput = {
+export type AAssetSupportTypesFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CAssetSupportTypesOrderBy>>;
-  where?: InputMaybe<CAssetSupportTypesBoolExp>;
+  order_by?: InputMaybe<Array<AAssetSupportTypesOrderBy>>;
+  where?: InputMaybe<AAssetSupportTypesBoolExp>;
 };
 
-export type CAssetSupportTypesOrderBy = {
+export type AAssetSupportTypesOrderBy = {
   definition?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
   name?: InputMaybe<OrderBy>;
 };
 
-export type CAssetTypes = {
-  __typename?: 'CAssetTypes';
-  assets?: Maybe<Array<CAssets>>;
-  assetsAggregate: CAssetsAggExp;
+export type AAssetTypes = {
+  __typename?: 'AAssetTypes';
+  assets?: Maybe<Array<AAssets>>;
+  assetsAggregate: AAssetsAggExp;
   definition: Scalars['String1']['output'];
   id: Scalars['String1']['output'];
   name: Scalars['String1']['output'];
 };
 
-
-export type CAssetTypesAssetsArgs = {
+export type AAssetTypesAssetsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CAssetsOrderBy>>;
-  where?: InputMaybe<CAssetsBoolExp>;
+  order_by?: InputMaybe<Array<AAssetsOrderBy>>;
+  where?: InputMaybe<AAssetsBoolExp>;
 };
 
-
-export type CAssetTypesAssetsAggregateArgs = {
-  filter_input?: InputMaybe<CAssetsFilterInput>;
+export type AAssetTypesAssetsAggregateArgs = {
+  filter_input?: InputMaybe<AAssetsFilterInput>;
 };
 
-export type CAssetTypesAggExp = {
-  __typename?: 'CAssetTypesAggExp';
+export type AAssetTypesAggExp = {
+  __typename?: 'AAssetTypesAggExp';
   _count: Scalars['Int']['output'];
   definition: StringAggExp;
   id: StringAggExp;
   name: StringAggExp;
 };
 
-export type CAssetTypesBoolExp = {
-  _and?: InputMaybe<Array<CAssetTypesBoolExp>>;
-  _not?: InputMaybe<CAssetTypesBoolExp>;
-  _or?: InputMaybe<Array<CAssetTypesBoolExp>>;
-  assets?: InputMaybe<CAssetsBoolExp>;
+export type AAssetTypesBoolExp = {
+  _and?: InputMaybe<Array<AAssetTypesBoolExp>>;
+  _not?: InputMaybe<AAssetTypesBoolExp>;
+  _or?: InputMaybe<Array<AAssetTypesBoolExp>>;
   definition?: InputMaybe<StringBoolExp>;
   id?: InputMaybe<StringBoolExp>;
   name?: InputMaybe<StringBoolExp>;
 };
 
-export type CAssetTypesFilterInput = {
+export type AAssetTypesFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CAssetTypesOrderBy>>;
-  where?: InputMaybe<CAssetTypesBoolExp>;
+  order_by?: InputMaybe<Array<AAssetTypesOrderBy>>;
+  where?: InputMaybe<AAssetTypesBoolExp>;
 };
 
-export type CAssetTypesOrderBy = {
+export type AAssetTypesOrderBy = {
   definition?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
   name?: InputMaybe<OrderBy>;
 };
 
-export type CAssets = {
-  __typename?: 'CAssets';
-  assetDeployments?: Maybe<Array<CAssetDeployments>>;
-  assetDeploymentsAggregate: CAssetDeploymentsAggExp;
-  assetStatus?: Maybe<CAssetStatuses>;
+export type AAssets = {
+  __typename?: 'AAssets';
+  assetDeployments?: Maybe<Array<AAssetDeployments>>;
+  assetDeploymentsAggregate: AssetDeploymentsAggExp;
+  assetStatus?: Maybe<AAssetStatuses>;
   assetStatusId?: Maybe<Scalars['String1']['output']>;
-  assetType?: Maybe<CAssetTypes>;
+  assetType?: Maybe<AAssetTypes>;
   assetTypeId?: Maybe<Scalars['String1']['output']>;
-  derivativeAssets?: Maybe<Array<CDerivativeAssets>>;
-  derivativeAssetsAggregate: CDerivativeAssetsAggExp;
-  derivativeAssetsByBaseAssetId?: Maybe<Array<CDerivativeAssets>>;
-  derivativeAssetsByBaseAssetIdAggregate: CDerivativeAssetsAggExp;
+  derivativeAssets?: Maybe<Array<ADerivativeAssets>>;
+  derivativeAssetsAggregate: ADerivativeAssetsAggExp;
+  derivativeAssetsByBaseAssetId?: Maybe<Array<ADerivativeAssets>>;
+  derivativeAssetsByBaseAssetIdAggregate: ADerivativeAssetsAggExp;
   description: Scalars['String1']['output'];
   icon: Scalars['String1']['output'];
   id: Scalars['String1']['output'];
   name: Scalars['String1']['output'];
-  productAssetRelationships?: Maybe<Array<CProductAssetRelationships>>;
-  productAssetRelationshipsAggregate: CProductAssetRelationshipsAggExp;
-  root?: Maybe<CRoots>;
+  productAssetRelationships?: Maybe<Array<AProductAssetRelationships>>;
+  productAssetRelationshipsAggregate: AProductAssetRelationshipsAggExp;
+  root?: Maybe<ARoots>;
   rootId: Scalars['String1']['output'];
   ticker: Scalars['String1']['output'];
   urls?: Maybe<Array<AssetUrls>>;
 };
 
-
-export type CAssetsAssetDeploymentsArgs = {
+export type AAssetsAssetDeploymentsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CAssetDeploymentsOrderBy>>;
-  where?: InputMaybe<AssetDeploymentsBoolExp>;
+  order_by?: InputMaybe<Array<AAssetDeploymentsOrderBy>>;
+  where?: InputMaybe<AAssetDeploymentsBoolExp>;
 };
 
-
-export type CAssetsAssetDeploymentsAggregateArgs = {
-  filter_input?: InputMaybe<CAssetDeploymentsFilterInput>;
+export type AAssetsAssetDeploymentsAggregateArgs = {
+  filter_input?: InputMaybe<AAssetDeploymentsFilterInput>;
 };
 
-
-export type CAssetsDerivativeAssetsArgs = {
+export type AAssetsDerivativeAssetsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CDerivativeAssetsOrderBy>>;
-  where?: InputMaybe<CDerivativeAssetsBoolExp>;
+  order_by?: InputMaybe<Array<ADerivativeAssetsOrderBy>>;
+  where?: InputMaybe<ADerivativeAssetsBoolExp>;
 };
 
-
-export type CAssetsDerivativeAssetsAggregateArgs = {
-  filter_input?: InputMaybe<CDerivativeAssetsFilterInput>;
+export type AAssetsDerivativeAssetsAggregateArgs = {
+  filter_input?: InputMaybe<ADerivativeAssetsFilterInput>;
 };
 
-
-export type CAssetsDerivativeAssetsByBaseAssetIdArgs = {
+export type AAssetsDerivativeAssetsByBaseAssetIdArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CDerivativeAssetsOrderBy>>;
-  where?: InputMaybe<CDerivativeAssetsBoolExp>;
+  order_by?: InputMaybe<Array<ADerivativeAssetsOrderBy>>;
+  where?: InputMaybe<ADerivativeAssetsBoolExp>;
 };
 
-
-export type CAssetsDerivativeAssetsByBaseAssetIdAggregateArgs = {
-  filter_input?: InputMaybe<CDerivativeAssetsFilterInput>;
+export type AAssetsDerivativeAssetsByBaseAssetIdAggregateArgs = {
+  filter_input?: InputMaybe<ADerivativeAssetsFilterInput>;
 };
 
-
-export type CAssetsProductAssetRelationshipsArgs = {
+export type AAssetsProductAssetRelationshipsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CProductAssetRelationshipsOrderBy>>;
-  where?: InputMaybe<CProductAssetRelationshipsBoolExp>;
+  order_by?: InputMaybe<Array<AProductAssetRelationshipsOrderBy>>;
+  where?: InputMaybe<AProductAssetRelationshipsBoolExp>;
 };
 
-
-export type CAssetsProductAssetRelationshipsAggregateArgs = {
-  filter_input?: InputMaybe<CProductAssetRelationshipsFilterInput>;
+export type AAssetsProductAssetRelationshipsAggregateArgs = {
+  filter_input?: InputMaybe<AProductAssetRelationshipsFilterInput>;
 };
 
-
-export type CAssetsUrlsArgs = {
+export type AAssetsUrlsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<AssetUrlsOrderBy>>;
   where?: InputMaybe<AssetUrlsBoolExp>;
 };
 
-export type CAssetsAggExp = {
-  __typename?: 'CAssetsAggExp';
+export type AAssetsAggExp = {
+  __typename?: 'AAssetsAggExp';
   _count: Scalars['Int']['output'];
   assetStatusId: StringAggExp;
   assetTypeId: StringAggExp;
@@ -393,275 +359,267 @@ export type CAssetsAggExp = {
   ticker: StringAggExp;
 };
 
-export type CAssetsBoolExp = {
-  _and?: InputMaybe<Array<CAssetsBoolExp>>;
-  _not?: InputMaybe<CAssetsBoolExp>;
-  _or?: InputMaybe<Array<CAssetsBoolExp>>;
-  assetDeployments?: InputMaybe<AssetDeploymentsBoolExp>;
-  assetStatus?: InputMaybe<CAssetStatusesBoolExp>;
+export type AAssetsBoolExp = {
+  _and?: InputMaybe<Array<AAssetsBoolExp>>;
+  _not?: InputMaybe<AAssetsBoolExp>;
+  _or?: InputMaybe<Array<AAssetsBoolExp>>;
+  assetDeployments?: InputMaybe<AAssetDeploymentsBoolExp>;
+  assetStatus?: InputMaybe<AAssetStatusesBoolExp>;
   assetStatusId?: InputMaybe<StringBoolExp>;
-  assetType?: InputMaybe<CAssetTypesBoolExp>;
   assetTypeId?: InputMaybe<StringBoolExp>;
-  derivativeAssets?: InputMaybe<CDerivativeAssetsBoolExp>;
-  derivativeAssetsByBaseAssetId?: InputMaybe<CDerivativeAssetsBoolExp>;
+  derivativeAssets?: InputMaybe<ADerivativeAssetsBoolExp>;
+  derivativeAssetsByBaseAssetId?: InputMaybe<ADerivativeAssetsBoolExp>;
   description?: InputMaybe<StringBoolExp>;
   icon?: InputMaybe<StringBoolExp>;
   id?: InputMaybe<StringBoolExp>;
   name?: InputMaybe<StringBoolExp>;
-  productAssetRelationships?: InputMaybe<CProductAssetRelationshipsBoolExp>;
-  root?: InputMaybe<CRootsBoolExp>;
+  productAssetRelationships?: InputMaybe<AProductAssetRelationshipsBoolExp>;
+  root?: InputMaybe<ARootsBoolExp>;
   rootId?: InputMaybe<StringBoolExp>;
   ticker?: InputMaybe<StringBoolExp>;
 };
 
-export type CAssetsFilterInput = {
+export type AAssetsFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CAssetsOrderBy>>;
-  where?: InputMaybe<CAssetsBoolExp>;
+  order_by?: InputMaybe<Array<AAssetsOrderBy>>;
+  where?: InputMaybe<AAssetsBoolExp>;
 };
 
-export type CAssetsOrderBy = {
-  assetStatus?: InputMaybe<CAssetStatusesOrderBy>;
+export type AAssetsOrderBy = {
+  assetStatus?: InputMaybe<AAssetStatusesOrderBy>;
   assetStatusId?: InputMaybe<OrderBy>;
-  assetType?: InputMaybe<CAssetTypesOrderBy>;
+  assetType?: InputMaybe<AAssetTypesOrderBy>;
   assetTypeId?: InputMaybe<OrderBy>;
   description?: InputMaybe<OrderBy>;
   icon?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
   name?: InputMaybe<OrderBy>;
-  root?: InputMaybe<CRootsOrderBy>;
+  root?: InputMaybe<ARootsOrderBy>;
   rootId?: InputMaybe<OrderBy>;
   ticker?: InputMaybe<OrderBy>;
 };
 
-export type CCoreTableNames = {
-  __typename?: 'CCoreTableNames';
+export type ACoreTableNames = {
+  __typename?: 'ACoreTableNames';
   id: Scalars['String1']['output'];
   tableName: Scalars['String1']['output'];
-  urls?: Maybe<Array<CUrls>>;
-  urlsAggregate: CUrlsAggExp;
+  urls?: Maybe<Array<AUrls>>;
+  urlsAggregate: AUrlsAggExp;
 };
 
-
-export type CCoreTableNamesUrlsArgs = {
+export type ACoreTableNamesUrlsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CUrlsOrderBy>>;
-  where?: InputMaybe<CUrlsBoolExp>;
+  order_by?: InputMaybe<Array<AUrlsOrderBy>>;
+  where?: InputMaybe<AUrlsBoolExp>;
 };
 
-
-export type CCoreTableNamesUrlsAggregateArgs = {
-  filter_input?: InputMaybe<CUrlsFilterInput>;
+export type ACoreTableNamesUrlsAggregateArgs = {
+  filter_input?: InputMaybe<AUrlsFilterInput>;
 };
 
-export type CCoreTableNamesAggExp = {
-  __typename?: 'CCoreTableNamesAggExp';
+export type ACoreTableNamesAggExp = {
+  __typename?: 'ACoreTableNamesAggExp';
   _count: Scalars['Int']['output'];
   id: StringAggExp;
   tableName: StringAggExp;
 };
 
-export type CCoreTableNamesBoolExp = {
-  _and?: InputMaybe<Array<CCoreTableNamesBoolExp>>;
-  _not?: InputMaybe<CCoreTableNamesBoolExp>;
-  _or?: InputMaybe<Array<CCoreTableNamesBoolExp>>;
+export type ACoreTableNamesBoolExp = {
+  _and?: InputMaybe<Array<ACoreTableNamesBoolExp>>;
+  _not?: InputMaybe<ACoreTableNamesBoolExp>;
+  _or?: InputMaybe<Array<ACoreTableNamesBoolExp>>;
   id?: InputMaybe<StringBoolExp>;
   tableName?: InputMaybe<StringBoolExp>;
-  urls?: InputMaybe<CUrlsBoolExp>;
+  urls?: InputMaybe<AUrlsBoolExp>;
 };
 
-export type CCoreTableNamesFilterInput = {
+export type ACoreTableNamesFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CCoreTableNamesOrderBy>>;
-  where?: InputMaybe<CCoreTableNamesBoolExp>;
+  order_by?: InputMaybe<Array<ACoreTableNamesOrderBy>>;
+  where?: InputMaybe<ACoreTableNamesBoolExp>;
 };
 
-export type CCoreTableNamesOrderBy = {
+export type ACoreTableNamesOrderBy = {
   id?: InputMaybe<OrderBy>;
   tableName?: InputMaybe<OrderBy>;
 };
 
-export type CCountries = {
-  __typename?: 'CCountries';
+export type ACountries = {
+  __typename?: 'ACountries';
   code: Scalars['String1']['output'];
-  entities?: Maybe<Array<CEntities>>;
-  entitiesAggregate: CEntitiesAggExp;
+  entities?: Maybe<Array<AEntities>>;
+  entitiesAggregate: AEntitiesAggExp;
   id: Scalars['String1']['output'];
   name: Scalars['String1']['output'];
 };
 
-
-export type CCountriesEntitiesArgs = {
+export type ACountriesEntitiesArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CEntitiesOrderBy>>;
-  where?: InputMaybe<CEntitiesBoolExp>;
+  order_by?: InputMaybe<Array<AEntitiesOrderBy>>;
+  where?: InputMaybe<AEntitiesBoolExp>;
 };
 
-
-export type CCountriesEntitiesAggregateArgs = {
-  filter_input?: InputMaybe<CEntitiesFilterInput>;
+export type ACountriesEntitiesAggregateArgs = {
+  filter_input?: InputMaybe<AEntitiesFilterInput>;
 };
 
-export type CCountriesAggExp = {
-  __typename?: 'CCountriesAggExp';
+export type ACountriesAggExp = {
+  __typename?: 'ACountriesAggExp';
   _count: Scalars['Int']['output'];
   code: StringAggExp;
   id: StringAggExp;
   name: StringAggExp;
 };
 
-export type CCountriesBoolExp = {
-  _and?: InputMaybe<Array<CCountriesBoolExp>>;
-  _not?: InputMaybe<CCountriesBoolExp>;
-  _or?: InputMaybe<Array<CCountriesBoolExp>>;
+export type ACountriesBoolExp = {
+  _and?: InputMaybe<Array<ACountriesBoolExp>>;
+  _not?: InputMaybe<ACountriesBoolExp>;
+  _or?: InputMaybe<Array<ACountriesBoolExp>>;
   code?: InputMaybe<StringBoolExp>;
-  entities?: InputMaybe<CEntitiesBoolExp>;
+  entities?: InputMaybe<AEntitiesBoolExp>;
   id?: InputMaybe<StringBoolExp>;
   name?: InputMaybe<StringBoolExp>;
 };
 
-export type CCountriesFilterInput = {
+export type ACountriesFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CCountriesOrderBy>>;
-  where?: InputMaybe<CCountriesBoolExp>;
+  order_by?: InputMaybe<Array<ACountriesOrderBy>>;
+  where?: InputMaybe<ACountriesBoolExp>;
 };
 
-export type CCountriesOrderBy = {
+export type ACountriesOrderBy = {
   code?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
   name?: InputMaybe<OrderBy>;
 };
 
-export type CDeploymentTypes = {
-  __typename?: 'CDeploymentTypes';
+export type ADeploymentTypes = {
+  __typename?: 'ADeploymentTypes';
   definition: Scalars['String1']['output'];
   id: Scalars['String1']['output'];
   name: Scalars['String1']['output'];
-  smartContractDeployments?: Maybe<Array<CSmartContractDeployments>>;
-  smartContractDeploymentsAggregate: CSmartContractDeploymentsAggExp;
+  smartContractDeployments?: Maybe<Array<ASmartContractDeployments>>;
+  smartContractDeploymentsAggregate: ASmartContractDeploymentsAggExp;
 };
 
-
-export type CDeploymentTypesSmartContractDeploymentsArgs = {
+export type ADeploymentTypesSmartContractDeploymentsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CSmartContractDeploymentsOrderBy>>;
-  where?: InputMaybe<CSmartContractDeploymentsBoolExp>;
+  order_by?: InputMaybe<Array<ASmartContractDeploymentsOrderBy>>;
+  where?: InputMaybe<ASmartContractDeploymentsBoolExp>;
 };
 
-
-export type CDeploymentTypesSmartContractDeploymentsAggregateArgs = {
-  filter_input?: InputMaybe<CSmartContractDeploymentsFilterInput>;
+export type ADeploymentTypesSmartContractDeploymentsAggregateArgs = {
+  filter_input?: InputMaybe<ASmartContractDeploymentsFilterInput>;
 };
 
-export type CDeploymentTypesAggExp = {
-  __typename?: 'CDeploymentTypesAggExp';
+export type ADeploymentTypesAggExp = {
+  __typename?: 'ADeploymentTypesAggExp';
   _count: Scalars['Int']['output'];
   definition: StringAggExp;
   id: StringAggExp;
   name: StringAggExp;
 };
 
-export type CDeploymentTypesBoolExp = {
-  _and?: InputMaybe<Array<CDeploymentTypesBoolExp>>;
-  _not?: InputMaybe<CDeploymentTypesBoolExp>;
-  _or?: InputMaybe<Array<CDeploymentTypesBoolExp>>;
+export type ADeploymentTypesBoolExp = {
+  _and?: InputMaybe<Array<ADeploymentTypesBoolExp>>;
+  _not?: InputMaybe<ADeploymentTypesBoolExp>;
+  _or?: InputMaybe<Array<ADeploymentTypesBoolExp>>;
   definition?: InputMaybe<StringBoolExp>;
   id?: InputMaybe<StringBoolExp>;
   name?: InputMaybe<StringBoolExp>;
-  smartContractDeployments?: InputMaybe<CSmartContractDeploymentsBoolExp>;
+  smartContractDeployments?: InputMaybe<ASmartContractDeploymentsBoolExp>;
 };
 
-export type CDeploymentTypesFilterInput = {
+export type ADeploymentTypesFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CDeploymentTypesOrderBy>>;
-  where?: InputMaybe<CDeploymentTypesBoolExp>;
+  order_by?: InputMaybe<Array<ADeploymentTypesOrderBy>>;
+  where?: InputMaybe<ADeploymentTypesBoolExp>;
 };
 
-export type CDeploymentTypesOrderBy = {
+export type ADeploymentTypesOrderBy = {
   definition?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
   name?: InputMaybe<OrderBy>;
 };
 
-export type CDerivativeAssets = {
-  __typename?: 'CDerivativeAssets';
-  asset?: Maybe<CAssets>;
-  assetByBaseAssetId?: Maybe<CAssets>;
+export type ADerivativeAssets = {
+  __typename?: 'ADerivativeAssets';
+  asset?: Maybe<AAssets>;
+  assetByBaseAssetId?: Maybe<AAssets>;
   baseAssetId: Scalars['String1']['output'];
   derivativeAssetId: Scalars['String1']['output'];
   id: Scalars['String1']['output'];
 };
 
-export type CDerivativeAssetsAggExp = {
-  __typename?: 'CDerivativeAssetsAggExp';
+export type ADerivativeAssetsAggExp = {
+  __typename?: 'ADerivativeAssetsAggExp';
   _count: Scalars['Int']['output'];
   baseAssetId: StringAggExp;
   derivativeAssetId: StringAggExp;
   id: StringAggExp;
 };
 
-export type CDerivativeAssetsBoolExp = {
-  _and?: InputMaybe<Array<CDerivativeAssetsBoolExp>>;
-  _not?: InputMaybe<CDerivativeAssetsBoolExp>;
-  _or?: InputMaybe<Array<CDerivativeAssetsBoolExp>>;
-  asset?: InputMaybe<CAssetsBoolExp>;
-  assetByBaseAssetId?: InputMaybe<CAssetsBoolExp>;
+export type ADerivativeAssetsBoolExp = {
+  _and?: InputMaybe<Array<ADerivativeAssetsBoolExp>>;
+  _not?: InputMaybe<ADerivativeAssetsBoolExp>;
+  _or?: InputMaybe<Array<ADerivativeAssetsBoolExp>>;
+  asset?: InputMaybe<AAssetsBoolExp>;
+  assetByBaseAssetId?: InputMaybe<AAssetsBoolExp>;
   baseAssetId?: InputMaybe<StringBoolExp>;
   derivativeAssetId?: InputMaybe<StringBoolExp>;
   id?: InputMaybe<StringBoolExp>;
 };
 
-export type CDerivativeAssetsFilterInput = {
+export type ADerivativeAssetsFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CDerivativeAssetsOrderBy>>;
-  where?: InputMaybe<CDerivativeAssetsBoolExp>;
+  order_by?: InputMaybe<Array<ADerivativeAssetsOrderBy>>;
+  where?: InputMaybe<ADerivativeAssetsBoolExp>;
 };
 
-export type CDerivativeAssetsOrderBy = {
-  asset?: InputMaybe<CAssetsOrderBy>;
-  assetByBaseAssetId?: InputMaybe<CAssetsOrderBy>;
+export type ADerivativeAssetsOrderBy = {
+  asset?: InputMaybe<AAssetsOrderBy>;
+  assetByBaseAssetId?: InputMaybe<AAssetsOrderBy>;
   baseAssetId?: InputMaybe<OrderBy>;
   derivativeAssetId?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
 };
 
-export type CEntities = {
-  __typename?: 'CEntities';
+export type AEntities = {
+  __typename?: 'AEntities';
   address: Scalars['String1']['output'];
-  country?: Maybe<CCountries>;
+  country?: Maybe<ACountries>;
   countryId?: Maybe<Scalars['String1']['output']>;
   dateOfIncorporation?: Maybe<Scalars['Date']['output']>;
-  entityType?: Maybe<CEntityTypes>;
+  entityType?: Maybe<AEntityTypes>;
   entityTypeId?: Maybe<Scalars['String1']['output']>;
   id: Scalars['String1']['output'];
   leiNumber: Scalars['String1']['output'];
   localRegistrationNumber: Scalars['String1']['output'];
   name: Scalars['String1']['output'];
-  root?: Maybe<CRoots>;
+  root?: Maybe<ARoots>;
   rootId: Scalars['String1']['output'];
   taxIdentificationNumber: Scalars['String1']['output'];
   tradeName: Scalars['String1']['output'];
   urls?: Maybe<Array<EntityUrls>>;
 };
 
-
-export type CEntitiesUrlsArgs = {
+export type AEntitiesUrlsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<EntityUrlsOrderBy>>;
   where?: InputMaybe<EntityUrlsBoolExp>;
 };
 
-export type CEntitiesAggExp = {
-  __typename?: 'CEntitiesAggExp';
+export type AEntitiesAggExp = {
+  __typename?: 'AEntitiesAggExp';
   _count: Scalars['Int']['output'];
   address: StringAggExp;
   countryId: StringAggExp;
@@ -676,116 +634,114 @@ export type CEntitiesAggExp = {
   tradeName: StringAggExp;
 };
 
-export type CEntitiesBoolExp = {
-  _and?: InputMaybe<Array<CEntitiesBoolExp>>;
-  _not?: InputMaybe<CEntitiesBoolExp>;
-  _or?: InputMaybe<Array<CEntitiesBoolExp>>;
+export type AEntitiesBoolExp = {
+  _and?: InputMaybe<Array<AEntitiesBoolExp>>;
+  _not?: InputMaybe<AEntitiesBoolExp>;
+  _or?: InputMaybe<Array<AEntitiesBoolExp>>;
   address?: InputMaybe<StringBoolExp>;
-  country?: InputMaybe<CCountriesBoolExp>;
+  country?: InputMaybe<ACountriesBoolExp>;
   countryId?: InputMaybe<StringBoolExp>;
   dateOfIncorporation?: InputMaybe<DateBoolExp>;
-  entityType?: InputMaybe<CEntityTypesBoolExp>;
+  entityType?: InputMaybe<AEntityTypesBoolExp>;
   entityTypeId?: InputMaybe<StringBoolExp>;
   id?: InputMaybe<StringBoolExp>;
   leiNumber?: InputMaybe<StringBoolExp>;
   localRegistrationNumber?: InputMaybe<StringBoolExp>;
   name?: InputMaybe<StringBoolExp>;
-  root?: InputMaybe<CRootsBoolExp>;
+  root?: InputMaybe<ARootsBoolExp>;
   rootId?: InputMaybe<StringBoolExp>;
   taxIdentificationNumber?: InputMaybe<StringBoolExp>;
   tradeName?: InputMaybe<StringBoolExp>;
 };
 
-export type CEntitiesFilterInput = {
+export type AEntitiesFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CEntitiesOrderBy>>;
-  where?: InputMaybe<CEntitiesBoolExp>;
+  order_by?: InputMaybe<Array<AEntitiesOrderBy>>;
+  where?: InputMaybe<AEntitiesBoolExp>;
 };
 
-export type CEntitiesOrderBy = {
+export type AEntitiesOrderBy = {
   address?: InputMaybe<OrderBy>;
-  country?: InputMaybe<CCountriesOrderBy>;
+  country?: InputMaybe<ACountriesOrderBy>;
   countryId?: InputMaybe<OrderBy>;
   dateOfIncorporation?: InputMaybe<OrderBy>;
-  entityType?: InputMaybe<CEntityTypesOrderBy>;
+  entityType?: InputMaybe<AEntityTypesOrderBy>;
   entityTypeId?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
   leiNumber?: InputMaybe<OrderBy>;
   localRegistrationNumber?: InputMaybe<OrderBy>;
   name?: InputMaybe<OrderBy>;
-  root?: InputMaybe<CRootsOrderBy>;
+  root?: InputMaybe<ARootsOrderBy>;
   rootId?: InputMaybe<OrderBy>;
   taxIdentificationNumber?: InputMaybe<OrderBy>;
   tradeName?: InputMaybe<OrderBy>;
 };
 
-export type CEntityTypes = {
-  __typename?: 'CEntityTypes';
+export type AEntityTypes = {
+  __typename?: 'AEntityTypes';
   definition: Scalars['String1']['output'];
-  entities?: Maybe<Array<CEntities>>;
-  entitiesAggregate: CEntitiesAggExp;
+  entities?: Maybe<Array<AEntities>>;
+  entitiesAggregate: AEntitiesAggExp;
   id: Scalars['String1']['output'];
   name: Scalars['String1']['output'];
 };
 
-
-export type CEntityTypesEntitiesArgs = {
+export type AEntityTypesEntitiesArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CEntitiesOrderBy>>;
-  where?: InputMaybe<CEntitiesBoolExp>;
+  order_by?: InputMaybe<Array<AEntitiesOrderBy>>;
+  where?: InputMaybe<AEntitiesBoolExp>;
 };
 
-
-export type CEntityTypesEntitiesAggregateArgs = {
-  filter_input?: InputMaybe<CEntitiesFilterInput>;
+export type AEntityTypesEntitiesAggregateArgs = {
+  filter_input?: InputMaybe<AEntitiesFilterInput>;
 };
 
-export type CEntityTypesAggExp = {
-  __typename?: 'CEntityTypesAggExp';
+export type AEntityTypesAggExp = {
+  __typename?: 'AEntityTypesAggExp';
   _count: Scalars['Int']['output'];
   definition: StringAggExp;
   id: StringAggExp;
   name: StringAggExp;
 };
 
-export type CEntityTypesBoolExp = {
-  _and?: InputMaybe<Array<CEntityTypesBoolExp>>;
-  _not?: InputMaybe<CEntityTypesBoolExp>;
-  _or?: InputMaybe<Array<CEntityTypesBoolExp>>;
+export type AEntityTypesBoolExp = {
+  _and?: InputMaybe<Array<AEntityTypesBoolExp>>;
+  _not?: InputMaybe<AEntityTypesBoolExp>;
+  _or?: InputMaybe<Array<AEntityTypesBoolExp>>;
   definition?: InputMaybe<StringBoolExp>;
-  entities?: InputMaybe<CEntitiesBoolExp>;
+  entities?: InputMaybe<AEntitiesBoolExp>;
   id?: InputMaybe<StringBoolExp>;
   name?: InputMaybe<StringBoolExp>;
 };
 
-export type CEntityTypesFilterInput = {
+export type AEntityTypesFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CEntityTypesOrderBy>>;
-  where?: InputMaybe<CEntityTypesBoolExp>;
+  order_by?: InputMaybe<Array<AEntityTypesOrderBy>>;
+  where?: InputMaybe<AEntityTypesBoolExp>;
 };
 
-export type CEntityTypesOrderBy = {
+export type AEntityTypesOrderBy = {
   definition?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
   name?: InputMaybe<OrderBy>;
 };
 
-export type CProductAssetRelationships = {
-  __typename?: 'CProductAssetRelationships';
-  asset?: Maybe<CAssets>;
+export type AProductAssetRelationships = {
+  __typename?: 'AProductAssetRelationships';
+  asset?: Maybe<AAssets>;
   assetId: Scalars['String1']['output'];
-  assetSupportType?: Maybe<CAssetSupportTypes>;
+  assetSupportType?: Maybe<AAssetSupportTypes>;
   id: Scalars['String1']['output'];
-  product?: Maybe<CProducts>;
+  product?: Maybe<AProducts>;
   productId: Scalars['String1']['output'];
   typeOfSupportId?: Maybe<Scalars['String1']['output']>;
 };
 
-export type CProductAssetRelationshipsAggExp = {
-  __typename?: 'CProductAssetRelationshipsAggExp';
+export type AProductAssetRelationshipsAggExp = {
+  __typename?: 'AProductAssetRelationshipsAggExp';
   _count: Scalars['Int']['output'];
   assetId: StringAggExp;
   id: StringAggExp;
@@ -793,290 +749,262 @@ export type CProductAssetRelationshipsAggExp = {
   typeOfSupportId: StringAggExp;
 };
 
-export type CProductAssetRelationshipsBoolExp = {
-  _and?: InputMaybe<Array<CProductAssetRelationshipsBoolExp>>;
-  _not?: InputMaybe<CProductAssetRelationshipsBoolExp>;
-  _or?: InputMaybe<Array<CProductAssetRelationshipsBoolExp>>;
-  asset?: InputMaybe<CAssetsBoolExp>;
+export type AProductAssetRelationshipsBoolExp = {
+  _and?: InputMaybe<Array<AProductAssetRelationshipsBoolExp>>;
+  _not?: InputMaybe<AProductAssetRelationshipsBoolExp>;
+  _or?: InputMaybe<Array<AProductAssetRelationshipsBoolExp>>;
+  asset?: InputMaybe<AAssetsBoolExp>;
   assetId?: InputMaybe<StringBoolExp>;
-  assetSupportType?: InputMaybe<CAssetSupportTypesBoolExp>;
+  assetSupportType?: InputMaybe<AAssetSupportTypesBoolExp>;
   id?: InputMaybe<StringBoolExp>;
-  product?: InputMaybe<CProductsBoolExp>;
+  product?: InputMaybe<AProductsBoolExp>;
   productId?: InputMaybe<StringBoolExp>;
   typeOfSupportId?: InputMaybe<StringBoolExp>;
 };
 
-export type CProductAssetRelationshipsFilterInput = {
+export type AProductAssetRelationshipsFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CProductAssetRelationshipsOrderBy>>;
-  where?: InputMaybe<CProductAssetRelationshipsBoolExp>;
+  order_by?: InputMaybe<Array<AProductAssetRelationshipsOrderBy>>;
+  where?: InputMaybe<AProductAssetRelationshipsBoolExp>;
 };
 
-export type CProductAssetRelationshipsOrderBy = {
-  asset?: InputMaybe<CAssetsOrderBy>;
+export type AProductAssetRelationshipsOrderBy = {
+  asset?: InputMaybe<AAssetsOrderBy>;
   assetId?: InputMaybe<OrderBy>;
-  assetSupportType?: InputMaybe<CAssetSupportTypesOrderBy>;
+  assetSupportType?: InputMaybe<AAssetSupportTypesOrderBy>;
   id?: InputMaybe<OrderBy>;
-  product?: InputMaybe<CProductsOrderBy>;
+  product?: InputMaybe<AProductsOrderBy>;
   productId?: InputMaybe<OrderBy>;
   typeOfSupportId?: InputMaybe<OrderBy>;
 };
 
-export type CProductDeployments = {
-  __typename?: 'CProductDeployments';
+export type AProductDeployments = {
+  __typename?: 'AProductDeployments';
   deploymentId: Scalars['String1']['output'];
   id: Scalars['String1']['output'];
-  product?: Maybe<CProducts>;
+  product?: Maybe<AProducts>;
   productId: Scalars['String1']['output'];
-  smartContractDeployment?: Maybe<CSmartContractDeployments>;
+  smartContractDeployment?: Maybe<ASmartContractDeployments>;
 };
 
-export type CProductDeploymentsAggExp = {
-  __typename?: 'CProductDeploymentsAggExp';
+export type AProductDeploymentsAggExp = {
+  __typename?: 'AProductDeploymentsAggExp';
   _count: Scalars['Int']['output'];
   deploymentId: StringAggExp;
   id: StringAggExp;
   productId: StringAggExp;
 };
 
-export type CProductDeploymentsBoolExp = {
-  _and?: InputMaybe<Array<CProductDeploymentsBoolExp>>;
-  _not?: InputMaybe<CProductDeploymentsBoolExp>;
-  _or?: InputMaybe<Array<CProductDeploymentsBoolExp>>;
+export type AProductDeploymentsBoolExp = {
+  _and?: InputMaybe<Array<AProductDeploymentsBoolExp>>;
+  _not?: InputMaybe<AProductDeploymentsBoolExp>;
+  _or?: InputMaybe<Array<AProductDeploymentsBoolExp>>;
   deploymentId?: InputMaybe<StringBoolExp>;
   id?: InputMaybe<StringBoolExp>;
-  product?: InputMaybe<CProductsBoolExp>;
+  product?: InputMaybe<AProductsBoolExp>;
   productId?: InputMaybe<StringBoolExp>;
-  smartContractDeployment?: InputMaybe<CSmartContractDeploymentsBoolExp>;
+  smartContractDeployment?: InputMaybe<ASmartContractDeploymentsBoolExp>;
 };
 
-export type CProductDeploymentsFilterInput = {
+export type AProductDeploymentsFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CProductDeploymentsOrderBy>>;
-  where?: InputMaybe<CProductDeploymentsBoolExp>;
+  order_by?: InputMaybe<Array<AProductDeploymentsOrderBy>>;
+  where?: InputMaybe<AProductDeploymentsBoolExp>;
 };
 
-export type CProductDeploymentsOrderBy = {
+export type AProductDeploymentsOrderBy = {
   deploymentId?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
-  product?: InputMaybe<CProductsOrderBy>;
+  product?: InputMaybe<AProductsOrderBy>;
   productId?: InputMaybe<OrderBy>;
-  smartContractDeployment?: InputMaybe<CSmartContractDeploymentsOrderBy>;
+  smartContractDeployment?: InputMaybe<ASmartContractDeploymentsOrderBy>;
 };
 
-export type CProductStatuses = {
-  __typename?: 'CProductStatuses';
+export type AProductStatuses = {
+  __typename?: 'AProductStatuses';
   definition: Scalars['String1']['output'];
   id: Scalars['String1']['output'];
   name: Scalars['String1']['output'];
-  products?: Maybe<Array<CProducts>>;
-  productsAggregate: CProductsAggExp;
+  products?: Maybe<Array<AProducts>>;
+  productsAggregate: AProductsAggExp;
 };
 
-
-export type CProductStatusesProductsArgs = {
+export type AProductStatusesProductsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CProductsOrderBy>>;
-  where?: InputMaybe<CProductsBoolExp>;
+  order_by?: InputMaybe<Array<AProductsOrderBy>>;
+  where?: InputMaybe<AProductsBoolExp>;
 };
 
-
-export type CProductStatusesProductsAggregateArgs = {
-  filter_input?: InputMaybe<CProductsFilterInput>;
+export type AProductStatusesProductsAggregateArgs = {
+  filter_input?: InputMaybe<AProductsFilterInput>;
 };
 
-export type CProductStatusesAggExp = {
-  __typename?: 'CProductStatusesAggExp';
+export type AProductStatusesAggExp = {
+  __typename?: 'AProductStatusesAggExp';
   _count: Scalars['Int']['output'];
   definition: StringAggExp;
   id: StringAggExp;
   name: StringAggExp;
 };
 
-export type CProductStatusesBoolExp = {
-  _and?: InputMaybe<Array<CProductStatusesBoolExp>>;
-  _not?: InputMaybe<CProductStatusesBoolExp>;
-  _or?: InputMaybe<Array<CProductStatusesBoolExp>>;
+export type AProductStatusesBoolExp = {
+  _and?: InputMaybe<Array<AProductStatusesBoolExp>>;
+  _not?: InputMaybe<AProductStatusesBoolExp>;
+  _or?: InputMaybe<Array<AProductStatusesBoolExp>>;
   definition?: InputMaybe<StringBoolExp>;
   id?: InputMaybe<StringBoolExp>;
   name?: InputMaybe<StringBoolExp>;
-  products?: InputMaybe<CProductsBoolExp>;
+  products?: InputMaybe<AProductsBoolExp>;
 };
 
-export type CProductStatusesFilterInput = {
+export type AProductStatusesFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CProductStatusesOrderBy>>;
-  where?: InputMaybe<CProductStatusesBoolExp>;
+  order_by?: InputMaybe<Array<AProductStatusesOrderBy>>;
+  where?: InputMaybe<AProductStatusesBoolExp>;
 };
 
-export type CProductStatusesOrderBy = {
+export type AProductStatusesOrderBy = {
   definition?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
   name?: InputMaybe<OrderBy>;
 };
 
-export type CProductTypes = {
-  __typename?: 'CProductTypes';
+export type AProductTypes = {
+  __typename?: 'AProductTypes';
   definition: Scalars['String1']['output'];
   id: Scalars['String1']['output'];
   name: Scalars['String1']['output'];
-  products?: Maybe<Array<CProducts>>;
-  productsAggregate: CProductsAggExp;
+  products?: Maybe<Array<AProducts>>;
+  productsAggregate: AProductsAggExp;
 };
 
-
-export type CProductTypesProductsArgs = {
+export type AProductTypesProductsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CProductsOrderBy>>;
-  where?: InputMaybe<CProductsBoolExp>;
+  order_by?: InputMaybe<Array<AProductsOrderBy>>;
+  where?: InputMaybe<AProductsBoolExp>;
 };
 
-
-export type CProductTypesProductsAggregateArgs = {
-  filter_input?: InputMaybe<CProductsFilterInput>;
+export type AProductTypesProductsAggregateArgs = {
+  filter_input?: InputMaybe<AProductsFilterInput>;
 };
 
-export type CProductTypesAggExp = {
-  __typename?: 'CProductTypesAggExp';
+export type AProductTypesAggExp = {
+  __typename?: 'AProductTypesAggExp';
   _count: Scalars['Int']['output'];
   definition: StringAggExp;
   id: StringAggExp;
   name: StringAggExp;
 };
 
-export type CProductTypesBoolExp = {
-  _and?: InputMaybe<Array<CProductTypesBoolExp>>;
-  _not?: InputMaybe<CProductTypesBoolExp>;
-  _or?: InputMaybe<Array<CProductTypesBoolExp>>;
+export type AProductTypesBoolExp = {
+  _and?: InputMaybe<Array<AProductTypesBoolExp>>;
+  _not?: InputMaybe<AProductTypesBoolExp>;
+  _or?: InputMaybe<Array<AProductTypesBoolExp>>;
   definition?: InputMaybe<StringBoolExp>;
   id?: InputMaybe<StringBoolExp>;
   name?: InputMaybe<StringBoolExp>;
-  products?: InputMaybe<CProductsBoolExp>;
+  products?: InputMaybe<AProductsBoolExp>;
 };
 
-export type CProductTypesFilterInput = {
+export type AProductTypesFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CProductTypesOrderBy>>;
-  where?: InputMaybe<CProductTypesBoolExp>;
+  order_by?: InputMaybe<Array<AProductTypesOrderBy>>;
+  where?: InputMaybe<AProductTypesBoolExp>;
 };
 
-export type CProductTypesOrderBy = {
+export type AProductTypesOrderBy = {
   definition?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
   name?: InputMaybe<OrderBy>;
 };
 
-export type CProducts = {
-  __typename?: 'CProducts';
+export type AProducts = {
+  __typename?: 'AProducts';
   description: Scalars['String1']['output'];
   id: Scalars['String1']['output'];
-  isMainProduct: Scalars['Int8']['output'];
+  isMainProduct?: Maybe<Scalars['Int1']['output']>;
   launchDate?: Maybe<Scalars['Date']['output']>;
   name: Scalars['String1']['output'];
-  productAssetRelationships?: Maybe<Array<CProductAssetRelationships>>;
-  productAssetRelationshipsAggregate: CProductAssetRelationshipsAggExp;
-  productDeployments?: Maybe<Array<CProductDeployments>>;
-  productDeploymentsAggregate: CProductDeploymentsAggExp;
-  productStatus?: Maybe<CProductStatuses>;
+  productAssetRelationships?: Maybe<Array<AProductAssetRelationships>>;
+  productAssetRelationshipsAggregate: AProductAssetRelationshipsAggExp;
+  productDeployments?: Maybe<Array<AProductDeployments>>;
+  productDeploymentsAggregate: AProductDeploymentsAggExp;
+  productStatus?: Maybe<AProductStatuses>;
   productStatusId?: Maybe<Scalars['String1']['output']>;
-  productType?: Maybe<CProductTypes>;
+  productType?: Maybe<AProductTypes>;
   productTypeId?: Maybe<Scalars['String1']['output']>;
-  root?: Maybe<CRoots>;
+  root?: Maybe<ARoots>;
   rootId: Scalars['String1']['output'];
-  smartContractDeployments?: Maybe<Array<CSmartContractDeployments>>;
-  smartContractDeploymentsAggregate: CSmartContractDeploymentsAggExp;
-  supportsProducts?: Maybe<Array<CSupportsProducts>>;
-  supportsProductsAggregate: CSupportsProductsAggExp;
-  supportsProductsBySupportsProductId?: Maybe<Array<CSupportsProducts>>;
-  supportsProductsBySupportsProductIdAggregate: CSupportsProductsAggExp;
+  supportsProducts?: Maybe<Array<ASupportsProducts>>;
+  supportsProductsAggregate: ASupportsProductsAggExp;
+  supportsProductsBySupportsProductId?: Maybe<Array<ASupportsProducts>>;
+  supportsProductsBySupportsProductIdAggregate: ASupportsProductsAggExp;
   urls?: Maybe<Array<ProductUrls>>;
 };
 
-
-export type CProductsProductAssetRelationshipsArgs = {
+export type AProductsProductAssetRelationshipsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CProductAssetRelationshipsOrderBy>>;
-  where?: InputMaybe<CProductAssetRelationshipsBoolExp>;
+  order_by?: InputMaybe<Array<AProductAssetRelationshipsOrderBy>>;
+  where?: InputMaybe<AProductAssetRelationshipsBoolExp>;
 };
 
-
-export type CProductsProductAssetRelationshipsAggregateArgs = {
-  filter_input?: InputMaybe<CProductAssetRelationshipsFilterInput>;
+export type AProductsProductAssetRelationshipsAggregateArgs = {
+  filter_input?: InputMaybe<AProductAssetRelationshipsFilterInput>;
 };
 
-
-export type CProductsProductDeploymentsArgs = {
+export type AProductsProductDeploymentsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CProductDeploymentsOrderBy>>;
-  where?: InputMaybe<CProductDeploymentsBoolExp>;
+  order_by?: InputMaybe<Array<AProductDeploymentsOrderBy>>;
+  where?: InputMaybe<AProductDeploymentsBoolExp>;
 };
 
-
-export type CProductsProductDeploymentsAggregateArgs = {
-  filter_input?: InputMaybe<CProductDeploymentsFilterInput>;
+export type AProductsProductDeploymentsAggregateArgs = {
+  filter_input?: InputMaybe<AProductDeploymentsFilterInput>;
 };
 
-
-export type CProductsSmartContractDeploymentsArgs = {
+export type AProductsSupportsProductsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CSmartContractDeploymentsOrderBy>>;
-  where?: InputMaybe<CSmartContractDeploymentsBoolExp>;
+  order_by?: InputMaybe<Array<ASupportsProductsOrderBy>>;
+  where?: InputMaybe<ASupportsProductsBoolExp>;
 };
 
-
-export type CProductsSmartContractDeploymentsAggregateArgs = {
-  filter_input?: InputMaybe<CSmartContractDeploymentsFilterInput>;
+export type AProductsSupportsProductsAggregateArgs = {
+  filter_input?: InputMaybe<ASupportsProductsFilterInput>;
 };
 
-
-export type CProductsSupportsProductsArgs = {
+export type AProductsSupportsProductsBySupportsProductIdArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CSupportsProductsOrderBy>>;
-  where?: InputMaybe<CSupportsProductsBoolExp>;
+  order_by?: InputMaybe<Array<ASupportsProductsOrderBy>>;
+  where?: InputMaybe<ASupportsProductsBoolExp>;
 };
 
-
-export type CProductsSupportsProductsAggregateArgs = {
-  filter_input?: InputMaybe<CSupportsProductsFilterInput>;
+export type AProductsSupportsProductsBySupportsProductIdAggregateArgs = {
+  filter_input?: InputMaybe<ASupportsProductsFilterInput>;
 };
 
-
-export type CProductsSupportsProductsBySupportsProductIdArgs = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CSupportsProductsOrderBy>>;
-  where?: InputMaybe<CSupportsProductsBoolExp>;
-};
-
-
-export type CProductsSupportsProductsBySupportsProductIdAggregateArgs = {
-  filter_input?: InputMaybe<CSupportsProductsFilterInput>;
-};
-
-
-export type CProductsUrlsArgs = {
+export type AProductsUrlsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<ProductUrlsOrderBy>>;
   where?: InputMaybe<ProductUrlsBoolExp>;
 };
 
-export type CProductsAggExp = {
-  __typename?: 'CProductsAggExp';
+export type AProductsAggExp = {
+  __typename?: 'AProductsAggExp';
   _count: Scalars['Int']['output'];
   description: StringAggExp;
   id: StringAggExp;
-  isMainProduct: Int8AggExp;
+  isMainProduct: IntAggExp;
   launchDate: DateAggExp;
   name: StringAggExp;
   productStatusId: StringAggExp;
@@ -1084,80 +1012,78 @@ export type CProductsAggExp = {
   rootId: StringAggExp;
 };
 
-export type CProductsBoolExp = {
-  _and?: InputMaybe<Array<CProductsBoolExp>>;
-  _not?: InputMaybe<CProductsBoolExp>;
-  _or?: InputMaybe<Array<CProductsBoolExp>>;
+export type AProductsBoolExp = {
+  _and?: InputMaybe<Array<AProductsBoolExp>>;
+  _not?: InputMaybe<AProductsBoolExp>;
+  _or?: InputMaybe<Array<AProductsBoolExp>>;
   description?: InputMaybe<StringBoolExp>;
   id?: InputMaybe<StringBoolExp>;
-  isMainProduct?: InputMaybe<Int8BoolExp>;
+  isMainProduct?: InputMaybe<IntBoolExp>;
   launchDate?: InputMaybe<DateBoolExp>;
   name?: InputMaybe<StringBoolExp>;
-  productAssetRelationships?: InputMaybe<CProductAssetRelationshipsBoolExp>;
-  productDeployments?: InputMaybe<CProductDeploymentsBoolExp>;
-  productStatus?: InputMaybe<CProductStatusesBoolExp>;
+  productAssetRelationships?: InputMaybe<AProductAssetRelationshipsBoolExp>;
+  productDeployments?: InputMaybe<AProductDeploymentsBoolExp>;
+  productStatus?: InputMaybe<AProductStatusesBoolExp>;
   productStatusId?: InputMaybe<StringBoolExp>;
-  productType?: InputMaybe<CProductTypesBoolExp>;
+  productType?: InputMaybe<AProductTypesBoolExp>;
   productTypeId?: InputMaybe<StringBoolExp>;
-  root?: InputMaybe<CRootsBoolExp>;
+  root?: InputMaybe<ARootsBoolExp>;
   rootId?: InputMaybe<StringBoolExp>;
-  smartContractDeployments?: InputMaybe<CSmartContractDeploymentsBoolExp>;
-  supportsProducts?: InputMaybe<CSupportsProductsBoolExp>;
-  supportsProductsBySupportsProductId?: InputMaybe<CSupportsProductsBoolExp>;
+  supportsProducts?: InputMaybe<ASupportsProductsBoolExp>;
+  supportsProductsBySupportsProductId?: InputMaybe<ASupportsProductsBoolExp>;
 };
 
-export type CProductsFilterInput = {
+export type AProductsFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CProductsOrderBy>>;
-  where?: InputMaybe<CProductsBoolExp>;
+  order_by?: InputMaybe<Array<AProductsOrderBy>>;
+  where?: InputMaybe<AProductsBoolExp>;
 };
 
-export type CProductsOrderBy = {
+export type AProductsOrderBy = {
   description?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
   isMainProduct?: InputMaybe<OrderBy>;
   launchDate?: InputMaybe<OrderBy>;
   name?: InputMaybe<OrderBy>;
-  productStatus?: InputMaybe<CProductStatusesOrderBy>;
+  productStatus?: InputMaybe<AProductStatusesOrderBy>;
   productStatusId?: InputMaybe<OrderBy>;
-  productType?: InputMaybe<CProductTypesOrderBy>;
+  productType?: InputMaybe<AProductTypesOrderBy>;
   productTypeId?: InputMaybe<OrderBy>;
-  root?: InputMaybe<CRootsOrderBy>;
+  root?: InputMaybe<ARootsOrderBy>;
   rootId?: InputMaybe<OrderBy>;
 };
 
-export type CProfileInfos = {
-  __typename?: 'CProfileInfos';
+export type AProfileInfos = {
+  __typename?: 'AProfileInfos';
   descriptionLong: Scalars['String1']['output'];
   descriptionShort: Scalars['String1']['output'];
   foundingDate?: Maybe<Scalars['Date']['output']>;
   id: Scalars['String1']['output'];
-  logo: Scalars['String1']['output'];
+  logo?: Maybe<Scalars['String1']['output']>;
   name: Scalars['String1']['output'];
-  profileSector?: Maybe<CProfileSectors>;
+  profileSector?: Maybe<AProfileSectors>;
   profileSectorId?: Maybe<Scalars['String1']['output']>;
-  profileStatus?: Maybe<CProfileStatuses>;
+  profileStatus?: Maybe<AProfileStatuses>;
   profileStatusId?: Maybe<Scalars['String1']['output']>;
-  profileType?: Maybe<CProfileTypes>;
+  profileType?: Maybe<AProfileTypes>;
   profileTypeId?: Maybe<Scalars['String1']['output']>;
-  root?: Maybe<CRoots>;
+  root?: Maybe<ARoots>;
   rootId: Scalars['String1']['output'];
   /** Self promotion field */
   tagLine: Scalars['String1']['output'];
   urls?: Maybe<Array<ProfileInfoUrls>>;
 };
 
-
-export type CProfileInfosUrlsArgs = {
+export type AProfileInfosUrlsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<ProfileInfoUrlsOrderBy>>;
   where?: InputMaybe<ProfileInfoUrlsBoolExp>;
 };
 
-export type CProfileInfosAggExp = {
-  __typename?: 'CProfileInfosAggExp';
+export type AProfileInfosAggExp = {
+  __typename?: 'AProfileInfosAggExp';
   _count: Scalars['Int']['output'];
   descriptionLong: StringAggExp;
   descriptionShort: StringAggExp;
@@ -1172,446 +1098,422 @@ export type CProfileInfosAggExp = {
   tagLine: StringAggExp;
 };
 
-export type CProfileInfosBoolExp = {
-  _and?: InputMaybe<Array<CProfileInfosBoolExp>>;
-  _not?: InputMaybe<CProfileInfosBoolExp>;
-  _or?: InputMaybe<Array<CProfileInfosBoolExp>>;
+export type AProfileInfosBoolExp = {
+  _and?: InputMaybe<Array<AProfileInfosBoolExp>>;
+  _not?: InputMaybe<AProfileInfosBoolExp>;
+  _or?: InputMaybe<Array<AProfileInfosBoolExp>>;
   descriptionLong?: InputMaybe<StringBoolExp>;
   descriptionShort?: InputMaybe<StringBoolExp>;
   foundingDate?: InputMaybe<DateBoolExp>;
   id?: InputMaybe<StringBoolExp>;
   logo?: InputMaybe<StringBoolExp>;
   name?: InputMaybe<StringBoolExp>;
-  profileSector?: InputMaybe<CProfileSectorsBoolExp>;
+  profileSector?: InputMaybe<AProfileSectorsBoolExp>;
   profileSectorId?: InputMaybe<StringBoolExp>;
-  profileStatus?: InputMaybe<CProfileStatusesBoolExp>;
+  profileStatus?: InputMaybe<AProfileStatusesBoolExp>;
   profileStatusId?: InputMaybe<StringBoolExp>;
-  profileType?: InputMaybe<CProfileTypesBoolExp>;
+  profileType?: InputMaybe<AProfileTypesBoolExp>;
   profileTypeId?: InputMaybe<StringBoolExp>;
-  root?: InputMaybe<CRootsBoolExp>;
+  root?: InputMaybe<ARootsBoolExp>;
   rootId?: InputMaybe<StringBoolExp>;
   tagLine?: InputMaybe<StringBoolExp>;
 };
 
-export type CProfileInfosFilterInput = {
+export type AProfileInfosFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CProfileInfosOrderBy>>;
-  where?: InputMaybe<CProfileInfosBoolExp>;
+  order_by?: InputMaybe<Array<AProfileInfosOrderBy>>;
+  where?: InputMaybe<AProfileInfosBoolExp>;
 };
 
-export type CProfileInfosOrderBy = {
+export type AProfileInfosOrderBy = {
   descriptionLong?: InputMaybe<OrderBy>;
   descriptionShort?: InputMaybe<OrderBy>;
   foundingDate?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
   logo?: InputMaybe<OrderBy>;
   name?: InputMaybe<OrderBy>;
-  profileSector?: InputMaybe<CProfileSectorsOrderBy>;
+  profileSector?: InputMaybe<AProfileSectorsOrderBy>;
   profileSectorId?: InputMaybe<OrderBy>;
-  profileStatus?: InputMaybe<CProfileStatusesOrderBy>;
+  profileStatus?: InputMaybe<AProfileStatusesOrderBy>;
   profileStatusId?: InputMaybe<OrderBy>;
-  profileType?: InputMaybe<CProfileTypesOrderBy>;
+  profileType?: InputMaybe<AProfileTypesOrderBy>;
   profileTypeId?: InputMaybe<OrderBy>;
-  root?: InputMaybe<CRootsOrderBy>;
+  root?: InputMaybe<ARootsOrderBy>;
   rootId?: InputMaybe<OrderBy>;
   tagLine?: InputMaybe<OrderBy>;
 };
 
-export type CProfileSectors = {
-  __typename?: 'CProfileSectors';
+export type AProfileSectors = {
+  __typename?: 'AProfileSectors';
   definition: Scalars['String1']['output'];
   id: Scalars['String1']['output'];
   name: Scalars['String1']['output'];
-  profileInfos?: Maybe<Array<CProfileInfos>>;
-  profileInfosAggregate: CProfileInfosAggExp;
+  profileInfos?: Maybe<Array<AProfileInfos>>;
+  profileInfosAggregate: AProfileInfosAggExp;
 };
 
-
-export type CProfileSectorsProfileInfosArgs = {
+export type AProfileSectorsProfileInfosArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CProfileInfosOrderBy>>;
-  where?: InputMaybe<CProfileInfosBoolExp>;
+  order_by?: InputMaybe<Array<AProfileInfosOrderBy>>;
+  where?: InputMaybe<AProfileInfosBoolExp>;
 };
 
-
-export type CProfileSectorsProfileInfosAggregateArgs = {
-  filter_input?: InputMaybe<CProfileInfosFilterInput>;
+export type AProfileSectorsProfileInfosAggregateArgs = {
+  filter_input?: InputMaybe<AProfileInfosFilterInput>;
 };
 
-export type CProfileSectorsAggExp = {
-  __typename?: 'CProfileSectorsAggExp';
+export type AProfileSectorsAggExp = {
+  __typename?: 'AProfileSectorsAggExp';
   _count: Scalars['Int']['output'];
   definition: StringAggExp;
   id: StringAggExp;
   name: StringAggExp;
 };
 
-export type CProfileSectorsBoolExp = {
-  _and?: InputMaybe<Array<CProfileSectorsBoolExp>>;
-  _not?: InputMaybe<CProfileSectorsBoolExp>;
-  _or?: InputMaybe<Array<CProfileSectorsBoolExp>>;
+export type AProfileSectorsBoolExp = {
+  _and?: InputMaybe<Array<AProfileSectorsBoolExp>>;
+  _not?: InputMaybe<AProfileSectorsBoolExp>;
+  _or?: InputMaybe<Array<AProfileSectorsBoolExp>>;
   definition?: InputMaybe<StringBoolExp>;
   id?: InputMaybe<StringBoolExp>;
   name?: InputMaybe<StringBoolExp>;
-  profileInfos?: InputMaybe<CProfileInfosBoolExp>;
+  profileInfos?: InputMaybe<AProfileInfosBoolExp>;
 };
 
-export type CProfileSectorsFilterInput = {
+export type AProfileSectorsFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CProfileSectorsOrderBy>>;
-  where?: InputMaybe<CProfileSectorsBoolExp>;
+  order_by?: InputMaybe<Array<AProfileSectorsOrderBy>>;
+  where?: InputMaybe<AProfileSectorsBoolExp>;
 };
 
-export type CProfileSectorsOrderBy = {
+export type AProfileSectorsOrderBy = {
   definition?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
   name?: InputMaybe<OrderBy>;
 };
 
-export type CProfileStatuses = {
-  __typename?: 'CProfileStatuses';
+export type AProfileStatuses = {
+  __typename?: 'AProfileStatuses';
   definition: Scalars['String1']['output'];
   id: Scalars['String1']['output'];
   name: Scalars['String1']['output'];
-  profileInfos?: Maybe<Array<CProfileInfos>>;
-  profileInfosAggregate: CProfileInfosAggExp;
+  profileInfos?: Maybe<Array<AProfileInfos>>;
+  profileInfosAggregate: AProfileInfosAggExp;
 };
 
-
-export type CProfileStatusesProfileInfosArgs = {
+export type AProfileStatusesProfileInfosArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CProfileInfosOrderBy>>;
-  where?: InputMaybe<CProfileInfosBoolExp>;
+  order_by?: InputMaybe<Array<AProfileInfosOrderBy>>;
+  where?: InputMaybe<AProfileInfosBoolExp>;
 };
 
-
-export type CProfileStatusesProfileInfosAggregateArgs = {
-  filter_input?: InputMaybe<CProfileInfosFilterInput>;
+export type AProfileStatusesProfileInfosAggregateArgs = {
+  filter_input?: InputMaybe<AProfileInfosFilterInput>;
 };
 
-export type CProfileStatusesAggExp = {
-  __typename?: 'CProfileStatusesAggExp';
+export type AProfileStatusesAggExp = {
+  __typename?: 'AProfileStatusesAggExp';
   _count: Scalars['Int']['output'];
   definition: StringAggExp;
   id: StringAggExp;
   name: StringAggExp;
 };
 
-export type CProfileStatusesBoolExp = {
-  _and?: InputMaybe<Array<CProfileStatusesBoolExp>>;
-  _not?: InputMaybe<CProfileStatusesBoolExp>;
-  _or?: InputMaybe<Array<CProfileStatusesBoolExp>>;
+export type AProfileStatusesBoolExp = {
+  _and?: InputMaybe<Array<AProfileStatusesBoolExp>>;
+  _not?: InputMaybe<AProfileStatusesBoolExp>;
+  _or?: InputMaybe<Array<AProfileStatusesBoolExp>>;
   definition?: InputMaybe<StringBoolExp>;
   id?: InputMaybe<StringBoolExp>;
   name?: InputMaybe<StringBoolExp>;
-  profileInfos?: InputMaybe<CProfileInfosBoolExp>;
+  profileInfos?: InputMaybe<AProfileInfosBoolExp>;
 };
 
-export type CProfileStatusesFilterInput = {
+export type AProfileStatusesFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CProfileStatusesOrderBy>>;
-  where?: InputMaybe<CProfileStatusesBoolExp>;
+  order_by?: InputMaybe<Array<AProfileStatusesOrderBy>>;
+  where?: InputMaybe<AProfileStatusesBoolExp>;
 };
 
-export type CProfileStatusesOrderBy = {
+export type AProfileStatusesOrderBy = {
   definition?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
   name?: InputMaybe<OrderBy>;
 };
 
 /**   */
-export type CProfileTags = {
-  __typename?: 'CProfileTags';
+export type AProfileTags = {
+  __typename?: 'AProfileTags';
   id: Scalars['String1']['output'];
-  root?: Maybe<CRoots>;
+  root?: Maybe<ARoots>;
   rootId: Scalars['String1']['output'];
-  tag?: Maybe<CTags>;
+  tag?: Maybe<ATags>;
   tagId: Scalars['String1']['output'];
 };
 
-export type CProfileTagsAggExp = {
-  __typename?: 'CProfileTagsAggExp';
+export type AProfileTagsAggExp = {
+  __typename?: 'AProfileTagsAggExp';
   _count: Scalars['Int']['output'];
   id: StringAggExp;
   rootId: StringAggExp;
   tagId: StringAggExp;
 };
 
-export type CProfileTagsBoolExp = {
-  _and?: InputMaybe<Array<CProfileTagsBoolExp>>;
-  _not?: InputMaybe<CProfileTagsBoolExp>;
-  _or?: InputMaybe<Array<CProfileTagsBoolExp>>;
+export type AProfileTagsBoolExp = {
+  _and?: InputMaybe<Array<AProfileTagsBoolExp>>;
+  _not?: InputMaybe<AProfileTagsBoolExp>;
+  _or?: InputMaybe<Array<AProfileTagsBoolExp>>;
   id?: InputMaybe<StringBoolExp>;
-  root?: InputMaybe<CRootsBoolExp>;
+  root?: InputMaybe<ARootsBoolExp>;
   rootId?: InputMaybe<StringBoolExp>;
-  tag?: InputMaybe<CTagsBoolExp>;
+  tag?: InputMaybe<ATagsBoolExp>;
   tagId?: InputMaybe<StringBoolExp>;
 };
 
-export type CProfileTagsFilterInput = {
+export type AProfileTagsFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CProfileTagsOrderBy>>;
-  where?: InputMaybe<CProfileTagsBoolExp>;
+  order_by?: InputMaybe<Array<AProfileTagsOrderBy>>;
+  where?: InputMaybe<AProfileTagsBoolExp>;
 };
 
-export type CProfileTagsOrderBy = {
+export type AProfileTagsOrderBy = {
   id?: InputMaybe<OrderBy>;
-  root?: InputMaybe<CRootsOrderBy>;
+  root?: InputMaybe<ARootsOrderBy>;
   rootId?: InputMaybe<OrderBy>;
-  tag?: InputMaybe<CTagsOrderBy>;
+  tag?: InputMaybe<ATagsOrderBy>;
   tagId?: InputMaybe<OrderBy>;
 };
 
-export type CProfileTypes = {
-  __typename?: 'CProfileTypes';
+export type AProfileTypes = {
+  __typename?: 'AProfileTypes';
   definition: Scalars['String1']['output'];
   id: Scalars['String1']['output'];
   name: Scalars['String1']['output'];
-  profileInfos?: Maybe<Array<CProfileInfos>>;
-  profileInfosAggregate: CProfileInfosAggExp;
+  profileInfos?: Maybe<Array<AProfileInfos>>;
+  profileInfosAggregate: AProfileInfosAggExp;
 };
 
-
-export type CProfileTypesProfileInfosArgs = {
+export type AProfileTypesProfileInfosArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CProfileInfosOrderBy>>;
-  where?: InputMaybe<CProfileInfosBoolExp>;
+  order_by?: InputMaybe<Array<AProfileInfosOrderBy>>;
+  where?: InputMaybe<AProfileInfosBoolExp>;
 };
 
-
-export type CProfileTypesProfileInfosAggregateArgs = {
-  filter_input?: InputMaybe<CProfileInfosFilterInput>;
+export type AProfileTypesProfileInfosAggregateArgs = {
+  filter_input?: InputMaybe<AProfileInfosFilterInput>;
 };
 
-export type CProfileTypesAggExp = {
-  __typename?: 'CProfileTypesAggExp';
+export type AProfileTypesAggExp = {
+  __typename?: 'AProfileTypesAggExp';
   _count: Scalars['Int']['output'];
   definition: StringAggExp;
   id: StringAggExp;
   name: StringAggExp;
 };
 
-export type CProfileTypesBoolExp = {
-  _and?: InputMaybe<Array<CProfileTypesBoolExp>>;
-  _not?: InputMaybe<CProfileTypesBoolExp>;
-  _or?: InputMaybe<Array<CProfileTypesBoolExp>>;
+export type AProfileTypesBoolExp = {
+  _and?: InputMaybe<Array<AProfileTypesBoolExp>>;
+  _not?: InputMaybe<AProfileTypesBoolExp>;
+  _or?: InputMaybe<Array<AProfileTypesBoolExp>>;
   definition?: InputMaybe<StringBoolExp>;
   id?: InputMaybe<StringBoolExp>;
   name?: InputMaybe<StringBoolExp>;
-  profileInfos?: InputMaybe<CProfileInfosBoolExp>;
+  profileInfos?: InputMaybe<AProfileInfosBoolExp>;
 };
 
-export type CProfileTypesFilterInput = {
+export type AProfileTypesFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CProfileTypesOrderBy>>;
-  where?: InputMaybe<CProfileTypesBoolExp>;
+  order_by?: InputMaybe<Array<AProfileTypesOrderBy>>;
+  where?: InputMaybe<AProfileTypesBoolExp>;
 };
 
-export type CProfileTypesOrderBy = {
+export type AProfileTypesOrderBy = {
   definition?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
   name?: InputMaybe<OrderBy>;
 };
 
-export type CRoots = {
-  __typename?: 'CRoots';
-  assets?: Maybe<Array<CAssets>>;
-  assetsAggregate: CAssetsAggExp;
-  entities?: Maybe<Array<CEntities>>;
-  entitiesAggregate: CEntitiesAggExp;
+export type ARoots = {
+  __typename?: 'ARoots';
+  assets?: Maybe<Array<AAssets>>;
+  assetsAggregate: AAssetsAggExp;
+  entities?: Maybe<Array<AEntities>>;
+  entitiesAggregate: AEntitiesAggExp;
   id: Scalars['String1']['output'];
-  products?: Maybe<Array<CProducts>>;
-  productsAggregate: CProductsAggExp;
-  profileInfos?: Maybe<Array<CProfileInfos>>;
-  profileInfosAggregate: CProfileInfosAggExp;
-  profileTags?: Maybe<Array<CProfileTags>>;
-  profileTagsAggregate: CProfileTagsAggExp;
+  products?: Maybe<Array<AProducts>>;
+  productsAggregate: AProductsAggExp;
+  profileInfos?: Maybe<Array<AProfileInfos>>;
+  profileInfosAggregate: AProfileInfosAggExp;
+  profileTags?: Maybe<Array<AProfileTags>>;
+  profileTagsAggregate: AProfileTagsAggExp;
   slug: Scalars['String1']['output'];
-  socials?: Maybe<Array<CSocials>>;
-  socialsAggregate: CSocialsAggExp;
+  socials?: Maybe<Array<ASocials>>;
+  socialsAggregate: ASocialsAggExp;
   urlMain: Scalars['String1']['output'];
 };
 
-
-export type CRootsAssetsArgs = {
+export type ARootsAssetsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CAssetsOrderBy>>;
-  where?: InputMaybe<CAssetsBoolExp>;
+  order_by?: InputMaybe<Array<AAssetsOrderBy>>;
+  where?: InputMaybe<AAssetsBoolExp>;
 };
 
-
-export type CRootsAssetsAggregateArgs = {
-  filter_input?: InputMaybe<CAssetsFilterInput>;
+export type ARootsAssetsAggregateArgs = {
+  filter_input?: InputMaybe<AAssetsFilterInput>;
 };
 
-
-export type CRootsEntitiesArgs = {
+export type ARootsEntitiesArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CEntitiesOrderBy>>;
-  where?: InputMaybe<CEntitiesBoolExp>;
+  order_by?: InputMaybe<Array<AEntitiesOrderBy>>;
+  where?: InputMaybe<AEntitiesBoolExp>;
 };
 
-
-export type CRootsEntitiesAggregateArgs = {
-  filter_input?: InputMaybe<CEntitiesFilterInput>;
+export type ARootsEntitiesAggregateArgs = {
+  filter_input?: InputMaybe<AEntitiesFilterInput>;
 };
 
-
-export type CRootsProductsArgs = {
+export type ARootsProductsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CProductsOrderBy>>;
-  where?: InputMaybe<CProductsBoolExp>;
+  order_by?: InputMaybe<Array<AProductsOrderBy>>;
+  where?: InputMaybe<AProductsBoolExp>;
 };
 
-
-export type CRootsProductsAggregateArgs = {
-  filter_input?: InputMaybe<CProductsFilterInput>;
+export type ARootsProductsAggregateArgs = {
+  filter_input?: InputMaybe<AProductsFilterInput>;
 };
 
-
-export type CRootsProfileInfosArgs = {
+export type ARootsProfileInfosArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CProfileInfosOrderBy>>;
-  where?: InputMaybe<CProfileInfosBoolExp>;
+  order_by?: InputMaybe<Array<AProfileInfosOrderBy>>;
+  where?: InputMaybe<AProfileInfosBoolExp>;
 };
 
-
-export type CRootsProfileInfosAggregateArgs = {
-  filter_input?: InputMaybe<CProfileInfosFilterInput>;
+export type ARootsProfileInfosAggregateArgs = {
+  filter_input?: InputMaybe<AProfileInfosFilterInput>;
 };
 
-
-export type CRootsProfileTagsArgs = {
+export type ARootsProfileTagsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CProfileTagsOrderBy>>;
-  where?: InputMaybe<CProfileTagsBoolExp>;
+  order_by?: InputMaybe<Array<AProfileTagsOrderBy>>;
+  where?: InputMaybe<AProfileTagsBoolExp>;
 };
 
-
-export type CRootsProfileTagsAggregateArgs = {
-  filter_input?: InputMaybe<CProfileTagsFilterInput>;
+export type ARootsProfileTagsAggregateArgs = {
+  filter_input?: InputMaybe<AProfileTagsFilterInput>;
 };
 
-
-export type CRootsSocialsArgs = {
+export type ARootsSocialsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CSocialsOrderBy>>;
-  where?: InputMaybe<CSocialsBoolExp>;
+  order_by?: InputMaybe<Array<ASocialsOrderBy>>;
+  where?: InputMaybe<ASocialsBoolExp>;
 };
 
-
-export type CRootsSocialsAggregateArgs = {
-  filter_input?: InputMaybe<CSocialsFilterInput>;
+export type ARootsSocialsAggregateArgs = {
+  filter_input?: InputMaybe<ASocialsFilterInput>;
 };
 
-export type CRootsAggExp = {
-  __typename?: 'CRootsAggExp';
+export type ARootsAggExp = {
+  __typename?: 'ARootsAggExp';
   _count: Scalars['Int']['output'];
   id: StringAggExp;
   slug: StringAggExp;
   urlMain: StringAggExp;
 };
 
-export type CRootsBoolExp = {
-  _and?: InputMaybe<Array<CRootsBoolExp>>;
-  _not?: InputMaybe<CRootsBoolExp>;
-  _or?: InputMaybe<Array<CRootsBoolExp>>;
-  assets?: InputMaybe<CAssetsBoolExp>;
-  entities?: InputMaybe<CEntitiesBoolExp>;
+export type ARootsBoolExp = {
+  _and?: InputMaybe<Array<ARootsBoolExp>>;
+  _not?: InputMaybe<ARootsBoolExp>;
+  _or?: InputMaybe<Array<ARootsBoolExp>>;
+  assets?: InputMaybe<AAssetsBoolExp>;
+  entities?: InputMaybe<AEntitiesBoolExp>;
   id?: InputMaybe<StringBoolExp>;
-  products?: InputMaybe<CProductsBoolExp>;
-  profileInfos?: InputMaybe<CProfileInfosBoolExp>;
-  profileTags?: InputMaybe<CProfileTagsBoolExp>;
+  products?: InputMaybe<AProductsBoolExp>;
+  profileInfos?: InputMaybe<AProfileInfosBoolExp>;
+  profileTags?: InputMaybe<AProfileTagsBoolExp>;
   slug?: InputMaybe<StringBoolExp>;
-  socials?: InputMaybe<CSocialsBoolExp>;
+  socials?: InputMaybe<ASocialsBoolExp>;
   urlMain?: InputMaybe<StringBoolExp>;
 };
 
-export type CRootsFilterInput = {
+export type ARootsFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CRootsOrderBy>>;
-  where?: InputMaybe<CRootsBoolExp>;
+  order_by?: InputMaybe<Array<ARootsOrderBy>>;
+  where?: InputMaybe<ARootsBoolExp>;
 };
 
-export type CRootsOrderBy = {
+export type ARootsOrderBy = {
   id?: InputMaybe<OrderBy>;
   slug?: InputMaybe<OrderBy>;
   urlMain?: InputMaybe<OrderBy>;
 };
 
-export type CSmartContractDeployments = {
-  __typename?: 'CSmartContractDeployments';
-  assetDeployments?: Maybe<Array<CAssetDeployments>>;
-  assetDeploymentsAggregate: CAssetDeploymentsAggExp;
-  assetStandard?: Maybe<CAssetStandards>;
+export type ASmartContractDeployments = {
+  __typename?: 'ASmartContractDeployments';
+  assetDeployments?: Maybe<Array<AAssetDeployments>>;
+  assetDeploymentsAggregate: AssetDeploymentsAggExp;
+  assetStandard?: Maybe<AAssetStandards>;
   deployedOnId?: Maybe<Scalars['String1']['output']>;
-  deployedOnProduct?: Maybe<CProducts>;
-  deploymentType?: Maybe<CDeploymentTypes>;
+  deployedOnProduct?: Maybe<AProducts>;
+  deploymentType?: Maybe<ADeploymentTypes>;
   deploymentTypeId?: Maybe<Scalars['String1']['output']>;
   id: Scalars['String1']['output'];
   isOfStandardId?: Maybe<Scalars['String1']['output']>;
-  productDeployments?: Maybe<Array<CProductDeployments>>;
-  productDeploymentsAggregate: CProductDeploymentsAggExp;
-  smartContracts?: Maybe<Array<CSmartContracts>>;
-  smartContractsAggregate: CSmartContractsAggExp;
+  productDeployments?: Maybe<Array<AProductDeployments>>;
+  productDeploymentsAggregate: AProductDeploymentsAggExp;
+  smartContracts?: Maybe<Array<ASmartContracts>>;
+  smartContractsAggregate: ASmartContractsAggExp;
 };
 
-
-export type CSmartContractDeploymentsAssetDeploymentsArgs = {
+export type ASmartContractDeploymentsAssetDeploymentsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CAssetDeploymentsOrderBy>>;
-  where?: InputMaybe<AssetDeploymentsBoolExp>;
+  order_by?: InputMaybe<Array<AAssetDeploymentsOrderBy>>;
+  where?: InputMaybe<AAssetDeploymentsBoolExp>;
 };
 
-
-export type CSmartContractDeploymentsAssetDeploymentsAggregateArgs = {
-  filter_input?: InputMaybe<CAssetDeploymentsFilterInput>;
+export type ASmartContractDeploymentsAssetDeploymentsAggregateArgs = {
+  filter_input?: InputMaybe<AAssetDeploymentsFilterInput>;
 };
 
-
-export type CSmartContractDeploymentsProductDeploymentsArgs = {
+export type ASmartContractDeploymentsProductDeploymentsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CProductDeploymentsOrderBy>>;
-  where?: InputMaybe<CProductDeploymentsBoolExp>;
+  order_by?: InputMaybe<Array<AProductDeploymentsOrderBy>>;
+  where?: InputMaybe<AProductDeploymentsBoolExp>;
 };
 
-
-export type CSmartContractDeploymentsProductDeploymentsAggregateArgs = {
-  filter_input?: InputMaybe<CProductDeploymentsFilterInput>;
+export type ASmartContractDeploymentsProductDeploymentsAggregateArgs = {
+  filter_input?: InputMaybe<AProductDeploymentsFilterInput>;
 };
 
-
-export type CSmartContractDeploymentsSmartContractsArgs = {
+export type ASmartContractDeploymentsSmartContractsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CSmartContractsOrderBy>>;
-  where?: InputMaybe<CSmartContractsBoolExp>;
+  order_by?: InputMaybe<Array<ASmartContractsOrderBy>>;
+  where?: InputMaybe<ASmartContractsBoolExp>;
 };
 
-
-export type CSmartContractDeploymentsSmartContractsAggregateArgs = {
-  filter_input?: InputMaybe<CSmartContractsFilterInput>;
+export type ASmartContractDeploymentsSmartContractsAggregateArgs = {
+  filter_input?: InputMaybe<ASmartContractsFilterInput>;
 };
 
-export type CSmartContractDeploymentsAggExp = {
-  __typename?: 'CSmartContractDeploymentsAggExp';
+export type ASmartContractDeploymentsAggExp = {
+  __typename?: 'ASmartContractDeploymentsAggExp';
   _count: Scalars['Int']['output'];
   deployedOnId: StringAggExp;
   deploymentTypeId: StringAggExp;
@@ -1619,51 +1521,51 @@ export type CSmartContractDeploymentsAggExp = {
   isOfStandardId: StringAggExp;
 };
 
-export type CSmartContractDeploymentsBoolExp = {
-  _and?: InputMaybe<Array<CSmartContractDeploymentsBoolExp>>;
-  _not?: InputMaybe<CSmartContractDeploymentsBoolExp>;
-  _or?: InputMaybe<Array<CSmartContractDeploymentsBoolExp>>;
-  assetDeployments?: InputMaybe<AssetDeploymentsBoolExp>;
-  assetStandard?: InputMaybe<CAssetStandardsBoolExp>;
+export type ASmartContractDeploymentsBoolExp = {
+  _and?: InputMaybe<Array<ASmartContractDeploymentsBoolExp>>;
+  _not?: InputMaybe<ASmartContractDeploymentsBoolExp>;
+  _or?: InputMaybe<Array<ASmartContractDeploymentsBoolExp>>;
+  assetDeployments?: InputMaybe<AAssetDeploymentsBoolExp>;
+  assetStandard?: InputMaybe<AAssetStandardsBoolExp>;
   deployedOnId?: InputMaybe<StringBoolExp>;
-  deployedOnProduct?: InputMaybe<CProductsBoolExp>;
-  deploymentType?: InputMaybe<CDeploymentTypesBoolExp>;
+  deployedOnProduct?: InputMaybe<AProductsBoolExp>;
+  deploymentType?: InputMaybe<ADeploymentTypesBoolExp>;
   deploymentTypeId?: InputMaybe<StringBoolExp>;
   id?: InputMaybe<StringBoolExp>;
   isOfStandardId?: InputMaybe<StringBoolExp>;
-  productDeployments?: InputMaybe<CProductDeploymentsBoolExp>;
-  smartContracts?: InputMaybe<CSmartContractsBoolExp>;
+  productDeployments?: InputMaybe<AProductDeploymentsBoolExp>;
+  smartContracts?: InputMaybe<ASmartContractsBoolExp>;
 };
 
-export type CSmartContractDeploymentsFilterInput = {
+export type ASmartContractDeploymentsFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CSmartContractDeploymentsOrderBy>>;
-  where?: InputMaybe<CSmartContractDeploymentsBoolExp>;
+  order_by?: InputMaybe<Array<ASmartContractDeploymentsOrderBy>>;
+  where?: InputMaybe<ASmartContractDeploymentsBoolExp>;
 };
 
-export type CSmartContractDeploymentsOrderBy = {
-  assetStandard?: InputMaybe<CAssetStandardsOrderBy>;
+export type ASmartContractDeploymentsOrderBy = {
+  assetStandard?: InputMaybe<AAssetStandardsOrderBy>;
   deployedOnId?: InputMaybe<OrderBy>;
-  deployedOnProduct?: InputMaybe<CProductsOrderBy>;
-  deploymentType?: InputMaybe<CDeploymentTypesOrderBy>;
+  deployedOnProduct?: InputMaybe<AProductsOrderBy>;
+  deploymentType?: InputMaybe<ADeploymentTypesOrderBy>;
   deploymentTypeId?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
   isOfStandardId?: InputMaybe<OrderBy>;
 };
 
-export type CSmartContracts = {
-  __typename?: 'CSmartContracts';
+export type ASmartContracts = {
+  __typename?: 'ASmartContracts';
   address: Scalars['String1']['output'];
   deploymentDate?: Maybe<Scalars['Date']['output']>;
   deploymentId?: Maybe<Scalars['String1']['output']>;
   id: Scalars['String1']['output'];
   name: Scalars['String1']['output'];
-  smartContractDeployment?: Maybe<CSmartContractDeployments>;
+  smartContractDeployment?: Maybe<ASmartContractDeployments>;
 };
 
-export type CSmartContractsAggExp = {
-  __typename?: 'CSmartContractsAggExp';
+export type ASmartContractsAggExp = {
+  __typename?: 'ASmartContractsAggExp';
   _count: Scalars['Int']['output'];
   address: StringAggExp;
   deploymentDate: DateAggExp;
@@ -1672,108 +1574,105 @@ export type CSmartContractsAggExp = {
   name: StringAggExp;
 };
 
-export type CSmartContractsBoolExp = {
-  _and?: InputMaybe<Array<CSmartContractsBoolExp>>;
-  _not?: InputMaybe<CSmartContractsBoolExp>;
-  _or?: InputMaybe<Array<CSmartContractsBoolExp>>;
+export type ASmartContractsBoolExp = {
+  _and?: InputMaybe<Array<ASmartContractsBoolExp>>;
+  _not?: InputMaybe<ASmartContractsBoolExp>;
+  _or?: InputMaybe<Array<ASmartContractsBoolExp>>;
   address?: InputMaybe<StringBoolExp>;
   deploymentDate?: InputMaybe<DateBoolExp>;
   deploymentId?: InputMaybe<StringBoolExp>;
   id?: InputMaybe<StringBoolExp>;
   name?: InputMaybe<StringBoolExp>;
-  smartContractDeployment?: InputMaybe<CSmartContractDeploymentsBoolExp>;
+  smartContractDeployment?: InputMaybe<ASmartContractDeploymentsBoolExp>;
 };
 
-export type CSmartContractsFilterInput = {
+export type ASmartContractsFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CSmartContractsOrderBy>>;
-  where?: InputMaybe<CSmartContractsBoolExp>;
+  order_by?: InputMaybe<Array<ASmartContractsOrderBy>>;
+  where?: InputMaybe<ASmartContractsBoolExp>;
 };
 
-export type CSmartContractsOrderBy = {
+export type ASmartContractsOrderBy = {
   address?: InputMaybe<OrderBy>;
   deploymentDate?: InputMaybe<OrderBy>;
   deploymentId?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
   name?: InputMaybe<OrderBy>;
-  smartContractDeployment?: InputMaybe<CSmartContractDeploymentsOrderBy>;
+  smartContractDeployment?: InputMaybe<ASmartContractDeploymentsOrderBy>;
 };
 
-export type CSocialTypes = {
-  __typename?: 'CSocialTypes';
+export type ASocialTypes = {
+  __typename?: 'ASocialTypes';
   definition: Scalars['String1']['output'];
   id: Scalars['String1']['output'];
   name: Scalars['String1']['output'];
-  socials?: Maybe<Array<CSocials>>;
-  socialsAggregate: CSocialsAggExp;
+  socials?: Maybe<Array<ASocials>>;
+  socialsAggregate: ASocialsAggExp;
 };
 
-
-export type CSocialTypesSocialsArgs = {
+export type ASocialTypesSocialsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CSocialsOrderBy>>;
-  where?: InputMaybe<CSocialsBoolExp>;
+  order_by?: InputMaybe<Array<ASocialsOrderBy>>;
+  where?: InputMaybe<ASocialsBoolExp>;
 };
 
-
-export type CSocialTypesSocialsAggregateArgs = {
-  filter_input?: InputMaybe<CSocialsFilterInput>;
+export type ASocialTypesSocialsAggregateArgs = {
+  filter_input?: InputMaybe<ASocialsFilterInput>;
 };
 
-export type CSocialTypesAggExp = {
-  __typename?: 'CSocialTypesAggExp';
+export type ASocialTypesAggExp = {
+  __typename?: 'ASocialTypesAggExp';
   _count: Scalars['Int']['output'];
   definition: StringAggExp;
   id: StringAggExp;
   name: StringAggExp;
 };
 
-export type CSocialTypesBoolExp = {
-  _and?: InputMaybe<Array<CSocialTypesBoolExp>>;
-  _not?: InputMaybe<CSocialTypesBoolExp>;
-  _or?: InputMaybe<Array<CSocialTypesBoolExp>>;
+export type ASocialTypesBoolExp = {
+  _and?: InputMaybe<Array<ASocialTypesBoolExp>>;
+  _not?: InputMaybe<ASocialTypesBoolExp>;
+  _or?: InputMaybe<Array<ASocialTypesBoolExp>>;
   definition?: InputMaybe<StringBoolExp>;
   id?: InputMaybe<StringBoolExp>;
   name?: InputMaybe<StringBoolExp>;
-  socials?: InputMaybe<CSocialsBoolExp>;
+  socials?: InputMaybe<ASocialsBoolExp>;
 };
 
-export type CSocialTypesFilterInput = {
+export type ASocialTypesFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CSocialTypesOrderBy>>;
-  where?: InputMaybe<CSocialTypesBoolExp>;
+  order_by?: InputMaybe<Array<ASocialTypesOrderBy>>;
+  where?: InputMaybe<ASocialTypesBoolExp>;
 };
 
-export type CSocialTypesOrderBy = {
+export type ASocialTypesOrderBy = {
   definition?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
   name?: InputMaybe<OrderBy>;
 };
 
-export type CSocials = {
-  __typename?: 'CSocials';
+export type ASocials = {
+  __typename?: 'ASocials';
   id: Scalars['String1']['output'];
   name: Scalars['String1']['output'];
-  root?: Maybe<CRoots>;
+  root?: Maybe<ARoots>;
   rootId: Scalars['String1']['output'];
-  socialType?: Maybe<CSocialTypes>;
+  socialType?: Maybe<ASocialTypes>;
   socialTypeId?: Maybe<Scalars['String1']['output']>;
   urls?: Maybe<Array<SocialUrls>>;
 };
 
-
-export type CSocialsUrlsArgs = {
+export type ASocialsUrlsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<SocialUrlsOrderBy>>;
   where?: InputMaybe<SocialUrlsBoolExp>;
 };
 
-export type CSocialsAggExp = {
-  __typename?: 'CSocialsAggExp';
+export type ASocialsAggExp = {
+  __typename?: 'ASocialsAggExp';
   _count: Scalars['Int']['output'];
   id: StringAggExp;
   name: StringAggExp;
@@ -1781,157 +1680,153 @@ export type CSocialsAggExp = {
   socialTypeId: StringAggExp;
 };
 
-export type CSocialsBoolExp = {
-  _and?: InputMaybe<Array<CSocialsBoolExp>>;
-  _not?: InputMaybe<CSocialsBoolExp>;
-  _or?: InputMaybe<Array<CSocialsBoolExp>>;
+export type ASocialsBoolExp = {
+  _and?: InputMaybe<Array<ASocialsBoolExp>>;
+  _not?: InputMaybe<ASocialsBoolExp>;
+  _or?: InputMaybe<Array<ASocialsBoolExp>>;
   id?: InputMaybe<StringBoolExp>;
   name?: InputMaybe<StringBoolExp>;
-  root?: InputMaybe<CRootsBoolExp>;
+  root?: InputMaybe<ARootsBoolExp>;
   rootId?: InputMaybe<StringBoolExp>;
-  socialType?: InputMaybe<CSocialTypesBoolExp>;
+  socialType?: InputMaybe<ASocialTypesBoolExp>;
   socialTypeId?: InputMaybe<StringBoolExp>;
 };
 
-export type CSocialsFilterInput = {
+export type ASocialsFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CSocialsOrderBy>>;
-  where?: InputMaybe<CSocialsBoolExp>;
+  order_by?: InputMaybe<Array<ASocialsOrderBy>>;
+  where?: InputMaybe<ASocialsBoolExp>;
 };
 
-export type CSocialsOrderBy = {
+export type ASocialsOrderBy = {
   id?: InputMaybe<OrderBy>;
   name?: InputMaybe<OrderBy>;
-  root?: InputMaybe<CRootsOrderBy>;
+  root?: InputMaybe<ARootsOrderBy>;
   rootId?: InputMaybe<OrderBy>;
-  socialType?: InputMaybe<CSocialTypesOrderBy>;
+  socialType?: InputMaybe<ASocialTypesOrderBy>;
   socialTypeId?: InputMaybe<OrderBy>;
 };
 
 /** Table mapping product support relationships */
-export type CSupportsProducts = {
-  __typename?: 'CSupportsProducts';
+export type ASupportsProducts = {
+  __typename?: 'ASupportsProducts';
   id: Scalars['String1']['output'];
-  product?: Maybe<CProducts>;
+  product?: Maybe<AProducts>;
   productId: Scalars['String1']['output'];
-  supportsProduct?: Maybe<CProducts>;
+  supportsProduct?: Maybe<AProducts>;
   supportsProductId: Scalars['String1']['output'];
 };
 
-export type CSupportsProductsAggExp = {
-  __typename?: 'CSupportsProductsAggExp';
+export type ASupportsProductsAggExp = {
+  __typename?: 'ASupportsProductsAggExp';
   _count: Scalars['Int']['output'];
   id: StringAggExp;
   productId: StringAggExp;
   supportsProductId: StringAggExp;
 };
 
-export type CSupportsProductsBoolExp = {
-  _and?: InputMaybe<Array<CSupportsProductsBoolExp>>;
-  _not?: InputMaybe<CSupportsProductsBoolExp>;
-  _or?: InputMaybe<Array<CSupportsProductsBoolExp>>;
+export type ASupportsProductsBoolExp = {
+  _and?: InputMaybe<Array<ASupportsProductsBoolExp>>;
+  _not?: InputMaybe<ASupportsProductsBoolExp>;
+  _or?: InputMaybe<Array<ASupportsProductsBoolExp>>;
   id?: InputMaybe<StringBoolExp>;
-  product?: InputMaybe<CProductsBoolExp>;
+  product?: InputMaybe<AProductsBoolExp>;
   productId?: InputMaybe<StringBoolExp>;
-  supportsProduct?: InputMaybe<CProductsBoolExp>;
+  supportsProduct?: InputMaybe<AProductsBoolExp>;
   supportsProductId?: InputMaybe<StringBoolExp>;
 };
 
-export type CSupportsProductsFilterInput = {
+export type ASupportsProductsFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CSupportsProductsOrderBy>>;
-  where?: InputMaybe<CSupportsProductsBoolExp>;
+  order_by?: InputMaybe<Array<ASupportsProductsOrderBy>>;
+  where?: InputMaybe<ASupportsProductsBoolExp>;
 };
 
-export type CSupportsProductsOrderBy = {
+export type ASupportsProductsOrderBy = {
   id?: InputMaybe<OrderBy>;
-  product?: InputMaybe<CProductsOrderBy>;
+  product?: InputMaybe<AProductsOrderBy>;
   productId?: InputMaybe<OrderBy>;
-  supportsProduct?: InputMaybe<CProductsOrderBy>;
+  supportsProduct?: InputMaybe<AProductsOrderBy>;
   supportsProductId?: InputMaybe<OrderBy>;
 };
 
-export type CTagTypes = {
-  __typename?: 'CTagTypes';
+export type ATagTypes = {
+  __typename?: 'ATagTypes';
   definition: Scalars['String1']['output'];
   id: Scalars['String1']['output'];
   name: Scalars['String1']['output'];
-  tags?: Maybe<Array<CTags>>;
-  tagsAggregate: CTagsAggExp;
+  tags?: Maybe<Array<ATags>>;
+  tagsAggregate: ATagsAggExp;
 };
 
-
-export type CTagTypesTagsArgs = {
+export type ATagTypesTagsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CTagsOrderBy>>;
-  where?: InputMaybe<CTagsBoolExp>;
+  order_by?: InputMaybe<Array<ATagsOrderBy>>;
+  where?: InputMaybe<ATagsBoolExp>;
 };
 
-
-export type CTagTypesTagsAggregateArgs = {
-  filter_input?: InputMaybe<CTagsFilterInput>;
+export type ATagTypesTagsAggregateArgs = {
+  filter_input?: InputMaybe<ATagsFilterInput>;
 };
 
-export type CTagTypesAggExp = {
-  __typename?: 'CTagTypesAggExp';
+export type ATagTypesAggExp = {
+  __typename?: 'ATagTypesAggExp';
   _count: Scalars['Int']['output'];
   definition: StringAggExp;
   id: StringAggExp;
   name: StringAggExp;
 };
 
-export type CTagTypesBoolExp = {
-  _and?: InputMaybe<Array<CTagTypesBoolExp>>;
-  _not?: InputMaybe<CTagTypesBoolExp>;
-  _or?: InputMaybe<Array<CTagTypesBoolExp>>;
+export type ATagTypesBoolExp = {
+  _and?: InputMaybe<Array<ATagTypesBoolExp>>;
+  _not?: InputMaybe<ATagTypesBoolExp>;
+  _or?: InputMaybe<Array<ATagTypesBoolExp>>;
   definition?: InputMaybe<StringBoolExp>;
   id?: InputMaybe<StringBoolExp>;
   name?: InputMaybe<StringBoolExp>;
-  tags?: InputMaybe<CTagsBoolExp>;
+  tags?: InputMaybe<ATagsBoolExp>;
 };
 
-export type CTagTypesFilterInput = {
+export type ATagTypesFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CTagTypesOrderBy>>;
-  where?: InputMaybe<CTagTypesBoolExp>;
+  order_by?: InputMaybe<Array<ATagTypesOrderBy>>;
+  where?: InputMaybe<ATagTypesBoolExp>;
 };
 
-export type CTagTypesOrderBy = {
+export type ATagTypesOrderBy = {
   definition?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
   name?: InputMaybe<OrderBy>;
 };
 
-export type CTags = {
-  __typename?: 'CTags';
+export type ATags = {
+  __typename?: 'ATags';
   description: Scalars['String1']['output'];
   id: Scalars['String1']['output'];
   name: Scalars['String1']['output'];
-  profileTags?: Maybe<Array<CProfileTags>>;
-  profileTagsAggregate: CProfileTagsAggExp;
-  tagType?: Maybe<CTagTypes>;
+  profileTags?: Maybe<Array<AProfileTags>>;
+  profileTagsAggregate: AProfileTagsAggExp;
+  tagType?: Maybe<ATagTypes>;
   tagTypeId?: Maybe<Scalars['String1']['output']>;
 };
 
-
-export type CTagsProfileTagsArgs = {
+export type ATagsProfileTagsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CProfileTagsOrderBy>>;
-  where?: InputMaybe<CProfileTagsBoolExp>;
+  order_by?: InputMaybe<Array<AProfileTagsOrderBy>>;
+  where?: InputMaybe<AProfileTagsBoolExp>;
 };
 
-
-export type CTagsProfileTagsAggregateArgs = {
-  filter_input?: InputMaybe<CProfileTagsFilterInput>;
+export type ATagsProfileTagsAggregateArgs = {
+  filter_input?: InputMaybe<AProfileTagsFilterInput>;
 };
 
-export type CTagsAggExp = {
-  __typename?: 'CTagsAggExp';
+export type ATagsAggExp = {
+  __typename?: 'ATagsAggExp';
   _count: Scalars['Int']['output'];
   description: StringAggExp;
   id: StringAggExp;
@@ -1939,99 +1834,97 @@ export type CTagsAggExp = {
   tagTypeId: StringAggExp;
 };
 
-export type CTagsBoolExp = {
-  _and?: InputMaybe<Array<CTagsBoolExp>>;
-  _not?: InputMaybe<CTagsBoolExp>;
-  _or?: InputMaybe<Array<CTagsBoolExp>>;
+export type ATagsBoolExp = {
+  _and?: InputMaybe<Array<ATagsBoolExp>>;
+  _not?: InputMaybe<ATagsBoolExp>;
+  _or?: InputMaybe<Array<ATagsBoolExp>>;
   description?: InputMaybe<StringBoolExp>;
   id?: InputMaybe<StringBoolExp>;
   name?: InputMaybe<StringBoolExp>;
-  profileTags?: InputMaybe<CProfileTagsBoolExp>;
-  tagType?: InputMaybe<CTagTypesBoolExp>;
+  profileTags?: InputMaybe<AProfileTagsBoolExp>;
+  tagType?: InputMaybe<ATagTypesBoolExp>;
   tagTypeId?: InputMaybe<StringBoolExp>;
 };
 
-export type CTagsFilterInput = {
+export type ATagsFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CTagsOrderBy>>;
-  where?: InputMaybe<CTagsBoolExp>;
+  order_by?: InputMaybe<Array<ATagsOrderBy>>;
+  where?: InputMaybe<ATagsBoolExp>;
 };
 
-export type CTagsOrderBy = {
+export type ATagsOrderBy = {
   description?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
   name?: InputMaybe<OrderBy>;
-  tagType?: InputMaybe<CTagTypesOrderBy>;
+  tagType?: InputMaybe<ATagTypesOrderBy>;
   tagTypeId?: InputMaybe<OrderBy>;
 };
 
-export type CUrlTypes = {
-  __typename?: 'CUrlTypes';
+export type AUrlTypes = {
+  __typename?: 'AUrlTypes';
   definition: Scalars['String1']['output'];
   id: Scalars['String1']['output'];
   name: Scalars['String1']['output'];
-  urls?: Maybe<Array<CUrls>>;
-  urlsAggregate: CUrlsAggExp;
+  urls?: Maybe<Array<AUrls>>;
+  urlsAggregate: AUrlsAggExp;
 };
 
-
-export type CUrlTypesUrlsArgs = {
+export type AUrlTypesUrlsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CUrlsOrderBy>>;
-  where?: InputMaybe<CUrlsBoolExp>;
+  order_by?: InputMaybe<Array<AUrlsOrderBy>>;
+  where?: InputMaybe<AUrlsBoolExp>;
 };
 
-
-export type CUrlTypesUrlsAggregateArgs = {
-  filter_input?: InputMaybe<CUrlsFilterInput>;
+export type AUrlTypesUrlsAggregateArgs = {
+  filter_input?: InputMaybe<AUrlsFilterInput>;
 };
 
-export type CUrlTypesAggExp = {
-  __typename?: 'CUrlTypesAggExp';
+export type AUrlTypesAggExp = {
+  __typename?: 'AUrlTypesAggExp';
   _count: Scalars['Int']['output'];
   definition: StringAggExp;
   id: StringAggExp;
   name: StringAggExp;
 };
 
-export type CUrlTypesBoolExp = {
-  _and?: InputMaybe<Array<CUrlTypesBoolExp>>;
-  _not?: InputMaybe<CUrlTypesBoolExp>;
-  _or?: InputMaybe<Array<CUrlTypesBoolExp>>;
+export type AUrlTypesBoolExp = {
+  _and?: InputMaybe<Array<AUrlTypesBoolExp>>;
+  _not?: InputMaybe<AUrlTypesBoolExp>;
+  _or?: InputMaybe<Array<AUrlTypesBoolExp>>;
   definition?: InputMaybe<StringBoolExp>;
   id?: InputMaybe<StringBoolExp>;
   name?: InputMaybe<StringBoolExp>;
-  urls?: InputMaybe<CUrlsBoolExp>;
+  urls?: InputMaybe<AUrlsBoolExp>;
 };
 
-export type CUrlTypesFilterInput = {
+export type AUrlTypesFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CUrlTypesOrderBy>>;
-  where?: InputMaybe<CUrlTypesBoolExp>;
+  order_by?: InputMaybe<Array<AUrlTypesOrderBy>>;
+  where?: InputMaybe<AUrlTypesBoolExp>;
 };
 
-export type CUrlTypesOrderBy = {
+export type AUrlTypesOrderBy = {
   definition?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
   name?: InputMaybe<OrderBy>;
 };
 
-export type CUrls = {
-  __typename?: 'CUrls';
-  coreTableName?: Maybe<CCoreTableNames>;
+export type AUrls = {
+  __typename?: 'AUrls';
+  coreTableName?: Maybe<ACoreTableNames>;
   id: Scalars['String1']['output'];
   rowId: Scalars['String1']['output'];
   tableId: Scalars['String1']['output'];
   url: Scalars['String1']['output'];
-  urlType?: Maybe<CUrlTypes>;
+  urlType?: Maybe<AUrlTypes>;
   urlTypeId?: Maybe<Scalars['String1']['output']>;
 };
 
-export type CUrlsAggExp = {
-  __typename?: 'CUrlsAggExp';
+export type AUrlsAggExp = {
+  __typename?: 'AUrlsAggExp';
   _count: Scalars['Int']['output'];
   id: StringAggExp;
   rowId: StringAggExp;
@@ -2040,33 +1933,64 @@ export type CUrlsAggExp = {
   urlTypeId: StringAggExp;
 };
 
-export type CUrlsBoolExp = {
-  _and?: InputMaybe<Array<CUrlsBoolExp>>;
-  _not?: InputMaybe<CUrlsBoolExp>;
-  _or?: InputMaybe<Array<CUrlsBoolExp>>;
-  coreTableName?: InputMaybe<CCoreTableNamesBoolExp>;
+export type AUrlsBoolExp = {
+  _and?: InputMaybe<Array<AUrlsBoolExp>>;
+  _not?: InputMaybe<AUrlsBoolExp>;
+  _or?: InputMaybe<Array<AUrlsBoolExp>>;
+  coreTableName?: InputMaybe<ACoreTableNamesBoolExp>;
   id?: InputMaybe<StringBoolExp>;
   rowId?: InputMaybe<StringBoolExp>;
   tableId?: InputMaybe<StringBoolExp>;
   url?: InputMaybe<StringBoolExp>;
-  urlType?: InputMaybe<CUrlTypesBoolExp>;
+  urlType?: InputMaybe<AUrlTypesBoolExp>;
   urlTypeId?: InputMaybe<StringBoolExp>;
 };
 
-export type CUrlsFilterInput = {
+export type AUrlsFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CUrlsOrderBy>>;
-  where?: InputMaybe<CUrlsBoolExp>;
+  order_by?: InputMaybe<Array<AUrlsOrderBy>>;
+  where?: InputMaybe<AUrlsBoolExp>;
 };
 
-export type CUrlsOrderBy = {
-  coreTableName?: InputMaybe<CCoreTableNamesOrderBy>;
+export type AUrlsOrderBy = {
+  coreTableName?: InputMaybe<ACoreTableNamesOrderBy>;
   id?: InputMaybe<OrderBy>;
   rowId?: InputMaybe<OrderBy>;
   tableId?: InputMaybe<OrderBy>;
   url?: InputMaybe<OrderBy>;
-  urlType?: InputMaybe<CUrlTypesOrderBy>;
+  urlType?: InputMaybe<AUrlTypesOrderBy>;
+  urlTypeId?: InputMaybe<OrderBy>;
+};
+
+export type AssetUrls = {
+  __typename?: 'AssetUrls';
+  id: Scalars['String1']['output'];
+  rowId: Scalars['String1']['output'];
+  tableId: Scalars['String1']['output'];
+  url: Scalars['String1']['output'];
+  urlType?: Maybe<AUrlTypes>;
+  urlTypeId: Scalars['String1']['output'];
+};
+
+export type AssetUrlsBoolExp = {
+  _and?: InputMaybe<Array<AssetUrlsBoolExp>>;
+  _not?: InputMaybe<AssetUrlsBoolExp>;
+  _or?: InputMaybe<Array<AssetUrlsBoolExp>>;
+  id?: InputMaybe<StringBoolExp>;
+  rowId?: InputMaybe<StringBoolExp>;
+  tableId?: InputMaybe<StringBoolExp>;
+  url?: InputMaybe<StringBoolExp>;
+  urlType?: InputMaybe<AUrlTypesBoolExp>;
+  urlTypeId?: InputMaybe<StringBoolExp>;
+};
+
+export type AssetUrlsOrderBy = {
+  id?: InputMaybe<OrderBy>;
+  rowId?: InputMaybe<OrderBy>;
+  tableId?: InputMaybe<OrderBy>;
+  url?: InputMaybe<OrderBy>;
+  urlType?: InputMaybe<AUrlTypesOrderBy>;
   urlTypeId?: InputMaybe<OrderBy>;
 };
 
@@ -2088,12 +2012,12 @@ export type DateBoolExp = {
 
 export type EntityUrls = {
   __typename?: 'EntityUrls';
-  id?: Maybe<Scalars['String1']['output']>;
-  rowId?: Maybe<Scalars['String1']['output']>;
-  tableId?: Maybe<Scalars['String1']['output']>;
-  url?: Maybe<Scalars['String1']['output']>;
-  urlType?: Maybe<CUrlTypes>;
-  urlTypeId?: Maybe<Scalars['String1']['output']>;
+  id: Scalars['String1']['output'];
+  rowId: Scalars['String1']['output'];
+  tableId: Scalars['String1']['output'];
+  url: Scalars['String1']['output'];
+  urlType?: Maybe<AUrlTypes>;
+  urlTypeId: Scalars['String1']['output'];
 };
 
 export type EntityUrlsBoolExp = {
@@ -2104,7 +2028,7 @@ export type EntityUrlsBoolExp = {
   rowId?: InputMaybe<StringBoolExp>;
   tableId?: InputMaybe<StringBoolExp>;
   url?: InputMaybe<StringBoolExp>;
-  urlType?: InputMaybe<CUrlTypesBoolExp>;
+  urlType?: InputMaybe<AUrlTypesBoolExp>;
   urlTypeId?: InputMaybe<StringBoolExp>;
 };
 
@@ -2113,29 +2037,33 @@ export type EntityUrlsOrderBy = {
   rowId?: InputMaybe<OrderBy>;
   tableId?: InputMaybe<OrderBy>;
   url?: InputMaybe<OrderBy>;
-  urlType?: InputMaybe<CUrlTypesOrderBy>;
+  urlType?: InputMaybe<AUrlTypesOrderBy>;
   urlTypeId?: InputMaybe<OrderBy>;
 };
 
-export type Int8AggExp = {
-  __typename?: 'Int8AggExp';
+export type IntAggExp = {
+  __typename?: 'IntAggExp';
   _count: Scalars['Int']['output'];
   _count_distinct: Scalars['Int']['output'];
-  avg: Scalars['Float64']['output'];
-  count: Scalars['Int64']['output'];
-  max: Scalars['Int8']['output'];
-  min: Scalars['Int8']['output'];
-  sum: Scalars['Int64']['output'];
+  avg: Scalars['Float1']['output'];
+  count: Scalars['Int1']['output'];
+  max: Scalars['Int1']['output'];
+  min: Scalars['Int1']['output'];
+  stddev_pop: Scalars['Float1']['output'];
+  stddev_samp: Scalars['Float1']['output'];
+  sum: Scalars['Int1']['output'];
+  var_pop: Scalars['Float1']['output'];
+  var_samp: Scalars['Float1']['output'];
 };
 
-export type Int8BoolExp = {
-  _eq?: InputMaybe<Scalars['Int8']['input']>;
-  _gt?: InputMaybe<Scalars['Int8']['input']>;
-  _gte?: InputMaybe<Scalars['Int8']['input']>;
-  _in?: InputMaybe<Array<Scalars['Int8']['input']>>;
+export type IntBoolExp = {
+  _eq?: InputMaybe<Scalars['Int1']['input']>;
+  _gt?: InputMaybe<Scalars['Int1']['input']>;
+  _gte?: InputMaybe<Scalars['Int1']['input']>;
+  _in?: InputMaybe<Array<Scalars['Int1']['input']>>;
   _is_null?: InputMaybe<Scalars['Boolean']['input']>;
-  _lt?: InputMaybe<Scalars['Int8']['input']>;
-  _lte?: InputMaybe<Scalars['Int8']['input']>;
+  _lt?: InputMaybe<Scalars['Int1']['input']>;
+  _lte?: InputMaybe<Scalars['Int1']['input']>;
 };
 
 export type Mutation = {
@@ -2152,12 +2080,12 @@ export enum OrderBy {
 
 export type ProductUrls = {
   __typename?: 'ProductUrls';
-  id?: Maybe<Scalars['String1']['output']>;
-  rowId?: Maybe<Scalars['String1']['output']>;
-  tableId?: Maybe<Scalars['String1']['output']>;
-  url?: Maybe<Scalars['String1']['output']>;
-  urlType?: Maybe<CUrlTypes>;
-  urlTypeId?: Maybe<Scalars['String1']['output']>;
+  id: Scalars['String1']['output'];
+  rowId: Scalars['String1']['output'];
+  tableId: Scalars['String1']['output'];
+  url: Scalars['String1']['output'];
+  urlType?: Maybe<AUrlTypes>;
+  urlTypeId: Scalars['String1']['output'];
 };
 
 export type ProductUrlsBoolExp = {
@@ -2168,7 +2096,7 @@ export type ProductUrlsBoolExp = {
   rowId?: InputMaybe<StringBoolExp>;
   tableId?: InputMaybe<StringBoolExp>;
   url?: InputMaybe<StringBoolExp>;
-  urlType?: InputMaybe<CUrlTypesBoolExp>;
+  urlType?: InputMaybe<AUrlTypesBoolExp>;
   urlTypeId?: InputMaybe<StringBoolExp>;
 };
 
@@ -2177,18 +2105,18 @@ export type ProductUrlsOrderBy = {
   rowId?: InputMaybe<OrderBy>;
   tableId?: InputMaybe<OrderBy>;
   url?: InputMaybe<OrderBy>;
-  urlType?: InputMaybe<CUrlTypesOrderBy>;
+  urlType?: InputMaybe<AUrlTypesOrderBy>;
   urlTypeId?: InputMaybe<OrderBy>;
 };
 
 export type ProfileInfoUrls = {
   __typename?: 'ProfileInfoUrls';
-  id?: Maybe<Scalars['String1']['output']>;
-  rowId?: Maybe<Scalars['String1']['output']>;
-  tableId?: Maybe<Scalars['String1']['output']>;
-  url?: Maybe<Scalars['String1']['output']>;
-  urlType?: Maybe<CUrlTypes>;
-  urlTypeId?: Maybe<Scalars['String1']['output']>;
+  id: Scalars['String1']['output'];
+  rowId: Scalars['String1']['output'];
+  tableId: Scalars['String1']['output'];
+  url: Scalars['String1']['output'];
+  urlType?: Maybe<AUrlTypes>;
+  urlTypeId: Scalars['String1']['output'];
 };
 
 export type ProfileInfoUrlsBoolExp = {
@@ -2199,7 +2127,7 @@ export type ProfileInfoUrlsBoolExp = {
   rowId?: InputMaybe<StringBoolExp>;
   tableId?: InputMaybe<StringBoolExp>;
   url?: InputMaybe<StringBoolExp>;
-  urlType?: InputMaybe<CUrlTypesBoolExp>;
+  urlType?: InputMaybe<AUrlTypesBoolExp>;
   urlTypeId?: InputMaybe<StringBoolExp>;
 };
 
@@ -2208,509 +2136,584 @@ export type ProfileInfoUrlsOrderBy = {
   rowId?: InputMaybe<OrderBy>;
   tableId?: InputMaybe<OrderBy>;
   url?: InputMaybe<OrderBy>;
-  urlType?: InputMaybe<CUrlTypesOrderBy>;
+  urlType?: InputMaybe<AUrlTypesOrderBy>;
   urlTypeId?: InputMaybe<OrderBy>;
 };
 
 export type Query = {
   __typename?: 'Query';
-  assetDeployments?: Maybe<Array<CAssetDeployments>>;
-  assetDeploymentsAggregate?: Maybe<CAssetDeploymentsAggExp>;
-  assetStandards?: Maybe<Array<CAssetStandards>>;
-  assetStandardsAggregate?: Maybe<CAssetStandardsAggExp>;
-  assetStatuses?: Maybe<Array<CAssetStatuses>>;
-  assetStatusesAggregate?: Maybe<CAssetStatusesAggExp>;
-  assetSupportTypes?: Maybe<Array<CAssetSupportTypes>>;
-  assetSupportTypesAggregate?: Maybe<CAssetSupportTypesAggExp>;
-  assetTypes?: Maybe<Array<CAssetTypes>>;
-  assetTypesAggregate?: Maybe<CAssetTypesAggExp>;
-  assets?: Maybe<Array<CAssets>>;
-  assetsAggregate?: Maybe<CAssetsAggExp>;
-  coreTableNames?: Maybe<Array<CCoreTableNames>>;
-  coreTableNamesAggregate?: Maybe<CCoreTableNamesAggExp>;
-  countries?: Maybe<Array<CCountries>>;
-  countriesAggregate?: Maybe<CCountriesAggExp>;
-  deploymentTypes?: Maybe<Array<CDeploymentTypes>>;
-  deploymentTypesAggregate?: Maybe<CDeploymentTypesAggExp>;
-  derivativeAssets?: Maybe<Array<CDerivativeAssets>>;
-  derivativeAssetsAggregate?: Maybe<CDerivativeAssetsAggExp>;
-  entities?: Maybe<Array<CEntities>>;
-  entitiesAggregate?: Maybe<CEntitiesAggExp>;
-  entityTypes?: Maybe<Array<CEntityTypes>>;
-  entityTypesAggregate?: Maybe<CEntityTypesAggExp>;
-  productAssetRelationships?: Maybe<Array<CProductAssetRelationships>>;
-  productAssetRelationshipsAggregate?: Maybe<CProductAssetRelationshipsAggExp>;
-  productDeployments?: Maybe<Array<CProductDeployments>>;
-  productDeploymentsAggregate?: Maybe<CProductDeploymentsAggExp>;
-  productStatuses?: Maybe<Array<CProductStatuses>>;
-  productStatusesAggregate?: Maybe<CProductStatusesAggExp>;
-  productTypes?: Maybe<Array<CProductTypes>>;
-  productTypesAggregate?: Maybe<CProductTypesAggExp>;
-  products?: Maybe<Array<CProducts>>;
-  productsAggregate?: Maybe<CProductsAggExp>;
-  profileInfos?: Maybe<Array<CProfileInfos>>;
-  profileInfosAggregate?: Maybe<CProfileInfosAggExp>;
-  profileInfosById?: Maybe<CProfileInfos>;
-  profileSectors?: Maybe<Array<CProfileSectors>>;
-  profileSectorsAggregate?: Maybe<CProfileSectorsAggExp>;
-  profileStatuses?: Maybe<Array<CProfileStatuses>>;
-  profileStatusesAggregate?: Maybe<CProfileStatusesAggExp>;
+  assetDeployments?: Maybe<Array<AAssetDeployments>>;
+  assetDeploymentsAggregate?: Maybe<AssetDeploymentsAggExp>;
+  assetDeploymentsById?: Maybe<AAssetDeployments>;
+  assetStandards?: Maybe<Array<AAssetStandards>>;
+  assetStandardsAggregate?: Maybe<AAssetStandardsAggExp>;
+  assetStandardsById?: Maybe<AAssetStandards>;
+  assetStatuses?: Maybe<Array<AAssetStatuses>>;
+  assetStatusesAggregate?: Maybe<AAssetStatusesAggExp>;
+  assetStatusesById?: Maybe<AAssetStatuses>;
+  assetSupportTypes?: Maybe<Array<AAssetSupportTypes>>;
+  assetSupportTypesAggregate?: Maybe<AAssetSupportTypesAggExp>;
+  assetSupportTypesById?: Maybe<AAssetSupportTypes>;
+  assetTypes?: Maybe<Array<AAssetTypes>>;
+  assetTypesAggregate?: Maybe<AAssetTypesAggExp>;
+  assetTypesById?: Maybe<AAssetTypes>;
+  assets?: Maybe<Array<AAssets>>;
+  assetsAggregate?: Maybe<AAssetsAggExp>;
+  assetsById?: Maybe<AAssets>;
+  coreTableNames?: Maybe<Array<ACoreTableNames>>;
+  coreTableNamesAggregate?: Maybe<ACoreTableNamesAggExp>;
+  coreTableNamesById?: Maybe<ACoreTableNames>;
+  countries?: Maybe<Array<ACountries>>;
+  countriesAggregate?: Maybe<ACountriesAggExp>;
+  countriesById?: Maybe<ACountries>;
+  ddeploymentTypes?: Maybe<Array<ADeploymentTypes>>;
+  deploymentTypesAggregate?: Maybe<ADeploymentTypesAggExp>;
+  deploymentTypesById?: Maybe<ADeploymentTypes>;
+  derivativeAssets?: Maybe<Array<ADerivativeAssets>>;
+  derivativeAssetsAggregate?: Maybe<ADerivativeAssetsAggExp>;
+  derivativeAssetsById?: Maybe<ADerivativeAssets>;
+  entities?: Maybe<Array<AEntities>>;
+  entitiesAggregate?: Maybe<AEntitiesAggExp>;
+  entitiesById?: Maybe<AEntities>;
+  entityTypes?: Maybe<Array<AEntityTypes>>;
+  entityTypesAggregate?: Maybe<AEntityTypesAggExp>;
+  entityTypesById?: Maybe<AEntityTypes>;
+  productAssetRelationships?: Maybe<Array<AProductAssetRelationships>>;
+  productAssetRelationshipsAggregate?: Maybe<AProductAssetRelationshipsAggExp>;
+  productAssetRelationshipsById?: Maybe<AProductAssetRelationships>;
+  productDeployments?: Maybe<Array<AProductDeployments>>;
+  productDeploymentsAggregate?: Maybe<AProductDeploymentsAggExp>;
+  productDeploymentsById?: Maybe<AProductDeployments>;
+  productStatuses?: Maybe<Array<AProductStatuses>>;
+  productStatusesAggregate?: Maybe<AProductStatusesAggExp>;
+  productStatusesById?: Maybe<AProductStatuses>;
+  productTypes?: Maybe<Array<AProductTypes>>;
+  productTypesAggregate?: Maybe<AProductTypesAggExp>;
+  productTypesById?: Maybe<AProductTypes>;
+  products?: Maybe<Array<AProducts>>;
+  productsAggregate?: Maybe<AProductsAggExp>;
+  productsById?: Maybe<AProducts>;
+  profileInfos?: Maybe<Array<AProfileInfos>>;
+  profileInfosAggregate?: Maybe<AProfileInfosAggExp>;
+  profileInfosById?: Maybe<AProfileInfos>;
+  profileSectors?: Maybe<Array<AProfileSectors>>;
+  profileSectorsAggregate?: Maybe<AProfileSectorsAggExp>;
+  profileSectorsById?: Maybe<AProfileSectors>;
+  profileStatuses?: Maybe<Array<AProfileStatuses>>;
+  profileStatusesAggregate?: Maybe<AProfileStatusesAggExp>;
+  profileStatusesById?: Maybe<AProfileStatuses>;
   /** Selects multiple objects from the model. Model description:   */
-  profileTags?: Maybe<Array<CProfileTags>>;
-  profileTagsAggregate?: Maybe<CProfileTagsAggExp>;
-  profileTypes?: Maybe<Array<CProfileTypes>>;
-  profileTypesAggregate?: Maybe<CProfileTypesAggExp>;
-  roots?: Maybe<Array<CRoots>>;
-  rootsAggregate?: Maybe<CRootsAggExp>;
-  smartContractDeployments?: Maybe<Array<CSmartContractDeployments>>;
-  smartContractDeploymentsAggregate?: Maybe<CSmartContractDeploymentsAggExp>;
-  smartContracts?: Maybe<Array<CSmartContracts>>;
-  smartContractsAggregate?: Maybe<CSmartContractsAggExp>;
-  socialTypes?: Maybe<Array<CSocialTypes>>;
-  socialTypesAggregate?: Maybe<CSocialTypesAggExp>;
-  socials?: Maybe<Array<CSocials>>;
-  socialsAggregate?: Maybe<CSocialsAggExp>;
+  profileTags?: Maybe<Array<AProfileTags>>;
+  profileTagsAggregate?: Maybe<AProfileTagsAggExp>;
+  /** Selects a single object from the model. Model description:   */
+  profileTagsById?: Maybe<AProfileTags>;
+  profileTypes?: Maybe<Array<AProfileTypes>>;
+  profileTypesAggregate?: Maybe<AProfileTypesAggExp>;
+  profileTypesById?: Maybe<AProfileTypes>;
+  roots?: Maybe<Array<ARoots>>;
+  rootsAggregate?: Maybe<ARootsAggExp>;
+  rootsById?: Maybe<ARoots>;
+  smartContractDeployments?: Maybe<Array<ASmartContractDeployments>>;
+  smartContractDeploymentsAggregate?: Maybe<ASmartContractDeploymentsAggExp>;
+  smartContractDeploymentsById?: Maybe<ASmartContractDeployments>;
+  smartContracts?: Maybe<Array<ASmartContracts>>;
+  smartContractsAggregate?: Maybe<ASmartContractsAggExp>;
+  smartContractsById?: Maybe<ASmartContracts>;
+  socialTypes?: Maybe<Array<ASocialTypes>>;
+  socialTypesAggregate?: Maybe<ASocialTypesAggExp>;
+  socialTypesById?: Maybe<ASocialTypes>;
+  socials?: Maybe<Array<ASocials>>;
+  socialsAggregate?: Maybe<ASocialsAggExp>;
   /** Selects multiple objects from the model. Model description: Table mapping product support relationships */
-  supportsProducts?: Maybe<Array<CSupportsProducts>>;
-  supportsProductsAggregate?: Maybe<CSupportsProductsAggExp>;
-  tagTypes?: Maybe<Array<CTagTypes>>;
-  tagTypesAggregate?: Maybe<CTagTypesAggExp>;
-  tags?: Maybe<Array<CTags>>;
-  tagsAggregate?: Maybe<CTagsAggExp>;
-  urlTypes?: Maybe<Array<CUrlTypes>>;
-  urlTypesAggregate?: Maybe<CUrlTypesAggExp>;
-  urlTypesById?: Maybe<CUrlTypes>;
-  urls?: Maybe<Array<CUrls>>;
-  urlsAggregate?: Maybe<CUrlsAggExp>;
-  urlsById?: Maybe<CUrls>;
+  supportsProducts?: Maybe<Array<ASupportsProducts>>;
+  supportsProductsAggregate?: Maybe<ASupportsProductsAggExp>;
+  /** Selects a single object from the model. Model description: Table mapping product support relationships */
+  supportsProductsById?: Maybe<ASupportsProducts>;
+  tagTypes?: Maybe<Array<ATagTypes>>;
+  tagTypesAggregate?: Maybe<ATagTypesAggExp>;
+  tagTypesById?: Maybe<ATagTypes>;
+  tags?: Maybe<Array<ATags>>;
+  tagsAggregate?: Maybe<ATagsAggExp>;
+  tagsById?: Maybe<ATags>;
+  urlTypes?: Maybe<Array<AUrlTypes>>;
+  urlTypesAggregate?: Maybe<AUrlTypesAggExp>;
+  urlTypesById?: Maybe<AUrlTypes>;
+  urls?: Maybe<Array<AUrls>>;
+  urlsAggregate?: Maybe<AUrlsAggExp>;
+  urlsById?: Maybe<AUrls>;
 };
-
 
 export type QueryAssetDeploymentsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CAssetDeploymentsOrderBy>>;
-  where?: InputMaybe<AssetDeploymentsBoolExp>;
+  order_by?: InputMaybe<Array<AAssetDeploymentsOrderBy>>;
+  where?: InputMaybe<AAssetDeploymentsBoolExp>;
 };
-
 
 export type QueryAssetDeploymentsAggregateArgs = {
-  filter_input?: InputMaybe<CAssetDeploymentsFilterInput>;
+  filter_input?: InputMaybe<AAssetDeploymentsFilterInput>;
 };
 
+export type QueryAssetDeploymentsByIdArgs = {
+  id: Scalars['String1']['input'];
+};
 
 export type QueryAssetStandardsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CAssetStandardsOrderBy>>;
-  where?: InputMaybe<CAssetStandardsBoolExp>;
+  order_by?: InputMaybe<Array<AAssetStandardsOrderBy>>;
+  where?: InputMaybe<AAssetStandardsBoolExp>;
 };
-
 
 export type QueryAssetStandardsAggregateArgs = {
-  filter_input?: InputMaybe<CAssetStandardsFilterInput>;
+  filter_input?: InputMaybe<AAssetStandardsFilterInput>;
 };
 
+export type QueryAssetStandardsByIdArgs = {
+  id: Scalars['String1']['input'];
+};
 
 export type QueryAssetStatusesArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CAssetStatusesOrderBy>>;
-  where?: InputMaybe<CAssetStatusesBoolExp>;
+  order_by?: InputMaybe<Array<AAssetStatusesOrderBy>>;
+  where?: InputMaybe<AAssetStatusesBoolExp>;
 };
-
 
 export type QueryAssetStatusesAggregateArgs = {
-  filter_input?: InputMaybe<CAssetStatusesFilterInput>;
+  filter_input?: InputMaybe<AAssetStatusesFilterInput>;
 };
 
+export type QueryAssetStatusesByIdArgs = {
+  id: Scalars['String1']['input'];
+};
 
 export type QueryAssetSupportTypesArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CAssetSupportTypesOrderBy>>;
-  where?: InputMaybe<CAssetSupportTypesBoolExp>;
+  order_by?: InputMaybe<Array<AAssetSupportTypesOrderBy>>;
+  where?: InputMaybe<AAssetSupportTypesBoolExp>;
 };
-
 
 export type QueryAssetSupportTypesAggregateArgs = {
-  filter_input?: InputMaybe<CAssetSupportTypesFilterInput>;
+  filter_input?: InputMaybe<AAssetSupportTypesFilterInput>;
 };
 
+export type QueryAssetSupportTypesByIdArgs = {
+  id: Scalars['String1']['input'];
+};
 
 export type QueryAssetTypesArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CAssetTypesOrderBy>>;
-  where?: InputMaybe<CAssetTypesBoolExp>;
+  order_by?: InputMaybe<Array<AAssetTypesOrderBy>>;
+  where?: InputMaybe<AAssetTypesBoolExp>;
 };
-
 
 export type QueryAssetTypesAggregateArgs = {
-  filter_input?: InputMaybe<CAssetTypesFilterInput>;
+  filter_input?: InputMaybe<AAssetTypesFilterInput>;
 };
 
+export type QueryAssetTypesByIdArgs = {
+  id: Scalars['String1']['input'];
+};
 
 export type QueryAssetsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CAssetsOrderBy>>;
-  where?: InputMaybe<CAssetsBoolExp>;
+  order_by?: InputMaybe<Array<AAssetsOrderBy>>;
+  where?: InputMaybe<AAssetsBoolExp>;
 };
-
 
 export type QueryAssetsAggregateArgs = {
-  filter_input?: InputMaybe<CAssetsFilterInput>;
+  filter_input?: InputMaybe<AAssetsFilterInput>;
 };
 
+export type QueryAssetsByIdArgs = {
+  id: Scalars['String1']['input'];
+};
 
 export type QueryCoreTableNamesArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CCoreTableNamesOrderBy>>;
-  where?: InputMaybe<CCoreTableNamesBoolExp>;
+  order_by?: InputMaybe<Array<ACoreTableNamesOrderBy>>;
+  where?: InputMaybe<ACoreTableNamesBoolExp>;
 };
-
 
 export type QueryCoreTableNamesAggregateArgs = {
-  filter_input?: InputMaybe<CCoreTableNamesFilterInput>;
+  filter_input?: InputMaybe<ACoreTableNamesFilterInput>;
 };
 
+export type QueryCoreTableNamesByIdArgs = {
+  id: Scalars['String1']['input'];
+};
 
 export type QueryCountriesArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CCountriesOrderBy>>;
-  where?: InputMaybe<CCountriesBoolExp>;
+  order_by?: InputMaybe<Array<ACountriesOrderBy>>;
+  where?: InputMaybe<ACountriesBoolExp>;
 };
-
 
 export type QueryCountriesAggregateArgs = {
-  filter_input?: InputMaybe<CCountriesFilterInput>;
+  filter_input?: InputMaybe<ACountriesFilterInput>;
 };
 
+export type QueryCountriesByIdArgs = {
+  id: Scalars['String1']['input'];
+};
 
-export type QueryDeploymentTypesArgs = {
+export type QueryDdeploymentTypesArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CDeploymentTypesOrderBy>>;
-  where?: InputMaybe<CDeploymentTypesBoolExp>;
+  order_by?: InputMaybe<Array<ADeploymentTypesOrderBy>>;
+  where?: InputMaybe<ADeploymentTypesBoolExp>;
 };
-
 
 export type QueryDeploymentTypesAggregateArgs = {
-  filter_input?: InputMaybe<CDeploymentTypesFilterInput>;
+  filter_input?: InputMaybe<ADeploymentTypesFilterInput>;
 };
 
+export type QueryDeploymentTypesByIdArgs = {
+  id: Scalars['String1']['input'];
+};
 
 export type QueryDerivativeAssetsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CDerivativeAssetsOrderBy>>;
-  where?: InputMaybe<CDerivativeAssetsBoolExp>;
+  order_by?: InputMaybe<Array<ADerivativeAssetsOrderBy>>;
+  where?: InputMaybe<ADerivativeAssetsBoolExp>;
 };
-
 
 export type QueryDerivativeAssetsAggregateArgs = {
-  filter_input?: InputMaybe<CDerivativeAssetsFilterInput>;
+  filter_input?: InputMaybe<ADerivativeAssetsFilterInput>;
 };
 
+export type QueryDerivativeAssetsByIdArgs = {
+  id: Scalars['String1']['input'];
+};
 
 export type QueryEntitiesArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CEntitiesOrderBy>>;
-  where?: InputMaybe<CEntitiesBoolExp>;
+  order_by?: InputMaybe<Array<AEntitiesOrderBy>>;
+  where?: InputMaybe<AEntitiesBoolExp>;
 };
-
 
 export type QueryEntitiesAggregateArgs = {
-  filter_input?: InputMaybe<CEntitiesFilterInput>;
+  filter_input?: InputMaybe<AEntitiesFilterInput>;
 };
 
+export type QueryEntitiesByIdArgs = {
+  id: Scalars['String1']['input'];
+};
 
 export type QueryEntityTypesArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CEntityTypesOrderBy>>;
-  where?: InputMaybe<CEntityTypesBoolExp>;
+  order_by?: InputMaybe<Array<AEntityTypesOrderBy>>;
+  where?: InputMaybe<AEntityTypesBoolExp>;
 };
-
 
 export type QueryEntityTypesAggregateArgs = {
-  filter_input?: InputMaybe<CEntityTypesFilterInput>;
+  filter_input?: InputMaybe<AEntityTypesFilterInput>;
 };
 
+export type QueryEntityTypesByIdArgs = {
+  id: Scalars['String1']['input'];
+};
 
 export type QueryProductAssetRelationshipsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CProductAssetRelationshipsOrderBy>>;
-  where?: InputMaybe<CProductAssetRelationshipsBoolExp>;
+  order_by?: InputMaybe<Array<AProductAssetRelationshipsOrderBy>>;
+  where?: InputMaybe<AProductAssetRelationshipsBoolExp>;
 };
-
 
 export type QueryProductAssetRelationshipsAggregateArgs = {
-  filter_input?: InputMaybe<CProductAssetRelationshipsFilterInput>;
+  filter_input?: InputMaybe<AProductAssetRelationshipsFilterInput>;
 };
 
+export type QueryProductAssetRelationshipsByIdArgs = {
+  id: Scalars['String1']['input'];
+};
 
 export type QueryProductDeploymentsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CProductDeploymentsOrderBy>>;
-  where?: InputMaybe<CProductDeploymentsBoolExp>;
+  order_by?: InputMaybe<Array<AProductDeploymentsOrderBy>>;
+  where?: InputMaybe<AProductDeploymentsBoolExp>;
 };
-
 
 export type QueryProductDeploymentsAggregateArgs = {
-  filter_input?: InputMaybe<CProductDeploymentsFilterInput>;
+  filter_input?: InputMaybe<AProductDeploymentsFilterInput>;
 };
 
+export type QueryProductDeploymentsByIdArgs = {
+  id: Scalars['String1']['input'];
+};
 
 export type QueryProductStatusesArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CProductStatusesOrderBy>>;
-  where?: InputMaybe<CProductStatusesBoolExp>;
+  order_by?: InputMaybe<Array<AProductStatusesOrderBy>>;
+  where?: InputMaybe<AProductStatusesBoolExp>;
 };
-
 
 export type QueryProductStatusesAggregateArgs = {
-  filter_input?: InputMaybe<CProductStatusesFilterInput>;
+  filter_input?: InputMaybe<AProductStatusesFilterInput>;
 };
 
+export type QueryProductStatusesByIdArgs = {
+  id: Scalars['String1']['input'];
+};
 
 export type QueryProductTypesArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CProductTypesOrderBy>>;
-  where?: InputMaybe<CProductTypesBoolExp>;
+  order_by?: InputMaybe<Array<AProductTypesOrderBy>>;
+  where?: InputMaybe<AProductTypesBoolExp>;
 };
-
 
 export type QueryProductTypesAggregateArgs = {
-  filter_input?: InputMaybe<CProductTypesFilterInput>;
+  filter_input?: InputMaybe<AProductTypesFilterInput>;
 };
 
+export type QueryProductTypesByIdArgs = {
+  id: Scalars['String1']['input'];
+};
 
 export type QueryProductsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CProductsOrderBy>>;
-  where?: InputMaybe<CProductsBoolExp>;
+  order_by?: InputMaybe<Array<AProductsOrderBy>>;
+  where?: InputMaybe<AProductsBoolExp>;
 };
-
 
 export type QueryProductsAggregateArgs = {
-  filter_input?: InputMaybe<CProductsFilterInput>;
+  filter_input?: InputMaybe<AProductsFilterInput>;
 };
 
+export type QueryProductsByIdArgs = {
+  id: Scalars['String1']['input'];
+};
 
 export type QueryProfileInfosArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CProfileInfosOrderBy>>;
-  where?: InputMaybe<CProfileInfosBoolExp>;
+  order_by?: InputMaybe<Array<AProfileInfosOrderBy>>;
+  where?: InputMaybe<AProfileInfosBoolExp>;
 };
-
 
 export type QueryProfileInfosAggregateArgs = {
-  filter_input?: InputMaybe<CProfileInfosFilterInput>;
+  filter_input?: InputMaybe<AProfileInfosFilterInput>;
 };
-
 
 export type QueryProfileInfosByIdArgs = {
   id: Scalars['String1']['input'];
 };
 
-
 export type QueryProfileSectorsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CProfileSectorsOrderBy>>;
-  where?: InputMaybe<CProfileSectorsBoolExp>;
+  order_by?: InputMaybe<Array<AProfileSectorsOrderBy>>;
+  where?: InputMaybe<AProfileSectorsBoolExp>;
 };
-
 
 export type QueryProfileSectorsAggregateArgs = {
-  filter_input?: InputMaybe<CProfileSectorsFilterInput>;
+  filter_input?: InputMaybe<AProfileSectorsFilterInput>;
 };
 
+export type QueryProfileSectorsByIdArgs = {
+  id: Scalars['String1']['input'];
+};
 
 export type QueryProfileStatusesArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CProfileStatusesOrderBy>>;
-  where?: InputMaybe<CProfileStatusesBoolExp>;
+  order_by?: InputMaybe<Array<AProfileStatusesOrderBy>>;
+  where?: InputMaybe<AProfileStatusesBoolExp>;
 };
-
 
 export type QueryProfileStatusesAggregateArgs = {
-  filter_input?: InputMaybe<CProfileStatusesFilterInput>;
+  filter_input?: InputMaybe<AProfileStatusesFilterInput>;
 };
 
+export type QueryProfileStatusesByIdArgs = {
+  id: Scalars['String1']['input'];
+};
 
 export type QueryProfileTagsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CProfileTagsOrderBy>>;
-  where?: InputMaybe<CProfileTagsBoolExp>;
+  order_by?: InputMaybe<Array<AProfileTagsOrderBy>>;
+  where?: InputMaybe<AProfileTagsBoolExp>;
 };
-
 
 export type QueryProfileTagsAggregateArgs = {
-  filter_input?: InputMaybe<CProfileTagsFilterInput>;
+  filter_input?: InputMaybe<AProfileTagsFilterInput>;
 };
 
+export type QueryProfileTagsByIdArgs = {
+  id: Scalars['String1']['input'];
+};
 
 export type QueryProfileTypesArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CProfileTypesOrderBy>>;
-  where?: InputMaybe<CProfileTypesBoolExp>;
+  order_by?: InputMaybe<Array<AProfileTypesOrderBy>>;
+  where?: InputMaybe<AProfileTypesBoolExp>;
 };
-
 
 export type QueryProfileTypesAggregateArgs = {
-  filter_input?: InputMaybe<CProfileTypesFilterInput>;
+  filter_input?: InputMaybe<AProfileTypesFilterInput>;
 };
 
+export type QueryProfileTypesByIdArgs = {
+  id: Scalars['String1']['input'];
+};
 
 export type QueryRootsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CRootsOrderBy>>;
-  where?: InputMaybe<CRootsBoolExp>;
+  order_by?: InputMaybe<Array<ARootsOrderBy>>;
+  where?: InputMaybe<ARootsBoolExp>;
 };
-
 
 export type QueryRootsAggregateArgs = {
-  filter_input?: InputMaybe<CRootsFilterInput>;
+  filter_input?: InputMaybe<ARootsFilterInput>;
 };
 
+export type QueryRootsByIdArgs = {
+  id: Scalars['String1']['input'];
+};
 
 export type QuerySmartContractDeploymentsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CSmartContractDeploymentsOrderBy>>;
-  where?: InputMaybe<CSmartContractDeploymentsBoolExp>;
+  order_by?: InputMaybe<Array<ASmartContractDeploymentsOrderBy>>;
+  where?: InputMaybe<ASmartContractDeploymentsBoolExp>;
 };
-
 
 export type QuerySmartContractDeploymentsAggregateArgs = {
-  filter_input?: InputMaybe<CSmartContractDeploymentsFilterInput>;
+  filter_input?: InputMaybe<ASmartContractDeploymentsFilterInput>;
 };
 
+export type QuerySmartContractDeploymentsByIdArgs = {
+  id: Scalars['String1']['input'];
+};
 
 export type QuerySmartContractsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CSmartContractsOrderBy>>;
-  where?: InputMaybe<CSmartContractsBoolExp>;
+  order_by?: InputMaybe<Array<ASmartContractsOrderBy>>;
+  where?: InputMaybe<ASmartContractsBoolExp>;
 };
-
 
 export type QuerySmartContractsAggregateArgs = {
-  filter_input?: InputMaybe<CSmartContractsFilterInput>;
+  filter_input?: InputMaybe<ASmartContractsFilterInput>;
 };
 
+export type QuerySmartContractsByIdArgs = {
+  id: Scalars['String1']['input'];
+};
 
 export type QuerySocialTypesArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CSocialTypesOrderBy>>;
-  where?: InputMaybe<CSocialTypesBoolExp>;
+  order_by?: InputMaybe<Array<ASocialTypesOrderBy>>;
+  where?: InputMaybe<ASocialTypesBoolExp>;
 };
-
 
 export type QuerySocialTypesAggregateArgs = {
-  filter_input?: InputMaybe<CSocialTypesFilterInput>;
+  filter_input?: InputMaybe<ASocialTypesFilterInput>;
 };
 
+export type QuerySocialTypesByIdArgs = {
+  id: Scalars['String1']['input'];
+};
 
 export type QuerySocialsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CSocialsOrderBy>>;
-  where?: InputMaybe<CSocialsBoolExp>;
+  order_by?: InputMaybe<Array<ASocialsOrderBy>>;
+  where?: InputMaybe<ASocialsBoolExp>;
 };
-
 
 export type QuerySocialsAggregateArgs = {
-  filter_input?: InputMaybe<CSocialsFilterInput>;
+  filter_input?: InputMaybe<ASocialsFilterInput>;
 };
-
 
 export type QuerySupportsProductsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CSupportsProductsOrderBy>>;
-  where?: InputMaybe<CSupportsProductsBoolExp>;
+  order_by?: InputMaybe<Array<ASupportsProductsOrderBy>>;
+  where?: InputMaybe<ASupportsProductsBoolExp>;
 };
-
 
 export type QuerySupportsProductsAggregateArgs = {
-  filter_input?: InputMaybe<CSupportsProductsFilterInput>;
+  filter_input?: InputMaybe<ASupportsProductsFilterInput>;
 };
 
+export type QuerySupportsProductsByIdArgs = {
+  id: Scalars['String1']['input'];
+};
 
 export type QueryTagTypesArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CTagTypesOrderBy>>;
-  where?: InputMaybe<CTagTypesBoolExp>;
+  order_by?: InputMaybe<Array<ATagTypesOrderBy>>;
+  where?: InputMaybe<ATagTypesBoolExp>;
 };
-
 
 export type QueryTagTypesAggregateArgs = {
-  filter_input?: InputMaybe<CTagTypesFilterInput>;
+  filter_input?: InputMaybe<ATagTypesFilterInput>;
 };
 
+export type QueryTagTypesByIdArgs = {
+  id: Scalars['String1']['input'];
+};
 
 export type QueryTagsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CTagsOrderBy>>;
-  where?: InputMaybe<CTagsBoolExp>;
+  order_by?: InputMaybe<Array<ATagsOrderBy>>;
+  where?: InputMaybe<ATagsBoolExp>;
 };
-
 
 export type QueryTagsAggregateArgs = {
-  filter_input?: InputMaybe<CTagsFilterInput>;
+  filter_input?: InputMaybe<ATagsFilterInput>;
 };
 
+export type QueryTagsByIdArgs = {
+  id: Scalars['String1']['input'];
+};
 
 export type QueryUrlTypesArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CUrlTypesOrderBy>>;
-  where?: InputMaybe<CUrlTypesBoolExp>;
+  order_by?: InputMaybe<Array<AUrlTypesOrderBy>>;
+  where?: InputMaybe<AUrlTypesBoolExp>;
 };
-
 
 export type QueryUrlTypesAggregateArgs = {
-  filter_input?: InputMaybe<CUrlTypesFilterInput>;
+  filter_input?: InputMaybe<AUrlTypesFilterInput>;
 };
-
 
 export type QueryUrlTypesByIdArgs = {
   id: Scalars['String1']['input'];
 };
 
-
 export type QueryUrlsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<CUrlsOrderBy>>;
-  where?: InputMaybe<CUrlsBoolExp>;
+  order_by?: InputMaybe<Array<AUrlsOrderBy>>;
+  where?: InputMaybe<AUrlsBoolExp>;
 };
-
 
 export type QueryUrlsAggregateArgs = {
-  filter_input?: InputMaybe<CUrlsFilterInput>;
+  filter_input?: InputMaybe<AUrlsFilterInput>;
 };
-
 
 export type QueryUrlsByIdArgs = {
   id: Scalars['String1']['input'];
@@ -2722,7 +2725,7 @@ export type SocialUrls = {
   rowId?: Maybe<Scalars['String1']['output']>;
   tableId?: Maybe<Scalars['String1']['output']>;
   url?: Maybe<Scalars['String1']['output']>;
-  urlType?: Maybe<CUrlTypes>;
+  urlType?: Maybe<AUrlTypes>;
   urlTypeId?: Maybe<Scalars['String1']['output']>;
 };
 
@@ -2734,7 +2737,7 @@ export type SocialUrlsBoolExp = {
   rowId?: InputMaybe<StringBoolExp>;
   tableId?: InputMaybe<StringBoolExp>;
   url?: InputMaybe<StringBoolExp>;
-  urlType?: InputMaybe<CUrlTypesBoolExp>;
+  urlType?: InputMaybe<AUrlTypesBoolExp>;
   urlTypeId?: InputMaybe<StringBoolExp>;
 };
 
@@ -2743,7 +2746,7 @@ export type SocialUrlsOrderBy = {
   rowId?: InputMaybe<OrderBy>;
   tableId?: InputMaybe<OrderBy>;
   url?: InputMaybe<OrderBy>;
-  urlType?: InputMaybe<CUrlTypesOrderBy>;
+  urlType?: InputMaybe<AUrlTypesOrderBy>;
   urlTypeId?: InputMaybe<OrderBy>;
 };
 
@@ -2763,301 +2766,291 @@ export type StringBoolExp = {
   _like?: InputMaybe<Scalars['String1']['input']>;
 };
 
-export type Subscription = {
-  __typename?: 'Subscription';
-  _no_fields_accessible?: Maybe<Scalars['String']['output']>;
+export type AssetDeploymentsAggExp = {
+  __typename?: 'assetDeploymentsAggExp';
+  _count: Scalars['Int']['output'];
+  assetId: StringAggExp;
+  deploymentId: StringAggExp;
+  id: StringAggExp;
 };
 
-export type AssetDeploymentsBoolExp = {
-  _and?: InputMaybe<Array<AssetDeploymentsBoolExp>>;
-  _not?: InputMaybe<AssetDeploymentsBoolExp>;
-  _or?: InputMaybe<Array<AssetDeploymentsBoolExp>>;
-  asset?: InputMaybe<CAssetsBoolExp>;
-  assetId?: InputMaybe<StringBoolExp>;
-  deploymentId?: InputMaybe<StringBoolExp>;
-  id?: InputMaybe<StringBoolExp>;
-  smartContractDeployment?: InputMaybe<CSmartContractDeploymentsBoolExp>;
-};
+export type AssetFieldsFragmentFragment = {
+  __typename?: 'AAssets';
+  ticker: string;
+  rootId: string;
+  name: string;
+  id: string;
+  icon: string;
+  description: string;
+  assetTypeId?: string | null;
+  assetStatusId?: string | null;
+  assetType?: {
+    __typename?: 'AAssetTypes';
+    definition: string;
+    id: string;
+    name: string;
+  } | null;
+  assetStatus?: {
+    __typename?: 'AAssetStatuses';
+    name: string;
+    id: string;
+    definition: string;
+  } | null;
+  assetDeployments?: Array<{
+    __typename?: 'AAssetDeployments';
+    id: string;
+    deploymentId: string;
+    assetId: string;
+    smartContractDeployment?: {
+      __typename?: 'ASmartContractDeployments';
+      id: string;
+      deployedOnProduct?: {
+        __typename?: 'AProducts';
+        id: string;
+        name: string;
+        root?: { __typename?: 'ARoots'; slug: string } | null;
+      } | null;
+      assetStandard?: { __typename?: 'AAssetStandards'; id: string } | null;
+      smartContracts?: Array<{
+        __typename?: 'ASmartContracts';
+        name: string;
+        id: string;
+        deploymentId?: string | null;
+        deploymentDate?: string | null;
+        address: string;
+      }> | null;
+      deploymentType?: {
+        __typename?: 'ADeploymentTypes';
+        name: string;
+        id: string;
+        definition: string;
+      } | null;
+    } | null;
+  }> | null;
+  urls?: Array<{
+    __typename?: 'AssetUrls';
+    url: string;
+    urlType?: {
+      __typename?: 'AUrlTypes';
+      name: string;
+      id: string;
+      definition: string;
+    } | null;
+  }> | null;
+} & { ' $fragmentName'?: 'AssetFieldsFragmentFragment' };
 
-/**
- * The fundamental unit of any GraphQL Schema is the type. There are many kinds of types in GraphQL as represented by the `__TypeKind` enum.
- *
- * Depending on the kind of a type, certain fields describe information about that type. Scalar types provide no information beyond a name, description and optional `specifiedByURL`, while Enum types provide their values. Object and Interface types provide the fields they describe. Abstract types, Union and Interface, provide the Object types possible at runtime. List and NonNull types compose other types.
- */
-export type __Type = {
-  __typename?: '__Type';
-  kind: __TypeKind;
-  name?: Maybe<Scalars['String']['output']>;
-  description?: Maybe<Scalars['String']['output']>;
-  specifiedByURL?: Maybe<Scalars['String']['output']>;
-  fields?: Maybe<Array<__Field>>;
-  interfaces?: Maybe<Array<__Type>>;
-  possibleTypes?: Maybe<Array<__Type>>;
-  enumValues?: Maybe<Array<__EnumValue>>;
-  inputFields?: Maybe<Array<__InputValue>>;
-  ofType?: Maybe<__Type>;
-  isOneOf?: Maybe<Scalars['Boolean']['output']>;
-};
+export type EntityFieldsFragmentFragment = {
+  __typename?: 'AEntities';
+  name: string;
+  tradeName: string;
+  taxIdentificationNumber: string;
+  localRegistrationNumber: string;
+  leiNumber: string;
+  id: string;
+  dateOfIncorporation?: string | null;
+  address: string;
+  entityType?: {
+    __typename?: 'AEntityTypes';
+    name: string;
+    id: string;
+    definition: string;
+  } | null;
+  country?: {
+    __typename?: 'ACountries';
+    name: string;
+    id: string;
+    code: string;
+  } | null;
+  urls?: Array<{
+    __typename?: 'EntityUrls';
+    url: string;
+    urlType?: {
+      __typename?: 'AUrlTypes';
+      name: string;
+      id: string;
+      definition: string;
+    } | null;
+  }> | null;
+} & { ' $fragmentName'?: 'EntityFieldsFragmentFragment' };
 
+export type ProfileFragmentFragment = {
+  __typename?: 'AProfileInfos';
+  profileSector?: { __typename?: 'AProfileSectors'; name: string } | null;
+  profileType?: { __typename?: 'AProfileTypes'; name: string } | null;
+  root?: {
+    __typename?: 'ARoots';
+    assets?: Array<{ __typename?: 'AAssets'; ticker: string }> | null;
+    profileTags?: Array<{
+      __typename?: 'AProfileTags';
+      tag?: { __typename?: 'ATags'; name: string; id: string } | null;
+    }> | null;
+  } | null;
+  profileStatus?: {
+    __typename?: 'AProfileStatuses';
+    name: string;
+    id: string;
+  } | null;
+  mainProduct?: {
+    __typename?: 'ARoots';
+    products?: Array<{
+      __typename?: 'AProducts';
+      productType?: { __typename?: 'AProductTypes'; name: string } | null;
+    }> | null;
+  } | null;
+} & { ' $fragmentName'?: 'ProfileFragmentFragment' };
 
-/**
- * The fundamental unit of any GraphQL Schema is the type. There are many kinds of types in GraphQL as represented by the `__TypeKind` enum.
- *
- * Depending on the kind of a type, certain fields describe information about that type. Scalar types provide no information beyond a name, description and optional `specifiedByURL`, while Enum types provide their values. Object and Interface types provide the fields they describe. Abstract types, Union and Interface, provide the Object types possible at runtime. List and NonNull types compose other types.
- */
-export type __TypeFieldsArgs = {
-  includeDeprecated?: InputMaybe<Scalars['Boolean']['input']>;
-};
+export type ProductFieldsFragmentFragment = {
+  __typename?: 'AProducts';
+  rootId: string;
+  productTypeId?: string | null;
+  productStatusId?: string | null;
+  name: string;
+  launchDate?: string | null;
+  isMainProduct?: number | null;
+  id: string;
+  description: string;
+  productType?: {
+    __typename?: 'AProductTypes';
+    name: string;
+    id: string;
+    definition: string;
+  } | null;
+  productStatus?: {
+    __typename?: 'AProductStatuses';
+    name: string;
+    id: string;
+    definition: string;
+  } | null;
+  productDeployments?: Array<{
+    __typename?: 'AProductDeployments';
+    smartContractDeployment?: {
+      __typename?: 'ASmartContractDeployments';
+      isOfStandardId?: string | null;
+      id: string;
+      deployedOnProduct?: {
+        __typename?: 'AProducts';
+        id: string;
+        name: string;
+        root?: { __typename?: 'ARoots'; slug: string } | null;
+      } | null;
+      assetStandard?: { __typename?: 'AAssetStandards'; id: string } | null;
+      deploymentType?: { __typename?: 'ADeploymentTypes'; name: string } | null;
+      smartContracts?: Array<{
+        __typename?: 'ASmartContracts';
+        name: string;
+        id: string;
+        deploymentDate?: string | null;
+        address: string;
+        deploymentId?: string | null;
+      }> | null;
+    } | null;
+  }> | null;
+  supportsProducts?: Array<{
+    __typename?: 'ASupportsProducts';
+    supportsProduct?: {
+      __typename?: 'AProducts';
+      name: string;
+      id: string;
+      root?: { __typename?: 'ARoots'; slug: string } | null;
+    } | null;
+  }> | null;
+  urls?: Array<{
+    __typename?: 'ProductUrls';
+    url: string;
+    urlType?: {
+      __typename?: 'AUrlTypes';
+      name: string;
+      id: string;
+      definition: string;
+    } | null;
+  }> | null;
+  productAssetRelationships?: Array<{
+    __typename?: 'AProductAssetRelationships';
+    assetId: string;
+    asset?: {
+      __typename?: 'AAssets';
+      name: string;
+      id: string;
+      assetType?: { __typename?: 'AAssetTypes'; name: string } | null;
+      root?: { __typename?: 'ARoots'; slug: string } | null;
+    } | null;
+    assetSupportType?: {
+      __typename?: 'AAssetSupportTypes';
+      name: string;
+    } | null;
+    product?: {
+      __typename?: 'AProducts';
+      name: string;
+      id: string;
+      description: string;
+    } | null;
+  }> | null;
+} & { ' $fragmentName'?: 'ProductFieldsFragmentFragment' };
 
-
-/**
- * The fundamental unit of any GraphQL Schema is the type. There are many kinds of types in GraphQL as represented by the `__TypeKind` enum.
- *
- * Depending on the kind of a type, certain fields describe information about that type. Scalar types provide no information beyond a name, description and optional `specifiedByURL`, while Enum types provide their values. Object and Interface types provide the fields they describe. Abstract types, Union and Interface, provide the Object types possible at runtime. List and NonNull types compose other types.
- */
-export type __TypeEnumValuesArgs = {
-  includeDeprecated?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-
-/**
- * The fundamental unit of any GraphQL Schema is the type. There are many kinds of types in GraphQL as represented by the `__TypeKind` enum.
- *
- * Depending on the kind of a type, certain fields describe information about that type. Scalar types provide no information beyond a name, description and optional `specifiedByURL`, while Enum types provide their values. Object and Interface types provide the fields they describe. Abstract types, Union and Interface, provide the Object types possible at runtime. List and NonNull types compose other types.
- */
-export type __TypeInputFieldsArgs = {
-  includeDeprecated?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-/** An enum describing what kind of type a given `__Type` is. */
-export enum __TypeKind {
-  /** Indicates this type is a scalar. */
-  Scalar = 'SCALAR',
-  /** Indicates this type is an object. `fields` and `interfaces` are valid fields. */
-  Object = 'OBJECT',
-  /** Indicates this type is an interface. `fields`, `interfaces`, and `possibleTypes` are valid fields. */
-  Interface = 'INTERFACE',
-  /** Indicates this type is a union. `possibleTypes` is a valid field. */
-  Union = 'UNION',
-  /** Indicates this type is an enum. `enumValues` is a valid field. */
-  Enum = 'ENUM',
-  /** Indicates this type is an input object. `inputFields` is a valid field. */
-  InputObject = 'INPUT_OBJECT',
-  /** Indicates this type is a list. `ofType` is a valid field. */
-  List = 'LIST',
-  /** Indicates this type is a non-null. `ofType` is a valid field. */
-  NonNull = 'NON_NULL'
-}
-
-/** Object and Interface types are described by a list of Fields, each of which has a name, potentially a list of arguments, and a return type. */
-export type __Field = {
-  __typename?: '__Field';
-  name: Scalars['String']['output'];
-  description?: Maybe<Scalars['String']['output']>;
-  args: Array<__InputValue>;
-  type: __Type;
-  isDeprecated: Scalars['Boolean']['output'];
-  deprecationReason?: Maybe<Scalars['String']['output']>;
-};
-
-
-/** Object and Interface types are described by a list of Fields, each of which has a name, potentially a list of arguments, and a return type. */
-export type __FieldArgsArgs = {
-  includeDeprecated?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-/** Arguments provided to Fields or Directives and the input fields of an InputObject are represented as Input Values which describe their type and optionally a default value. */
-export type __InputValue = {
-  __typename?: '__InputValue';
-  name: Scalars['String']['output'];
-  description?: Maybe<Scalars['String']['output']>;
-  type: __Type;
-  /** A GraphQL-formatted string representing the default value for this input value. */
-  defaultValue?: Maybe<Scalars['String']['output']>;
-  isDeprecated: Scalars['Boolean']['output'];
-  deprecationReason?: Maybe<Scalars['String']['output']>;
-};
-
-/** One possible value for a given Enum. Enum values are unique values, not a placeholder for a string or numeric value. However an Enum value is returned in a JSON response as a string. */
-export type __EnumValue = {
-  __typename?: '__EnumValue';
-  name: Scalars['String']['output'];
-  description?: Maybe<Scalars['String']['output']>;
-  isDeprecated: Scalars['Boolean']['output'];
-  deprecationReason?: Maybe<Scalars['String']['output']>;
-};
-
-export type AssetFieldsFragmentFragment = { __typename?: 'CAssets', ticker: string, rootId: string, name: string, id: string, icon: string, description: string, assetTypeId?: string | null, assetStatusId?: string | null, assetType?: { __typename?: 'CAssetTypes', definition: string, id: string, name: string } | null, assetStatus?: { __typename?: 'CAssetStatuses', name: string, id: string, definition: string } | null, assetDeployments?: Array<{ __typename?: 'CAssetDeployments', id: string, deploymentId: string, assetId: string, smartContractDeployment?: { __typename?: 'CSmartContractDeployments', id: string, deployedOnProduct?: { __typename?: 'CProducts', id: string, name: string, root?: { __typename?: 'CRoots', slug: string } | null } | null, assetStandard?: { __typename?: 'CAssetStandards', id: string } | null, smartContracts?: Array<{ __typename?: 'CSmartContracts', name: string, id: string, deploymentId?: string | null, deploymentDate?: string | null, address: string }> | null, deploymentType?: { __typename?: 'CDeploymentTypes', name: string, id: string, definition: string } | null } | null }> | null, urls?: Array<{ __typename?: 'AssetUrls', url?: string | null, urlType?: { __typename?: 'CUrlTypes', name: string, id: string, definition: string } | null }> | null } & { ' $fragmentName'?: 'AssetFieldsFragmentFragment' };
-
-export type EntityFieldsFragmentFragment = { __typename?: 'CEntities', name: string, tradeName: string, taxIdentificationNumber: string, localRegistrationNumber: string, leiNumber: string, id: string, dateOfIncorporation?: string | null, address: string, entityType?: { __typename?: 'CEntityTypes', name: string, id: string, definition: string } | null, country?: { __typename?: 'CCountries', name: string, id: string, code: string } | null, urls?: Array<{ __typename?: 'EntityUrls', url?: string | null, urlType?: { __typename?: 'CUrlTypes', name: string, id: string, definition: string } | null }> | null } & { ' $fragmentName'?: 'EntityFieldsFragmentFragment' };
-
-export type ProfileFragmentFragment = { __typename?: 'CProfileInfos', profileSector?: { __typename?: 'CProfileSectors', name: string } | null, profileType?: { __typename?: 'CProfileTypes', name: string } | null, root?: { __typename?: 'CRoots', assets?: Array<{ __typename?: 'CAssets', ticker: string }> | null, profileTags?: Array<{ __typename?: 'CProfileTags', tag?: { __typename?: 'CTags', name: string, id: string } | null }> | null } | null, profileStatus?: { __typename?: 'CProfileStatuses', name: string, id: string } | null, mainProduct?: { __typename?: 'CRoots', products?: Array<{ __typename?: 'CProducts', productType?: { __typename?: 'CProductTypes', name: string } | null }> | null } | null } & { ' $fragmentName'?: 'ProfileFragmentFragment' };
-
-export type ProductFieldsFragmentFragment = { __typename?: 'CProducts', rootId: string, productTypeId?: string | null, productStatusId?: string | null, name: string, launchDate?: string | null, isMainProduct: number, id: string, description: string, productType?: { __typename?: 'CProductTypes', name: string, id: string, definition: string } | null, productStatus?: { __typename?: 'CProductStatuses', name: string, id: string, definition: string } | null, productDeployments?: Array<{ __typename?: 'CProductDeployments', smartContractDeployment?: { __typename?: 'CSmartContractDeployments', isOfStandardId?: string | null, id: string, deployedOnProduct?: { __typename?: 'CProducts', id: string, name: string, root?: { __typename?: 'CRoots', slug: string } | null } | null, assetStandard?: { __typename?: 'CAssetStandards', id: string } | null, deploymentType?: { __typename?: 'CDeploymentTypes', name: string } | null, smartContracts?: Array<{ __typename?: 'CSmartContracts', name: string, id: string, deploymentDate?: string | null, address: string, deploymentId?: string | null }> | null } | null }> | null, supportsProducts?: Array<{ __typename?: 'CSupportsProducts', supportsProduct?: { __typename?: 'CProducts', name: string, id: string, root?: { __typename?: 'CRoots', slug: string } | null } | null }> | null, urls?: Array<{ __typename?: 'ProductUrls', url?: string | null, urlType?: { __typename?: 'CUrlTypes', name: string, id: string, definition: string } | null }> | null, productAssetRelationships?: Array<{ __typename?: 'CProductAssetRelationships', assetId: string, asset?: { __typename?: 'CAssets', name: string, id: string, assetType?: { __typename?: 'CAssetTypes', name: string } | null, root?: { __typename?: 'CRoots', slug: string } | null } | null, assetSupportType?: { __typename?: 'CAssetSupportTypes', name: string } | null, product?: { __typename?: 'CProducts', name: string, id: string, description: string } | null }> | null } & { ' $fragmentName'?: 'ProductFieldsFragmentFragment' };
-
-export type ProfileHeadingFragmentFragment = { __typename?: 'CProfileInfos', logo: string, name: string, urls?: Array<{ __typename?: 'ProfileInfoUrls', url?: string | null, urlType?: { __typename?: 'CUrlTypes', name: string } | null }> | null, root?: { __typename?: 'CRoots', socials?: Array<{ __typename?: 'CSocials', name: string, socialType?: { __typename?: 'CSocialTypes', name: string } | null, urls?: Array<{ __typename?: 'SocialUrls', url?: string | null }> | null }> | null } | null } & { ' $fragmentName'?: 'ProfileHeadingFragmentFragment' };
+export type ProfileHeadingFragmentFragment = {
+  __typename?: 'AProfileInfos';
+  logo?: string | null;
+  name: string;
+  urls?: Array<{
+    __typename?: 'ProfileInfoUrls';
+    url: string;
+    urlType?: { __typename?: 'AUrlTypes'; name: string } | null;
+  }> | null;
+  root?: {
+    __typename?: 'ARoots';
+    socials?: Array<{
+      __typename?: 'ASocials';
+      name: string;
+      socialType?: { __typename?: 'ASocialTypes'; name: string } | null;
+      urls?: Array<{ __typename?: 'SocialUrls'; url?: string | null }> | null;
+    }> | null;
+  } | null;
+} & { ' $fragmentName'?: 'ProfileHeadingFragmentFragment' };
 
 export type GetProfileDataQueryVariables = Exact<{
-  where?: InputMaybe<CProfileInfosBoolExp>;
+  where?: InputMaybe<AProfileInfosBoolExp>;
 }>;
 
-
-export type GetProfileDataQuery = { __typename?: 'Query', profileInfos?: Array<(
-    { __typename?: 'CProfileInfos', tagLine: string, descriptionShort: string, descriptionLong: string, root?: { __typename?: 'CRoots', products?: Array<(
-        { __typename?: 'CProducts', id: string }
-        & { ' $fragmentRefs'?: { 'ProductFieldsFragmentFragment': ProductFieldsFragmentFragment } }
-      )> | null, assets?: Array<(
-        { __typename?: 'CAssets', id: string }
-        & { ' $fragmentRefs'?: { 'AssetFieldsFragmentFragment': AssetFieldsFragmentFragment } }
-      )> | null, entities?: Array<(
-        { __typename?: 'CEntities', id: string }
-        & { ' $fragmentRefs'?: { 'EntityFieldsFragmentFragment': EntityFieldsFragmentFragment } }
-      )> | null } | null }
-    & { ' $fragmentRefs'?: { 'ProfileFragmentFragment': ProfileFragmentFragment;'ProfileHeadingFragmentFragment': ProfileHeadingFragmentFragment } }
-  )> | null };
-
-export type ProfileCardFragmentFragment = { __typename?: 'CProfileInfos', name: string, logo: string, id: string, tagLine: string, descriptionShort: string, profileTypeId?: string | null, profileStatusId?: string | null, profileSectorId?: string | null, foundingDate?: string | null, profileSector?: { __typename?: 'CProfileSectors', name: string, id: string, definition: string } | null, profileStatus?: { __typename?: 'CProfileStatuses', name: string, id: string, definition: string } | null, profileType?: { __typename?: 'CProfileTypes', name: string, id: string, definition: string } | null, urls?: Array<{ __typename?: 'ProfileInfoUrls', url?: string | null, urlType?: { __typename?: 'CUrlTypes', name: string, id: string, definition: string } | null }> | null, mainProduct?: { __typename?: 'CRoots', products?: Array<{ __typename?: 'CProducts', name: string, productType?: { __typename?: 'CProductTypes', name: string } | null }> | null } | null, root?: { __typename?: 'CRoots', urlMain: string, slug: string, assets?: Array<(
-      { __typename?: 'CAssets', ticker: string, name: string, id: string }
-      & { ' $fragmentRefs'?: { 'AssetFieldsFragmentFragment': AssetFieldsFragmentFragment } }
-    )> | null, socials?: Array<{ __typename?: 'CSocials', name: string, socialType?: { __typename?: 'CSocialTypes', name: string } | null, urls?: Array<{ __typename?: 'SocialUrls', url?: string | null }> | null }> | null, profileTags?: Array<{ __typename?: 'CProfileTags', tag?: { __typename?: 'CTags', name: string, id: string } | null }> | null, products?: Array<(
-      { __typename?: 'CProducts', id: string, name: string }
-      & { ' $fragmentRefs'?: { 'ProductFieldsFragmentFragment': ProductFieldsFragmentFragment } }
-    )> | null } | null } & { ' $fragmentName'?: 'ProfileCardFragmentFragment' };
-
-export type SearchProfilesQueryVariables = Exact<{
-  order_by?: InputMaybe<Array<CProfileInfosOrderBy> | CProfileInfosOrderBy>;
-  where?: InputMaybe<CProfileInfosBoolExp>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-}>;
-
-
-export type SearchProfilesQuery = { __typename?: 'Query', profileInfos?: Array<(
-    { __typename?: 'CProfileInfos' }
-    & { ' $fragmentRefs'?: { 'ProfileCardFragmentFragment': ProfileCardFragmentFragment } }
-  )> | null };
-
-export type GetOrderByFieldsQueryVariables = Exact<{
-  name: Scalars['String']['input'];
-}>;
-
-
-export type GetOrderByFieldsQuery = { __typename?: 'Query', __type?: { __typename?: '__Type', inputFields?: Array<{ __typename?: '__InputValue', name: string, type: { __typename?: '__Type', name?: string | null, kind: __TypeKind, inputFields?: Array<{ __typename?: '__InputValue', name: string }> | null, ofType?: { __typename?: '__Type', name?: string | null, kind: __TypeKind } | null } }> | null } | null };
-
-export type GetAssetDeployedOnProductsOptionsQueryVariables = Exact<{
-  where?: InputMaybe<CProductsBoolExp>;
-}>;
-
-
-export type GetAssetDeployedOnProductsOptionsQuery = { __typename?: 'Query', products?: Array<{ __typename?: 'CProducts', name: string, id: string, description: string }> | null };
-
-export type GetAssetStandardOptionsQueryVariables = Exact<{
-  where?: InputMaybe<CAssetStandardsBoolExp>;
-}>;
-
-
-export type GetAssetStandardOptionsQuery = { __typename?: 'Query', assetStandards?: Array<{ __typename?: 'CAssetStandards', label: string, value: string, description: string }> | null };
-
-export type GetAssetTickerOptionsQueryVariables = Exact<{
-  where?: InputMaybe<CAssetsBoolExp>;
-}>;
-
-
-export type GetAssetTickerOptionsQuery = { __typename?: 'Query', assets?: Array<{ __typename?: 'CAssets', ticker: string }> | null };
-
-export type GetAssetTypeOptionsQueryVariables = Exact<{
-  where?: InputMaybe<CAssetTypesBoolExp>;
-}>;
-
-
-export type GetAssetTypeOptionsQuery = { __typename?: 'Query', assetTypes?: Array<{ __typename?: 'CAssetTypes', label: string, value: string, description: string }> | null };
-
-export type GetEntityCountryOptionsQueryVariables = Exact<{
-  where?: InputMaybe<CCountriesBoolExp>;
-}>;
-
-
-export type GetEntityCountryOptionsQuery = { __typename?: 'Query', countries?: Array<{ __typename?: 'CCountries', label: string, value: string }> | null };
-
-export type GetEntityNameOptionsQueryVariables = Exact<{
-  where?: InputMaybe<CEntitiesBoolExp>;
-}>;
-
-
-export type GetEntityNameOptionsQuery = { __typename?: 'Query', entities?: Array<{ __typename?: 'CEntities', label: string, value: string }> | null };
-
-export type GetEntityTypeOptionsQueryVariables = Exact<{
-  where?: InputMaybe<CEntityTypesBoolExp>;
-}>;
-
-
-export type GetEntityTypeOptionsQuery = { __typename?: 'Query', entityTypes?: Array<{ __typename?: 'CEntityTypes', label: string, value: string, description: string }> | null };
-
-export type GetProductAssetRelationshipsOptionsQueryVariables = Exact<{
-  where?: InputMaybe<CAssetsBoolExp>;
-}>;
-
-
-export type GetProductAssetRelationshipsOptionsQuery = { __typename?: 'Query', assets?: Array<{ __typename?: 'CAssets', ticker: string }> | null };
-
-export type GetProductDeployedOnProductsOptionsQueryVariables = Exact<{
-  where?: InputMaybe<CProductsBoolExp>;
-}>;
-
-
-export type GetProductDeployedOnProductsOptionsQuery = { __typename?: 'Query', products?: Array<{ __typename?: 'CProducts', name: string, id: string, description: string }> | null };
-
-export type GetProductStatusesOptionsQueryVariables = Exact<{
-  where?: InputMaybe<CProductStatusesBoolExp>;
-}>;
-
-
-export type GetProductStatusesOptionsQuery = { __typename?: 'Query', productStatuses?: Array<{ __typename?: 'CProductStatuses', label: string, value: string, description: string }> | null };
-
-export type GetProductTypeOptionsQueryVariables = Exact<{
-  where?: InputMaybe<CProductTypesBoolExp>;
-  aggregateInput?: InputMaybe<CProductsFilterInput>;
-}>;
-
-
-export type GetProductTypeOptionsQuery = { __typename?: 'Query', productTypes?: Array<{ __typename?: 'CProductTypes', label: string, value: string, description: string, productsAggregate: { __typename?: 'CProductsAggExp', _count: number } }> | null };
-
-export type GetProfileSectorsOptionsQueryVariables = Exact<{
-  where?: InputMaybe<CProfileSectorsBoolExp>;
-  aggregateInput?: InputMaybe<CProfileInfosFilterInput>;
-}>;
-
-
-export type GetProfileSectorsOptionsQuery = { __typename?: 'Query', profileSectors?: Array<{ __typename?: 'CProfileSectors', label: string, value: string, description: string, profileInfosAggregate: { __typename?: 'CProfileInfosAggExp', _count: number } }> | null };
-
-export type GetProfileStatusesOptionsQueryVariables = Exact<{
-  where?: InputMaybe<CProfileStatusesBoolExp>;
-}>;
-
-
-export type GetProfileStatusesOptionsQuery = { __typename?: 'Query', profileStatuses?: Array<{ __typename?: 'CProfileStatuses', label: string, value: string, description: string }> | null };
-
-export type GetProfileTypeOptionsQueryVariables = Exact<{
-  where?: InputMaybe<CProfileTypesBoolExp>;
-}>;
-
-
-export type GetProfileTypeOptionsQuery = { __typename?: 'Query', profileTypes?: Array<{ __typename?: 'CProfileTypes', label: string, value: string, description: string }> | null };
-
-export type GetSupportsProductsOptionsQueryVariables = Exact<{
-  where?: InputMaybe<CSupportsProductsBoolExp>;
-}>;
-
-
-export type GetSupportsProductsOptionsQuery = { __typename?: 'Query', supportsProducts?: Array<{ __typename?: 'CSupportsProducts', supportsProduct?: { __typename?: 'CProducts', name: string, id: string, description: string } | null }> | null };
-
-export type GetTagsOptionsQueryVariables = Exact<{
-  where?: InputMaybe<CTagsBoolExp>;
-  aggregateInput?: InputMaybe<CProfileTagsFilterInput>;
-}>;
-
-
-export type GetTagsOptionsQuery = { __typename?: 'Query', tags?: Array<{ __typename?: 'CTags', description: string, value: string, label: string, profileTagsAggregate: { __typename?: 'CProfileTagsAggExp', _count: number } }> | null };
+export type GetProfileDataQuery = {
+  __typename?: 'Query';
+  profileInfos?: Array<
+    {
+      __typename?: 'AProfileInfos';
+      tagLine: string;
+      descriptionShort: string;
+      descriptionLong: string;
+      root?: {
+        __typename?: 'ARoots';
+        products?: Array<
+          { __typename?: 'AProducts'; id: string } & {
+            ' $fragmentRefs'?: {
+              ProductFieldsFragmentFragment: ProductFieldsFragmentFragment;
+            };
+          }
+        > | null;
+        assets?: Array<
+          { __typename?: 'AAssets'; id: string } & {
+            ' $fragmentRefs'?: {
+              AssetFieldsFragmentFragment: AssetFieldsFragmentFragment;
+            };
+          }
+        > | null;
+        entities?: Array<
+          { __typename?: 'AEntities'; id: string } & {
+            ' $fragmentRefs'?: {
+              EntityFieldsFragmentFragment: EntityFieldsFragmentFragment;
+            };
+          }
+        > | null;
+      } | null;
+    } & {
+      ' $fragmentRefs'?: {
+        ProfileHeadingFragmentFragment: ProfileHeadingFragmentFragment;
+        ProfileFragmentFragment: ProfileFragmentFragment;
+      };
+    }
+  > | null;
+};
 
 export class TypedDocumentString<TResult, TVariables>
   extends String
@@ -3065,7 +3058,10 @@ export class TypedDocumentString<TResult, TVariables>
 {
   __apiType?: DocumentTypeDecoration<TResult, TVariables>['__apiType'];
 
-  constructor(private value: string, public __meta__?: Record<string, any> | undefined) {
+  constructor(
+    private value: string,
+    public __meta__?: Record<string, any> | undefined
+  ) {
     super(value);
   }
 
@@ -3073,8 +3069,72 @@ export class TypedDocumentString<TResult, TVariables>
     return this.value;
   }
 }
-export const EntityFieldsFragmentFragmentDoc = new TypedDocumentString(`
-    fragment EntityFieldsFragment on CEntities {
+export const AssetFieldsFragmentFragmentDoc = new TypedDocumentString(
+  `
+    fragment AssetFieldsFragment on AAssets {
+  ticker
+  rootId
+  name
+  id
+  icon
+  description
+  assetTypeId
+  assetStatusId
+  assetType {
+    definition
+    id
+    name
+  }
+  assetStatus {
+    name
+    id
+    definition
+  }
+  assetDeployments {
+    id
+    deploymentId
+    assetId
+    smartContractDeployment {
+      id
+      deployedOnProduct {
+        id
+        name
+        root {
+          slug
+        }
+      }
+      assetStandard {
+        id
+      }
+      smartContracts {
+        name
+        id
+        deploymentId
+        deploymentDate
+        address
+      }
+      deploymentType {
+        name
+        id
+        definition
+      }
+    }
+  }
+  urls(order_by: {urlTypeId: Asc}) {
+    url
+    urlType {
+      name
+      id
+      definition
+    }
+  }
+}
+    `,
+  { fragmentName: 'AssetFieldsFragment' }
+) as unknown as TypedDocumentString<AssetFieldsFragmentFragment, unknown>;
+export const EntityFieldsFragmentFragmentDoc = new TypedDocumentString(
+  `
+    fragment EntityFieldsFragment on AEntities {
   name
   tradeName
   taxIdentificationNumber
@@ -3102,9 +3162,12 @@ export const EntityFieldsFragmentFragmentDoc = new TypedDocumentString(`
     }
   }
 }
-    `, {"fragmentName":"EntityFieldsFragment"}) as unknown as TypedDocumentString<EntityFieldsFragmentFragment, unknown>;
-export const ProfileFragmentFragmentDoc = new TypedDocumentString(`
-    fragment ProfileFragment on CProfileInfos {
+    `,
+  { fragmentName: 'EntityFieldsFragment' }
+) as unknown as TypedDocumentString<EntityFieldsFragmentFragment, unknown>;
+export const ProfileFragmentFragmentDoc = new TypedDocumentString(
+  `
+    fragment ProfileFragment on AProfileInfos {
   profileSector {
     name
   }
@@ -3136,32 +3199,12 @@ export const ProfileFragmentFragmentDoc = new TypedDocumentString(`
     }
   }
 }
-    `, {"fragmentName":"ProfileFragment"}) as unknown as TypedDocumentString<ProfileFragmentFragment, unknown>;
-export const ProfileHeadingFragmentFragmentDoc = new TypedDocumentString(`
-    fragment ProfileHeadingFragment on CProfileInfos {
-  logo
-  name
-  urls(order_by: {urlTypeId: Asc}) {
-    url
-    urlType {
-      name
-    }
-  }
-  root {
-    socials {
-      name
-      socialType {
-        name
-      }
-      urls(order_by: {urlTypeId: Asc}) {
-        url
-      }
-    }
-  }
-}
-    `, {"fragmentName":"ProfileHeadingFragment"}) as unknown as TypedDocumentString<ProfileHeadingFragmentFragment, unknown>;
-export const ProductFieldsFragmentFragmentDoc = new TypedDocumentString(`
-    fragment ProductFieldsFragment on CProducts {
+    `,
+  { fragmentName: 'ProfileFragment' }
+) as unknown as TypedDocumentString<ProfileFragmentFragment, unknown>;
+export const ProductFieldsFragmentFragmentDoc = new TypedDocumentString(
+  `
+    fragment ProductFieldsFragment on AProducts {
   rootId
   productTypeId
   productStatusId
@@ -3245,117 +3288,21 @@ export const ProductFieldsFragmentFragmentDoc = new TypedDocumentString(`
     }
   }
 }
-    `, {"fragmentName":"ProductFieldsFragment"}) as unknown as TypedDocumentString<ProductFieldsFragmentFragment, unknown>;
-export const AssetFieldsFragmentFragmentDoc = new TypedDocumentString(`
-    fragment AssetFieldsFragment on CAssets {
-  ticker
-  rootId
-  name
-  id
-  icon
-  description
-  assetTypeId
-  assetStatusId
-  assetType {
-    definition
-    id
-    name
-  }
-  assetStatus {
-    name
-    id
-    definition
-  }
-  assetDeployments {
-    id
-    deploymentId
-    assetId
-    smartContractDeployment {
-      id
-      deployedOnProduct {
-        id
-        name
-        root {
-          slug
-        }
-      }
-      assetStandard {
-        id
-      }
-      smartContracts {
-        name
-        id
-        deploymentId
-        deploymentDate
-        address
-      }
-      deploymentType {
-        name
-        id
-        definition
-      }
-    }
-  }
-  urls(order_by: {urlTypeId: Asc}) {
-    url
-    urlType {
-      name
-      id
-      definition
-    }
-  }
-}
-    `, {"fragmentName":"AssetFieldsFragment"}) as unknown as TypedDocumentString<AssetFieldsFragmentFragment, unknown>;
-export const ProfileCardFragmentFragmentDoc = new TypedDocumentString(`
-    fragment ProfileCardFragment on CProfileInfos {
-  name
+    `,
+  { fragmentName: 'ProductFieldsFragment' }
+) as unknown as TypedDocumentString<ProductFieldsFragmentFragment, unknown>;
+export const ProfileHeadingFragmentFragmentDoc = new TypedDocumentString(
+  `
+    fragment ProfileHeadingFragment on AProfileInfos {
   logo
-  id
-  tagLine
-  descriptionShort
-  profileTypeId
-  profileStatusId
-  profileSectorId
-  foundingDate
-  profileSector {
-    name
-    id
-    definition
-  }
-  profileStatus {
-    name
-    id
-    definition
-  }
-  profileType {
-    name
-    id
-    definition
-  }
+  name
   urls(order_by: {urlTypeId: Asc}) {
     url
     urlType {
       name
-      id
-      definition
-    }
-  }
-  mainProduct: root {
-    products(where: {isMainProduct: {_eq: "1"}}, limit: 1) {
-      name
-      productType {
-        name
-      }
     }
   }
   root {
-    urlMain
-    slug
-    assets {
-      ticker
-      name
-      id
-    }
     socials {
       name
       socialType {
@@ -3365,172 +3312,19 @@ export const ProfileCardFragmentFragmentDoc = new TypedDocumentString(`
         url
       }
     }
-    profileTags {
-      tag {
-        name
-        id
-      }
-    }
-    products {
-      id
-      name
-      ...ProductFieldsFragment
-    }
-    assets {
-      ...AssetFieldsFragment
-    }
   }
 }
-    fragment AssetFieldsFragment on CAssets {
-  ticker
-  rootId
-  name
-  id
-  icon
-  description
-  assetTypeId
-  assetStatusId
-  assetType {
-    definition
-    id
-    name
-  }
-  assetStatus {
-    name
-    id
-    definition
-  }
-  assetDeployments {
-    id
-    deploymentId
-    assetId
-    smartContractDeployment {
-      id
-      deployedOnProduct {
-        id
-        name
-        root {
-          slug
-        }
-      }
-      assetStandard {
-        id
-      }
-      smartContracts {
-        name
-        id
-        deploymentId
-        deploymentDate
-        address
-      }
-      deploymentType {
-        name
-        id
-        definition
-      }
-    }
-  }
-  urls(order_by: {urlTypeId: Asc}) {
-    url
-    urlType {
-      name
-      id
-      definition
-    }
-  }
-}
-fragment ProductFieldsFragment on CProducts {
-  rootId
-  productTypeId
-  productStatusId
-  name
-  launchDate
-  isMainProduct
-  id
-  description
-  productType {
-    name
-    id
-    definition
-  }
-  productStatus {
-    name
-    id
-    definition
-  }
-  productDeployments {
-    smartContractDeployment {
-      deployedOnProduct {
-        id
-        name
-        root {
-          slug
-        }
-      }
-      assetStandard {
-        id
-      }
-      deploymentType {
-        name
-      }
-      smartContracts {
-        name
-        id
-        deploymentDate
-        address
-        deploymentId
-      }
-      isOfStandardId
-      id
-    }
-  }
-  supportsProducts {
-    supportsProduct {
-      name
-      id
-      root {
-        slug
-      }
-    }
-  }
-  urls(order_by: {urlTypeId: Asc}) {
-    url
-    urlType {
-      name
-      id
-      definition
-    }
-  }
-  productAssetRelationships {
-    assetId
-    asset {
-      name
-      id
-      assetType {
-        name
-      }
-      root {
-        slug
-      }
-    }
-    assetSupportType {
-      name
-    }
-    product {
-      name
-      id
-      description
-    }
-  }
-}`, {"fragmentName":"ProfileCardFragment"}) as unknown as TypedDocumentString<ProfileCardFragmentFragment, unknown>;
+    `,
+  { fragmentName: 'ProfileHeadingFragment' }
+) as unknown as TypedDocumentString<ProfileHeadingFragmentFragment, unknown>;
 export const GetProfileDataDocument = new TypedDocumentString(`
-    query getProfileData($where: CProfileInfosBoolExp) {
+    query getProfileData($where: AProfileInfosBoolExp) {
   profileInfos(limit: 1, offset: 0, where: $where) {
     tagLine
     descriptionShort
     descriptionLong
-    ...ProfileFragment
     ...ProfileHeadingFragment
+    ...ProfileFragment
     root {
       products {
         id
@@ -3547,7 +3341,7 @@ export const GetProfileDataDocument = new TypedDocumentString(`
     }
   }
 }
-    fragment AssetFieldsFragment on CAssets {
+    fragment AssetFieldsFragment on AAssets {
   ticker
   rootId
   name
@@ -3605,7 +3399,7 @@ export const GetProfileDataDocument = new TypedDocumentString(`
     }
   }
 }
-fragment EntityFieldsFragment on CEntities {
+fragment EntityFieldsFragment on AEntities {
   name
   tradeName
   taxIdentificationNumber
@@ -3633,7 +3427,7 @@ fragment EntityFieldsFragment on CEntities {
     }
   }
 }
-fragment ProfileFragment on CProfileInfos {
+fragment ProfileFragment on AProfileInfos {
   profileSector {
     name
   }
@@ -3665,7 +3459,7 @@ fragment ProfileFragment on CProfileInfos {
     }
   }
 }
-fragment ProductFieldsFragment on CProducts {
+fragment ProductFieldsFragment on AProducts {
   rootId
   productTypeId
   productStatusId
@@ -3749,7 +3543,7 @@ fragment ProductFieldsFragment on CProducts {
     }
   }
 }
-fragment ProfileHeadingFragment on CProfileInfos {
+fragment ProfileHeadingFragment on AProfileInfos {
   logo
   name
   urls(order_by: {urlTypeId: Asc}) {
@@ -3769,395 +3563,7 @@ fragment ProfileHeadingFragment on CProfileInfos {
       }
     }
   }
-}`) as unknown as TypedDocumentString<GetProfileDataQuery, GetProfileDataQueryVariables>;
-export const SearchProfilesDocument = new TypedDocumentString(`
-    query SearchProfiles($order_by: [CProfileInfosOrderBy!], $where: CProfileInfosBoolExp, $limit: Int, $offset: Int) {
-  profileInfos(limit: $limit, offset: $offset, where: $where, order_by: $order_by) {
-    ...ProfileCardFragment
-  }
-}
-    fragment AssetFieldsFragment on CAssets {
-  ticker
-  rootId
-  name
-  id
-  icon
-  description
-  assetTypeId
-  assetStatusId
-  assetType {
-    definition
-    id
-    name
-  }
-  assetStatus {
-    name
-    id
-    definition
-  }
-  assetDeployments {
-    id
-    deploymentId
-    assetId
-    smartContractDeployment {
-      id
-      deployedOnProduct {
-        id
-        name
-        root {
-          slug
-        }
-      }
-      assetStandard {
-        id
-      }
-      smartContracts {
-        name
-        id
-        deploymentId
-        deploymentDate
-        address
-      }
-      deploymentType {
-        name
-        id
-        definition
-      }
-    }
-  }
-  urls(order_by: {urlTypeId: Asc}) {
-    url
-    urlType {
-      name
-      id
-      definition
-    }
-  }
-}
-fragment ProductFieldsFragment on CProducts {
-  rootId
-  productTypeId
-  productStatusId
-  name
-  launchDate
-  isMainProduct
-  id
-  description
-  productType {
-    name
-    id
-    definition
-  }
-  productStatus {
-    name
-    id
-    definition
-  }
-  productDeployments {
-    smartContractDeployment {
-      deployedOnProduct {
-        id
-        name
-        root {
-          slug
-        }
-      }
-      assetStandard {
-        id
-      }
-      deploymentType {
-        name
-      }
-      smartContracts {
-        name
-        id
-        deploymentDate
-        address
-        deploymentId
-      }
-      isOfStandardId
-      id
-    }
-  }
-  supportsProducts {
-    supportsProduct {
-      name
-      id
-      root {
-        slug
-      }
-    }
-  }
-  urls(order_by: {urlTypeId: Asc}) {
-    url
-    urlType {
-      name
-      id
-      definition
-    }
-  }
-  productAssetRelationships {
-    assetId
-    asset {
-      name
-      id
-      assetType {
-        name
-      }
-      root {
-        slug
-      }
-    }
-    assetSupportType {
-      name
-    }
-    product {
-      name
-      id
-      description
-    }
-  }
-}
-fragment ProfileCardFragment on CProfileInfos {
-  name
-  logo
-  id
-  tagLine
-  descriptionShort
-  profileTypeId
-  profileStatusId
-  profileSectorId
-  foundingDate
-  profileSector {
-    name
-    id
-    definition
-  }
-  profileStatus {
-    name
-    id
-    definition
-  }
-  profileType {
-    name
-    id
-    definition
-  }
-  urls(order_by: {urlTypeId: Asc}) {
-    url
-    urlType {
-      name
-      id
-      definition
-    }
-  }
-  mainProduct: root {
-    products(where: {isMainProduct: {_eq: "1"}}, limit: 1) {
-      name
-      productType {
-        name
-      }
-    }
-  }
-  root {
-    urlMain
-    slug
-    assets {
-      ticker
-      name
-      id
-    }
-    socials {
-      name
-      socialType {
-        name
-      }
-      urls(order_by: {urlTypeId: Asc}) {
-        url
-      }
-    }
-    profileTags {
-      tag {
-        name
-        id
-      }
-    }
-    products {
-      id
-      name
-      ...ProductFieldsFragment
-    }
-    assets {
-      ...AssetFieldsFragment
-    }
-  }
-}`) as unknown as TypedDocumentString<SearchProfilesQuery, SearchProfilesQueryVariables>;
-export const GetOrderByFieldsDocument = new TypedDocumentString(`
-    query GetOrderByFields($name: String!) {
-  __type(name: $name) {
-    inputFields {
-      name
-      type {
-        inputFields {
-          name
-        }
-        name
-        kind
-        ofType {
-          name
-          kind
-        }
-      }
-    }
-  }
-}
-    `) as unknown as TypedDocumentString<GetOrderByFieldsQuery, GetOrderByFieldsQueryVariables>;
-export const GetAssetDeployedOnProductsOptionsDocument = new TypedDocumentString(`
-    query getAssetDeployedOnProductsOptions($where: CProductsBoolExp) {
-  products(where: $where) {
-    name
-    id
-    description
-  }
-}
-    `) as unknown as TypedDocumentString<GetAssetDeployedOnProductsOptionsQuery, GetAssetDeployedOnProductsOptionsQueryVariables>;
-export const GetAssetStandardOptionsDocument = new TypedDocumentString(`
-    query getAssetStandardOptions($where: CAssetStandardsBoolExp) {
-  assetStandards(where: $where) {
-    label: name
-    value: id
-    description: definition
-  }
-}
-    `) as unknown as TypedDocumentString<GetAssetStandardOptionsQuery, GetAssetStandardOptionsQueryVariables>;
-export const GetAssetTickerOptionsDocument = new TypedDocumentString(`
-    query getAssetTickerOptions($where: CAssetsBoolExp) {
-  assets(where: $where) {
-    ticker
-  }
-}
-    `) as unknown as TypedDocumentString<GetAssetTickerOptionsQuery, GetAssetTickerOptionsQueryVariables>;
-export const GetAssetTypeOptionsDocument = new TypedDocumentString(`
-    query getAssetTypeOptions($where: CAssetTypesBoolExp) {
-  assetTypes(where: $where) {
-    label: name
-    value: id
-    description: definition
-  }
-}
-    `) as unknown as TypedDocumentString<GetAssetTypeOptionsQuery, GetAssetTypeOptionsQueryVariables>;
-export const GetEntityCountryOptionsDocument = new TypedDocumentString(`
-    query getEntityCountryOptions($where: CCountriesBoolExp) {
-  countries(where: $where) {
-    label: name
-    value: id
-  }
-}
-    `) as unknown as TypedDocumentString<GetEntityCountryOptionsQuery, GetEntityCountryOptionsQueryVariables>;
-export const GetEntityNameOptionsDocument = new TypedDocumentString(`
-    query getEntityNameOptions($where: CEntitiesBoolExp) {
-  entities(where: $where) {
-    label: name
-    value: id
-  }
-}
-    `) as unknown as TypedDocumentString<GetEntityNameOptionsQuery, GetEntityNameOptionsQueryVariables>;
-export const GetEntityTypeOptionsDocument = new TypedDocumentString(`
-    query getEntityTypeOptions($where: CEntityTypesBoolExp) {
-  entityTypes(where: $where) {
-    label: name
-    value: id
-    description: definition
-  }
-}
-    `) as unknown as TypedDocumentString<GetEntityTypeOptionsQuery, GetEntityTypeOptionsQueryVariables>;
-export const GetProductAssetRelationshipsOptionsDocument = new TypedDocumentString(`
-    query getProductAssetRelationshipsOptions($where: CAssetsBoolExp) {
-  assets(where: $where) {
-    ticker
-  }
-}
-    `) as unknown as TypedDocumentString<GetProductAssetRelationshipsOptionsQuery, GetProductAssetRelationshipsOptionsQueryVariables>;
-export const GetProductDeployedOnProductsOptionsDocument = new TypedDocumentString(`
-    query getProductDeployedOnProductsOptions($where: CProductsBoolExp) {
-  products(where: $where) {
-    name
-    id
-    description
-  }
-}
-    `) as unknown as TypedDocumentString<GetProductDeployedOnProductsOptionsQuery, GetProductDeployedOnProductsOptionsQueryVariables>;
-export const GetProductStatusesOptionsDocument = new TypedDocumentString(`
-    query getProductStatusesOptions($where: CProductStatusesBoolExp) {
-  productStatuses(where: $where) {
-    label: name
-    value: id
-    description: definition
-  }
-}
-    `) as unknown as TypedDocumentString<GetProductStatusesOptionsQuery, GetProductStatusesOptionsQueryVariables>;
-export const GetProductTypeOptionsDocument = new TypedDocumentString(`
-    query getProductTypeOptions($where: CProductTypesBoolExp, $aggregateInput: CProductsFilterInput) {
-  productTypes(where: $where) {
-    label: name
-    value: id
-    description: definition
-    productsAggregate(filter_input: $aggregateInput) {
-      _count
-    }
-  }
-}
-    `) as unknown as TypedDocumentString<GetProductTypeOptionsQuery, GetProductTypeOptionsQueryVariables>;
-export const GetProfileSectorsOptionsDocument = new TypedDocumentString(`
-    query getProfileSectorsOptions($where: CProfileSectorsBoolExp, $aggregateInput: CProfileInfosFilterInput) {
-  profileSectors(where: $where) {
-    label: name
-    value: id
-    description: definition
-    profileInfosAggregate(filter_input: $aggregateInput) {
-      _count
-    }
-  }
-}
-    `) as unknown as TypedDocumentString<GetProfileSectorsOptionsQuery, GetProfileSectorsOptionsQueryVariables>;
-export const GetProfileStatusesOptionsDocument = new TypedDocumentString(`
-    query getProfileStatusesOptions($where: CProfileStatusesBoolExp) {
-  profileStatuses(where: $where) {
-    label: name
-    value: id
-    description: definition
-  }
-}
-    `) as unknown as TypedDocumentString<GetProfileStatusesOptionsQuery, GetProfileStatusesOptionsQueryVariables>;
-export const GetProfileTypeOptionsDocument = new TypedDocumentString(`
-    query getProfileTypeOptions($where: CProfileTypesBoolExp) {
-  profileTypes(where: $where) {
-    label: name
-    value: id
-    description: definition
-  }
-}
-    `) as unknown as TypedDocumentString<GetProfileTypeOptionsQuery, GetProfileTypeOptionsQueryVariables>;
-export const GetSupportsProductsOptionsDocument = new TypedDocumentString(`
-    query getSupportsProductsOptions($where: CSupportsProductsBoolExp) {
-  supportsProducts(where: $where) {
-    supportsProduct {
-      name
-      id
-      description
-    }
-  }
-}
-    `) as unknown as TypedDocumentString<GetSupportsProductsOptionsQuery, GetSupportsProductsOptionsQueryVariables>;
-export const GetTagsOptionsDocument = new TypedDocumentString(`
-    query getTagsOptions($where: CTagsBoolExp, $aggregateInput: CProfileTagsFilterInput) {
-  tags(where: $where) {
-    value: id
-    label: name
-    description
-    profileTagsAggregate(filter_input: $aggregateInput) {
-      _count
-    }
-  }
-}
-    `) as unknown as TypedDocumentString<GetTagsOptionsQuery, GetTagsOptionsQueryVariables>;
+}`) as unknown as TypedDocumentString<
+  GetProfileDataQuery,
+  GetProfileDataQueryVariables
+>;

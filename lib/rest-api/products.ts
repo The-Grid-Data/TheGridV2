@@ -1,8 +1,8 @@
-import { CProducts } from '../graphql/generated/graphql';
+import { AProducts } from '../graphql/generated/graphql';
 import { RestClient } from './client';
 
-export type CreateProductInput = Partial<CProducts>;
-export type UpdateProductInput = Partial<CProducts> & { id: string };
+export type CreateProductInput = Partial<AProducts>;
+export type UpdateProductInput = Partial<AProducts> & { id: string };
 
 const TABLE_NAME = 'products';
 
