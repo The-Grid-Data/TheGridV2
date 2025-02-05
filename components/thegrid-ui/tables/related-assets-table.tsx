@@ -3,51 +3,46 @@
 import { DataTable } from '@/components/thegrid-ui/data-table/data-table';
 import { useDataTable } from '@/components/thegrid-ui/data-table/hooks/use-data-table';
 import { type ColumnDef } from '@tanstack/react-table';
+import { TableContainer } from '../lenses/base/components/table-container';
+import { ProductFieldsFragmentFragment } from '@/lib/graphql/generated/graphql';
+import { useMemo } from 'react';
+import { DataTableColumnHeader } from '../data-table/data-table-column-header';
 
-interface RelatedAsset {
-  id: string;
-  asset: string;
-  supportType: string;
-}
+type ProductAssetRelationships =
+  ProductFieldsFragmentFragment['productAssetRelationships'];
+type ProductAssetRelationship = NonNullable<ProductAssetRelationships>[number];
 
-const relatedAssets: RelatedAsset[] = [
+const columns: ColumnDef<ProductAssetRelationship>[] = [
   {
-    id: '1',
-    asset: 'SLN',
-    supportType: 'Native'
+    accessorKey: 'asset.name',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Asset" />
+    )
   },
   {
-    id: '2',
-    asset: 'ETH',
-    supportType: 'Memecoins'
-  },
-  {
-    id: '3',
-    asset: 'Other',
-    supportType: 'Other'
+    accessorKey: 'assetSupportType.name',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Support Type" />
+    )
   }
 ];
 
-const columns: ColumnDef<RelatedAsset>[] = [
-  {
-    accessorKey: 'asset',
-    header: 'Asset'
-  },
-  {
-    accessorKey: 'supportType',
-    header: 'Support Type'
-  }
-];
+type RelatedAssetsTableProps = {
+  productAssetRelationships?: ProductAssetRelationships;
+};
 
-interface RelatedAssetsTableProps {}
+export function RelatedAssetsTable({
+  productAssetRelationships
+}: RelatedAssetsTableProps) {
+  const data = useMemo(() => {
+    return productAssetRelationships ?? [];
+  }, [productAssetRelationships]);
 
-export function RelatedAssetsTable({}: RelatedAssetsTableProps) {
   const table = useDataTable({
-    data: relatedAssets,
+    data,
     columns,
-    pageCount: Math.ceil(relatedAssets.length / 10),
+    pageCount: Math.ceil(data.length / 10),
     initialState: {
-      sorting: [{ id: 'asset', desc: false }],
       pagination: {
         pageSize: 10,
         pageIndex: 0
@@ -56,8 +51,10 @@ export function RelatedAssetsTable({}: RelatedAssetsTableProps) {
   });
 
   return (
-    <div className="space-y-4">
-      <DataTable table={table} />
-    </div>
+    <TableContainer title="Related Assets">
+      <div className="space-y-4">
+        <DataTable table={table} />
+      </div>
+    </TableContainer>
   );
 }

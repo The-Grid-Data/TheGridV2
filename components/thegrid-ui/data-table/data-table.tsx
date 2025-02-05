@@ -1,5 +1,9 @@
 import * as React from 'react';
-import { flexRender, type Table as TanstackTable } from '@tanstack/react-table';
+import {
+  flexRender,
+  Row,
+  type Table as TanstackTable
+} from '@tanstack/react-table';
 
 import { cn } from '@/lib/utils';
 import {
@@ -12,6 +16,9 @@ import {
 } from '@/components/ui/table';
 import { getCommonPinningStyles } from './lib/data-table';
 import { DataTablePagination } from './data-table-pagination';
+import { Button } from '@/components/ui/button';
+import { ChevronDown, ChevronUp } from 'lucide-react';
+import { Fragment } from 'react';
 
 interface DataTableProps<TData> extends React.HTMLAttributes<HTMLDivElement> {
   /**
@@ -27,6 +34,8 @@ interface DataTableProps<TData> extends React.HTMLAttributes<HTMLDivElement> {
    * @example floatingBar={<TasksTableFloatingBar table={table} />}
    */
   floatingBar?: React.ReactNode | null;
+
+  renderSubRow?: (row: Row<TData>) => React.ReactNode;
 }
 
 export function DataTable<TData>({
@@ -34,8 +43,18 @@ export function DataTable<TData>({
   floatingBar = null,
   children,
   className,
+  renderSubRow,
   ...props
 }: DataTableProps<TData>) {
+  const [openRows, setOpenRows] = React.useState<Record<string, boolean>>({});
+
+  const toggleRow = (rowId: string) => {
+    setOpenRows(prev => ({
+      ...prev,
+      [rowId]: !prev[rowId]
+    }));
+  };
+
   return (
     <div
       className={cn('w-full space-y-2.5 overflow-auto', className)}
@@ -47,53 +66,97 @@ export function DataTable<TData>({
           <TableHeader>
             {table.getHeaderGroups().map(headerGroup => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map(header => {
-                  return (
-                    <TableHead
-                      key={header.id}
-                      colSpan={header.colSpan}
-                      style={{
-                        ...getCommonPinningStyles({ column: header.column })
-                      }}
-                    >
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  );
-                })}
+                {renderSubRow && <TableHead colSpan={1} />}
+                {headerGroup.headers.map(header => (
+                  <TableHead
+                    key={header.id}
+                    colSpan={header.colSpan}
+                    style={{
+                      ...getCommonPinningStyles({ column: header.column })
+                    }}
+                  >
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </TableHead>
+                ))}
               </TableRow>
             ))}
           </TableHeader>
           <TableBody>
             {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map(row => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && 'selected'}
-                >
-                  {row.getVisibleCells().map(cell => (
-                    <TableCell
-                      key={cell.id}
-                      style={{
-                        ...getCommonPinningStyles({ column: cell.column })
-                      }}
-                    >
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
+              table.getRowModel().rows.map(row =>
+                renderSubRow ? (
+                  <Fragment key={row.id}>
+                    <TableRow data-state={row.getIsSelected() && 'selected'}>
+                      <TableCell className="w-2">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => toggleRow(row.id)}
+                          aria-expanded={openRows[row.id] ? 'true' : 'false'}
+                          aria-label="Toggle"
+                        >
+                          {openRows[row.id] ? (
+                            <ChevronUp className="h-4 w-4" />
+                          ) : (
+                            <ChevronDown className="h-4 w-4" />
+                          )}
+                          <span className="sr-only">Toggle</span>
+                        </Button>
+                      </TableCell>
+                      {row.getVisibleCells().map(cell => (
+                        <TableCell
+                          key={cell.id}
+                          style={{
+                            ...getCommonPinningStyles({ column: cell.column })
+                          }}
+                        >
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                    {openRows[row.id] && (
+                      <TableRow key={`${row.id}-subrow`}>
+                        <TableCell colSpan={table.getAllColumns().length + 1}>
+                          {renderSubRow(row)}
+                        </TableCell>
+                      </TableRow>
+                    )}
+                  </Fragment>
+                ) : (
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && 'selected'}
+                  >
+                    {row.getVisibleCells().map(cell => (
+                      <TableCell
+                        key={cell.id}
+                        style={{
+                          ...getCommonPinningStyles({ column: cell.column })
+                        }}
+                      >
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                )
+              )
             ) : (
               <TableRow>
                 <TableCell
-                  colSpan={table.getAllColumns().length}
+                  colSpan={
+                    table.getAllColumns().length + (renderSubRow ? 1 : 0)
+                  }
                   className="h-24 text-center"
                 >
                   No results.

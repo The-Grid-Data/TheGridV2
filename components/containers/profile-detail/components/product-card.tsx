@@ -50,6 +50,7 @@ export const ProductFragment = graphql(`
         }
         assetStandard {
           id
+          name
         }
         deploymentType {
           name
@@ -134,13 +135,9 @@ export const ProductCard = ({
           )}
           <div className="ml-auto">
             <EditProductOverlay
-              lensData={product}
+              product={product}
               triggerNode={
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  type="button"
-                >
+                <Button variant="ghost" size="icon" type="button">
                   <Edit className="h-4 w-4" />
                 </Button>
               }

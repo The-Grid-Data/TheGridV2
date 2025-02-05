@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import type { DataTableFilterField, ExtendedSortingState } from '../types';
 import {
   getCoreRowModel,
@@ -23,6 +23,7 @@ import {
 interface UseDataTableProps<TData>
   extends Omit<
     TableOptions<TData>,
+    // | 'data'
     | 'state'
     | 'pageCount'
     | 'getCoreRowModel'
@@ -76,6 +77,8 @@ interface UseDataTableProps<TData>
     sorting?: ExtendedSortingState<TData>;
   };
 
+  // data?: TableOptions<TData>['data'] | null;
+
   /**
    * Callback when state changes
    */
@@ -94,28 +97,28 @@ export function useDataTable<TData>({
   ...props
 }: UseDataTableProps<TData>) {
   // Row selection state
-  const [rowSelection, setRowSelection] = React.useState<RowSelectionState>(
+  const [rowSelection, setRowSelection] = useState<RowSelectionState>(
     initialState?.rowSelection ?? {}
   );
 
   // Column visibility state
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>(initialState?.columnVisibility ?? {});
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(
+    initialState?.columnVisibility ?? {}
+  );
 
   // Pagination state
-  const [{ pageIndex, pageSize }, setPagination] =
-    React.useState<PaginationState>({
-      pageIndex: 0,
-      pageSize: initialState?.pagination?.pageSize ?? 10
-    });
+  const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: initialState?.pagination?.pageSize ?? 10
+  });
 
   // Sorting state
-  const [sorting, setSorting] = React.useState<ExtendedSortingState<TData>>(
+  const [sorting, setSorting] = useState<ExtendedSortingState<TData>>(
     initialState?.sorting ?? []
   );
 
   // Column filters state
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
     initialState?.columnFilters ?? []
   );
 
@@ -164,7 +167,7 @@ export function useDataTable<TData>({
   });
 
   // Call onStateChange when any state changes
-  React.useEffect(() => {
+  useEffect(() => {
     onStateChange?.(state => ({
       ...state,
       rowSelection,

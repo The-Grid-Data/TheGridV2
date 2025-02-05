@@ -1,15 +1,12 @@
 'use client';
 
 import * as React from 'react';
-import type {
-  DataTableAdvancedFilterField,
-  DataTableFilterField,
-  DataTableRowAction
-} from '@/components/thegrid-ui/data-table/types';
+import type { DataTableAdvancedFilterField } from '@/components/thegrid-ui/data-table/types';
 import { useDataTable } from '@/components/thegrid-ui/data-table/hooks/use-data-table';
 import { DataTable } from '@/components/thegrid-ui/data-table/data-table';
 import { DataTableToolbar } from '@/components/thegrid-ui/data-table/data-table-toolbar';
 import { type ColumnDef } from '@tanstack/react-table';
+import { DataTableColumnHeader } from '@/components/thegrid-ui/data-table/data-table-column-header';
 
 interface Task {
   id: string;
@@ -54,38 +51,53 @@ const tasks: Task[] = [
 const columns: ColumnDef<Task>[] = [
   {
     accessorKey: 'title',
-    header: 'Title'
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Title" />
+    )
   },
   {
     accessorKey: 'status',
-    header: 'Status'
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Status" />
+    ),
+    enableSorting: true
   },
   {
     accessorKey: 'priority',
-    header: 'Priority'
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Priority" />
+    )
   },
   {
     accessorKey: 'dueDate',
-    header: 'Due Date'
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Due Date" />
+    )
   },
   {
     accessorKey: 'assignee',
-    header: 'Assignee'
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Assignee" />
+    )
   }
 ];
 
 interface TasksTableProps {}
 
 export function TasksTable({}: TasksTableProps) {
-  const filterFields: DataTableFilterField<Task>[] = [
+  const [rowSelection, setRowSelection] = React.useState({});
+
+  const filterFields: DataTableAdvancedFilterField<Task>[] = [
     {
       id: 'title',
       label: 'Title',
-      placeholder: 'Filter titles...'
+      placeholder: 'Filter titles...',
+      type: 'text'
     },
     {
       id: 'status',
       label: 'Status',
+      type: 'multi-select',
       options: [
         { label: 'Todo', value: 'todo' },
         { label: 'In Progress', value: 'in_progress' },
@@ -95,6 +107,7 @@ export function TasksTable({}: TasksTableProps) {
     {
       id: 'priority',
       label: 'Priority',
+      type: 'multi-select',
       options: [
         { label: 'Low', value: 'low' },
         { label: 'Medium', value: 'medium' },
@@ -109,7 +122,8 @@ export function TasksTable({}: TasksTableProps) {
     pageCount: Math.ceil(tasks.length / 10),
     filterFields,
     initialState: {
-      sorting: [{ id: 'createdAt', desc: true }],
+      sorting: [{ id: 'dueDate', desc: true }],
+      columnPinning: { right: ['actions'] },
       pagination: {
         pageSize: 10,
         pageIndex: 0

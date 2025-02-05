@@ -3,51 +3,49 @@
 import { DataTable } from '@/components/thegrid-ui/data-table/data-table';
 import { useDataTable } from '@/components/thegrid-ui/data-table/hooks/use-data-table';
 import { type ColumnDef } from '@tanstack/react-table';
+import { TableContainer } from '../lenses/base/components/table-container';
+import { ProductFieldsFragmentFragment } from '@/lib/graphql/generated/graphql';
+import { useMemo } from 'react';
+import { DataTableColumnHeader } from '../data-table/data-table-column-header';
 
-interface Url {
-  id: string;
-  url: string;
-  urlType: 'landing_page' | 'product_page' | 'other';
-}
-
-const urls: Url[] = [
-  {
-    id: '1',
-    url: 'https://www.bitconin.com',
-    urlType: 'landing_page'
-  },
-  {
-    id: '2',
-    url: 'https://www.etheremum.com',
-    urlType: 'product_page'
-  },
-  {
-    id: '3',
-    url: 'https://www.solyana.com',
-    urlType: 'other'
-  }
-];
+type Urls = ProductFieldsFragmentFragment['urls'];
+type Url = NonNullable<Urls>[number];
 
 const columns: ColumnDef<Url>[] = [
   {
     accessorKey: 'url',
-    header: 'Url'
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="URL" />
+    )
   },
   {
-    accessorKey: 'urlType',
-    header: 'Url Type'
+    accessorKey: 'urlType.name',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Type" />
+    )
+  },
+  {
+    accessorKey: 'urlType.definition',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Definition" />
+    )
   }
 ];
 
-interface UrlsTableProps {}
+type UrlsTableProps = {
+  urls: Urls;
+};
 
-export function UrlsTable({}: UrlsTableProps) {
+export function UrlsTable({ urls }: UrlsTableProps) {
+  const data = useMemo(() => {
+    return urls ?? [];
+  }, [urls]);
+
   const table = useDataTable({
-    data: urls,
+    data,
     columns,
-    pageCount: Math.ceil(urls.length / 10),
+    pageCount: Math.ceil(urls?.length ?? 0 / 10),
     initialState: {
-      sorting: [{ id: 'url', desc: false }],
       pagination: {
         pageSize: 10,
         pageIndex: 0
@@ -56,8 +54,10 @@ export function UrlsTable({}: UrlsTableProps) {
   });
 
   return (
-    <div className="space-y-4">
-      <DataTable table={table} />
-    </div>
+    <TableContainer title="URLs">
+      <div className="space-y-4">
+        <DataTable table={table} />
+      </div>
+    </TableContainer>
   );
 }

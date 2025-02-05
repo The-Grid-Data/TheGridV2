@@ -1,9 +1,5 @@
 import type { ColumnSort, Row } from '@tanstack/react-table';
-import { type z } from 'zod';
 import type { ComponentType } from 'react';
-
-import { DataTableConfig } from './data-table-config';
-import { filterSchema } from './lib/parsers';
 
 export type Prettify<T> = {
   [K in keyof T]: T[K];
@@ -28,12 +24,6 @@ export interface ExtendedColumnSort<TData> extends Omit<ColumnSort, 'id'> {
 
 export type ExtendedSortingState<TData> = ExtendedColumnSort<TData>[];
 
-export type ColumnType = DataTableConfig['columnTypes'][number];
-
-export type FilterOperator = DataTableConfig['globalOperators'][number];
-
-export type JoinOperator = DataTableConfig['joinOperators'][number]['value'];
-
 export interface DataTableFilterField<TData> {
   id: StringKeyOf<TData>;
   label: string;
@@ -46,11 +36,9 @@ export interface DataTableAdvancedFilterField<TData>
   type: 'text' | 'number' | 'date' | 'boolean' | 'select' | 'multi-select';
 }
 
-export type Filter<TData> = Prettify<
-  Omit<z.infer<typeof filterSchema>, 'id'> & {
-    id: StringKeyOf<TData>;
-  }
->;
+export type Filter<TData> = Prettify<{
+  id: StringKeyOf<TData>;
+}>;
 
 export interface DataTableRowAction<TData> {
   row: Row<TData>;
