@@ -1,9 +1,8 @@
 'use client';
 
-import * as React from 'react';
 import { CheckIcon, ClipboardIcon } from 'lucide-react';
+import * as React from 'react';
 
-import { cn } from '@/lib/utils';
 import { Button, ButtonProps } from '@/components/ui/button';
 import {
   Tooltip,
@@ -11,6 +10,7 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from '@/components/ui/tooltip';
+import { cn } from '@/lib/utils';
 
 interface CopyButtonProps extends ButtonProps {
   value: string;
@@ -43,7 +43,7 @@ export function CopyButton({
     <TooltipProvider>
       <Tooltip open={hasCopied}>
         <TooltipTrigger asChild={!children}>
-          <>
+          <div>
             {children && <div onClick={handleCopy}>{children}</div>}
             {!children && (
               <Button
@@ -60,7 +60,7 @@ export function CopyButton({
                 {hasCopied ? <CheckIcon /> : <ClipboardIcon />}
               </Button>
             )}
-          </>
+          </div>
         </TooltipTrigger>
         <TooltipContent>
           <div className="flex items-center gap-2">
