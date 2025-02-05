@@ -98,18 +98,12 @@ const getUserFriendlyMessage = (error: string): string => {
 };
 
 export const createRestApiClient = (
-  getToken: () => Promise<string>,
-  userMetadata: UserMetadata
+  getToken: () => Promise<string>
 ): RestClient => {
   const executeRequest = async (operations: any[]): Promise<ApiResponse> => {
     const token = await getToken();
     const fullPayload = {
       command: 'retool_backend_go/db.crud.direct',
-      user: {
-        user_id: userMetadata.user_id,
-        user_email: userMetadata.email,
-        access_key: userMetadata.api_key
-      },
       batch: {
         dry_run: false,
         operations
@@ -210,21 +204,6 @@ export const createRestApiClient = (
 };
 
 export const useRestApiClient = () => {
-  const { getToken, userMetadata } = useClerkContext();
-
-  if (
-    !userMetadata?.publicMetadata?.user_id ||
-    !userMetadata?.publicMetadata?.email ||
-    !userMetadata?.publicMetadata?.api_key
-  ) {
-    throw new Error(
-      'User must be authenticated and have required metadata to use the API client'
-    );
-  }
-
-  return createRestApiClient(getToken, {
-    user_id: userMetadata.publicMetadata.user_id,
-    email: userMetadata.publicMetadata.email,
-    api_key: userMetadata.publicMetadata.api_key
-  });
+  const { getToken } = useClerkContext();
+  return createRestApiClient(getToken);
 };
