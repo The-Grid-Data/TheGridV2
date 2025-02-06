@@ -3,40 +3,71 @@
 import { DataTable } from '@/components/thegrid-ui/data-table/data-table';
 import { useDataTable } from '@/components/thegrid-ui/data-table/hooks/use-data-table';
 import { ProductFieldsFragmentFragment } from '@/lib/graphql/generated/graphql';
+import { useRestApiClient } from '@/lib/rest-api/client';
+import { useUrlsApi } from '@/lib/rest-api/urls';
+import { getTgsData } from '@/lib/tgs';
+import { useQueryClient } from '@tanstack/react-query';
 import { type ColumnDef } from '@tanstack/react-table';
 import { useMemo } from 'react';
 import { DataTableColumnHeader } from '../data-table/data-table-column-header';
+import { type ColumnMeta } from '../data-table/types';
 import { TableContainer } from '../lenses/base/components/table-container';
 
 type Urls = ProductFieldsFragmentFragment['urls'];
 type Url = NonNullable<Urls>[number];
 
-const columns: ColumnDef<Url>[] = [
+const urlTypeData = getTgsData('urls.urlType');
+const urlTypeOptions = urlTypeData.isDataValid && urlTypeData.is_enum === 'true'
+  ? urlTypeData.possible_values.map(value => ({
+      label: value.name,
+      value: value.id
+    }))
+  : [];
+
+const columns: ColumnDef<Url, any>[] = [
   {
     accessorKey: 'url',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="URL" />
-    )
+    ),
+    meta: {
+      type: 'url',
+      isEditable: true,
+      validation: (value: string) => {
+        try {
+          new URL(value);
+          return true;
+        } catch {
+          return 'Please enter a valid URL';
+        }
+      }
+    } satisfies ColumnMeta
   },
   {
     accessorKey: 'urlType.name',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Type" />
-    )
+    ),
+    cell: ({ row }) => row.original.urlType?.name,
+    meta: {
+      type: 'tag',
+      isEditable: true,
+      options: urlTypeOptions,
+      field: 'urlType.id'
+    } satisfies ColumnMeta
   },
-  {
-    accessorKey: 'urlType.definition',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Definition" />
-    )
-  }
 ];
 
 type UrlsTableProps = {
   urls: Urls;
+  rootId: string;
 };
 
-export function UrlsTable({ urls }: UrlsTableProps) {
+export function UrlsTable({ urls, rootId }: UrlsTableProps) {
+  const client = useRestApiClient();
+  const urlsApi = useUrlsApi(client);
+  const queryClient = useQueryClient();
+
   const data = useMemo(() => {
     return urls ?? [];
   }, [urls]);
@@ -44,11 +75,20 @@ export function UrlsTable({ urls }: UrlsTableProps) {
   const table = useDataTable({
     data,
     columns,
-    isEditable: true,
-    onCellSubmit: async ({ id, field, value }) => {
-      // TODO: Implement the actual update logic here
-      console.log('Updating cell:', { id, field, value });
-      return true; // Return true to indicate success
+    onCellSubmit: async (data) => {
+      try {
+        await urlsApi.update(data);
+        queryClient.invalidateQueries({
+          queryKey: ['profile', rootId],
+          exact: true,
+          refetchType: 'all'
+        });
+
+        return true;
+      } catch (error) {
+        console.error('Failed to update URL:', error);
+        return false;
+      }
     },
     pageCount: Math.ceil(urls?.length ?? 0 / 10),
     initialState: {

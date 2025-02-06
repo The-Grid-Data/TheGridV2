@@ -1,11 +1,11 @@
 'use client';
 
-import { ControlledOverlay } from '@/components/ui/controlled-overlay';
-import { EditProductForm } from './edit-product-form';
-import { ProductFieldsFragmentFragment } from '@/lib/graphql/generated/graphql';
 import { DeploymentsTable } from '@/components/thegrid-ui/tables/deployments-table';
-import { UrlsTable } from '@/components/thegrid-ui/tables/urls-table';
 import { RelatedAssetsTable } from '@/components/thegrid-ui/tables/related-assets-table';
+import { UrlsTable } from '@/components/thegrid-ui/tables/urls-table';
+import { ControlledOverlay } from '@/components/ui/controlled-overlay';
+import { ProductFieldsFragmentFragment } from '@/lib/graphql/generated/graphql';
+import { EditProductForm } from './edit-product-form';
 
 type EditProductOverlayProps = {
   product: ProductFieldsFragmentFragment;
@@ -29,7 +29,7 @@ export function EditProductOverlay({
             onCancel={closeDialog}
           />
           <div className="flex flex-col gap-12">
-            <UrlsTable urls={product.urls} />
+            <UrlsTable urls={product.urls} rootId={product.rootId} />
             <DeploymentsTable productDeployments={product.productDeployments} />
             <RelatedAssetsTable
               productAssetRelationships={product.productAssetRelationships}

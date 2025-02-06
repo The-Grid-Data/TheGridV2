@@ -49,13 +49,11 @@ export interface UseDataTableProps<TData>
 
   /**
    * Callback when a cell is edited
-   * @param data { id: string; field: string; value: any }
+   * @param data { id: string } & Record<string, any>
    */
-  onCellSubmit?: (data: {
-    id: string;
-    field: string;
-    value: any;
-  }) => Promise<boolean>;
+  onCellSubmit?: (
+    data: { id: string } & Record<string, any>
+  ) => Promise<boolean>;
 
   /**
    * Defines filter fields for the table. Supports both dynamic faceted filters and search filters.
@@ -148,11 +146,10 @@ export function useDataTable<TData>({
   );
 
   // Create meta object for custom options
-  const meta: DataTableMeta<TData> = {
+  const meta = {
     ...customMeta,
-    isEditable,
     onCellSubmit
-  };
+  } as DataTableMeta<TData>;
 
   // Create the table instance
   const table = useReactTable({

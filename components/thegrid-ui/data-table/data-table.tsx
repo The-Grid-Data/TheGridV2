@@ -52,7 +52,6 @@ export function DataTable<TData>({
 
   // Get editable config from table meta
   const meta = table.options.meta as DataTableMeta<TData>;
-  const isEditable = meta?.isEditable;
   const onCellSubmit = meta?.onCellSubmit;
 
   const toggleRow = (rowId: string) => {
@@ -119,7 +118,6 @@ export function DataTable<TData>({
                         <DataTableCell
                           key={cell.id}
                           cell={cell}
-                          isEditable={isEditable}
                           onSubmit={onCellSubmit}
                         />
                       ))}
@@ -141,7 +139,6 @@ export function DataTable<TData>({
                       <DataTableCell
                         key={cell.id}
                         cell={cell}
-                        isEditable={isEditable}
                         onSubmit={onCellSubmit}
                       />
                     ))}

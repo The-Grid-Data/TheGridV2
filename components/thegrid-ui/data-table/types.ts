@@ -36,13 +36,20 @@ export interface DataTableAdvancedFilterField<TData>
   type: 'text' | 'number' | 'date' | 'boolean' | 'select' | 'multi-select';
 }
 
-export interface DataTableMeta<TData> {
+export type ColumnType = 'text' | 'tag' | 'url' | 'date' | 'number';
+
+export interface ColumnMeta {
+  type?: ColumnType;
   isEditable?: boolean;
-  onCellSubmit?: (data: {
-    id: string;
-    field: string;
-    value: any;
-  }) => Promise<boolean>;
+  validation?: (value: any) => boolean | string; // return string for error message
+  options?: { label: string; value: string }[];
+  field?: string; // The actual field to update, if different from the accessor
+}
+
+export interface DataTableMeta<TData> {
+  onCellSubmit?: (
+    data: { id: string } & Record<string, any>
+  ) => Promise<boolean>;
 }
 
 export type Filter<TData> = Prettify<{

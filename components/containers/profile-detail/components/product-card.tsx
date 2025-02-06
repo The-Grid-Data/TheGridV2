@@ -40,7 +40,9 @@ export const ProductFragment = graphql(`
       definition
     }
     productDeployments {
+      id
       smartContractDeployment {
+        id
         deployedOnProduct {
           id
           name
@@ -67,6 +69,7 @@ export const ProductFragment = graphql(`
       }
     }
     supportsProducts {
+      id
       supportsProduct {
         name
         id
@@ -76,6 +79,7 @@ export const ProductFragment = graphql(`
       }
     }
     urls(order_by: { urlTypeId: Asc }) {
+      id
       url
       urlType {
         name
@@ -84,6 +88,7 @@ export const ProductFragment = graphql(`
       }
     }
     productAssetRelationships {
+      id
       assetId
       asset {
         name
