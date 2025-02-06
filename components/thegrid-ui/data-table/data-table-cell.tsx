@@ -22,7 +22,6 @@ export function DataTableCell<TData>({
   const inputRef = React.useRef<HTMLInputElement>(null);
 
   const handleDoubleClick = () => {
-    console.log('handleDoubleClick', { isEditable, onSubmit });
     if (!isEditable || !onSubmit) return;
     setValue(String(cell.getValue()));
     setIsEditing(true);

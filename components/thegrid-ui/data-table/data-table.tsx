@@ -55,10 +55,6 @@ export function DataTable<TData>({
   const isEditable = meta?.isEditable;
   const onCellSubmit = meta?.onCellSubmit;
 
-  console.log('table', table);
-  console.log('isEditable', isEditable);
-  console.log('onCellSubmit', onCellSubmit);
-
   const toggleRow = (rowId: string) => {
     setOpenRows(prev => ({
       ...prev,

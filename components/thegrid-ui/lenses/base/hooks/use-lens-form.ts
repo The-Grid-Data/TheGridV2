@@ -90,7 +90,6 @@ export function useLensForm<
       }
     },
     onSuccess: () => {
-      console.log('Invalidating queries with key:', config.queryKey);
       queryClient.invalidateQueries({
         queryKey: config.queryKey,
         exact: true,
