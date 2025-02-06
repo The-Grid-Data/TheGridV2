@@ -50,9 +50,7 @@ export const HomeWhenSignedOut = () => {
             </CardHeader>
             <CardContent>
               <Button variant="default" asChild>
-                <Link href={paths.externalUrls.claimProfile}>
-                  Create account
-                </Link>
+                <Link href={paths.signUp}>Create account</Link>
               </Button>
             </CardContent>
           </Card>
