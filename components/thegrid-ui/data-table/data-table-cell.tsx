@@ -138,7 +138,8 @@ export function DataTableCell<TData>({
             }}
             onKeyDown={handleKeyDown}
             className={cn(
-              "h-8",
+              "h-6",
+              "rounded-sm",
               error && "border-destructive focus-visible:ring-destructive"
             )}
             disabled={isSubmitting}
@@ -168,7 +169,7 @@ export function DataTableCell<TData>({
       }}
       className={cn(
         'relative',
-        isEditable && !isEditing && 'cursor-pointer hover:bg-muted/50',
+        isEditable && !isEditing && 'cursor-pointer hover:!bg-muted',
         isSubmitting && 'opacity-50'
       )}
       onClick={handleClick}
