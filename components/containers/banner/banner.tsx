@@ -1,3 +1,5 @@
+import { paths } from '@/lib/routes/paths';
+
 export const Banner = () => {
   return (
     <section className="flex justify-center bg-foreground p-2">
@@ -6,7 +8,7 @@ export const Banner = () => {
         implementation of{' '}
         <a
           target="_blank"
-          href="https://thegrid.id/legal/web-services-terms"
+          href={paths.externalUrls.termsOfService}
           className="underline"
         >
           The Grid&apos;s data

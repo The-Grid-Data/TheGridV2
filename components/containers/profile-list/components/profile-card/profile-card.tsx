@@ -4,9 +4,9 @@ import { AssetCard } from '@/components/containers/profile-detail/components/ass
 import { ItemWithSheet } from '@/components/containers/profile-detail/components/Item-with-sheet';
 import { ProductCard } from '@/components/containers/profile-detail/components/product-card';
 import {
-    extractSocialUrls,
-    extractUrls,
-    UrlTypeIconLinks
+  extractSocialUrls,
+  extractUrls,
+  UrlTypeIconLinks
 } from '@/components/containers/url-type-icon/url-type-icon-list';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
