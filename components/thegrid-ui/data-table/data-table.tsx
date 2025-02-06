@@ -37,6 +37,13 @@ interface DataTableProps<TData> extends React.HTMLAttributes<HTMLDivElement> {
    */
   floatingBar?: React.ReactNode | null;
 
+  /**
+   * Hide the table footer which includes pagination
+   * @default false
+   * @type boolean
+   */
+  hideFooter?: boolean;
+
   renderSubRow?: (row: Row<TData>) => React.ReactNode;
 }
 
@@ -46,6 +53,7 @@ export function DataTable<TData>({
   children,
   className,
   renderSubRow,
+  hideFooter = false,
   ...props
 }: DataTableProps<TData>) {
   const [openRows, setOpenRows] = React.useState<Record<string, boolean>>({});
@@ -161,7 +169,7 @@ export function DataTable<TData>({
         </Table>
       </div>
       <div className="flex flex-col gap-2.5">
-        <DataTablePagination table={table} />
+        {!hideFooter && <DataTablePagination table={table} />}
         {table.getFilteredSelectedRowModel().rows.length > 0 && floatingBar}
       </div>
     </div>

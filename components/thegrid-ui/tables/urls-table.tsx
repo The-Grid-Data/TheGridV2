@@ -75,6 +75,7 @@ export function UrlsTable({ urls, rootId }: UrlsTableProps) {
   const table = useDataTable({
     data,
     columns,
+    pageCount: 1,
     onCellSubmit: async (data) => {
       try {
         await urlsApi.update(data);
@@ -89,20 +90,13 @@ export function UrlsTable({ urls, rootId }: UrlsTableProps) {
         console.error('Failed to update URL:', error);
         return false;
       }
-    },
-    pageCount: Math.ceil(urls?.length ?? 0 / 10),
-    initialState: {
-      pagination: {
-        pageSize: 10,
-        pageIndex: 0
-      }
     }
   });
 
   return (
     <TableContainer title="URLs">
       <div className="space-y-4">
-        <DataTable table={table} />
+        <DataTable table={table} hideFooter />
       </div>
     </TableContainer>
   );

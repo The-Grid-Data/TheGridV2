@@ -2,11 +2,11 @@
 
 import { DataTable } from '@/components/thegrid-ui/data-table/data-table';
 import { useDataTable } from '@/components/thegrid-ui/data-table/hooks/use-data-table';
-import { type ColumnDef } from '@tanstack/react-table';
-import { TableContainer } from '../lenses/base/components/table-container';
 import { ProductFieldsFragmentFragment } from '@/lib/graphql/generated/graphql';
+import { type ColumnDef } from '@tanstack/react-table';
 import { useMemo } from 'react';
 import { DataTableColumnHeader } from '../data-table/data-table-column-header';
+import { TableContainer } from '../lenses/base/components/table-container';
 
 type ProductAssetRelationships =
   ProductFieldsFragmentFragment['productAssetRelationships'];
@@ -41,19 +41,13 @@ export function RelatedAssetsTable({
   const table = useDataTable({
     data,
     columns,
-    pageCount: Math.ceil(data.length / 10),
-    initialState: {
-      pagination: {
-        pageSize: 10,
-        pageIndex: 0
-      }
-    }
+    pageCount: 1,
   });
 
   return (
     <TableContainer title="Related Assets">
       <div className="space-y-4">
-        <DataTable table={table} />
+        <DataTable table={table} hideFooter />
       </div>
     </TableContainer>
   );

@@ -2,11 +2,11 @@
 
 import { DataTable } from '@/components/thegrid-ui/data-table/data-table';
 import { useDataTable } from '@/components/thegrid-ui/data-table/hooks/use-data-table';
-import { type ColumnDef } from '@tanstack/react-table';
-import { TableContainer } from '../lenses/base/components/table-container';
 import { ProductFieldsFragmentFragment } from '@/lib/graphql/generated/graphql';
+import { type ColumnDef } from '@tanstack/react-table';
 import { useMemo } from 'react';
 import { DataTableColumnHeader } from '../data-table/data-table-column-header';
+import { TableContainer } from '../lenses/base/components/table-container';
 
 type Deployments = ProductFieldsFragmentFragment['productDeployments'];
 type Deployment = NonNullable<Deployments>[number];
@@ -46,14 +46,8 @@ export function DeploymentsTable({
   const table = useDataTable({
     data,
     columns,
-    pageCount: Math.ceil(productDeployments?.length ?? 0 / 10),
+    pageCount: 1,
     enableExpanding: true,
-    initialState: {
-      pagination: {
-        pageSize: 10,
-        pageIndex: 0
-      }
-    }
   });
 
   return (
@@ -61,6 +55,7 @@ export function DeploymentsTable({
       <div className="space-y-4">
         <DataTable
           table={table}
+          hideFooter
           renderSubRow={row => <DeploymentSubRow deployment={row.original} />}
         />
       </div>
@@ -101,18 +96,12 @@ export function DeploymentSubRow({ deployment }: { deployment: Deployment }) {
     data,
     columns: subColumns,
     pageCount: 1,
-    initialState: {
-      pagination: {
-        pageSize: data.length || 10,
-        pageIndex: 0
-      }
-    },
     enableExpanding: false
   });
 
   return (
     <div className="bg-gray-50 p-2">
-      <DataTable table={subTable} />
+      <DataTable table={subTable} hideFooter />
     </div>
   );
 }
