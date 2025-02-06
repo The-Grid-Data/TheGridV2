@@ -1,7 +1,19 @@
 'use client';
 
-import { ClerkProvider, useAuth, useOrganization, useUser } from '@clerk/nextjs';
-import { type ReactNode, createContext, useCallback, useContext, useEffect, useState } from 'react';
+import {
+  ClerkProvider,
+  useAuth,
+  useOrganization,
+  useUser
+} from '@clerk/nextjs';
+import {
+  type ReactNode,
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState
+} from 'react';
 
 type UserMetadata = {
   id: string;
@@ -38,11 +50,17 @@ export const ClerkContext = createContext<ClerkContextType>({
   token: null,
   isLoading: true,
   isAuthenticated: false,
-  getToken: async () => { throw new Error('Clerk context not initialized'); }
+  getToken: async () => {
+    throw new Error('Clerk context not initialized');
+  }
 });
 
 function ClerkContextProvider({ children }: { children: ReactNode }) {
-  const { isLoaded: isAuthLoaded, isSignedIn, getToken: clerkGetToken } = useAuth();
+  const {
+    isLoaded: isAuthLoaded,
+    isSignedIn,
+    getToken: clerkGetToken
+  } = useAuth();
   const { isLoaded: isOrgLoaded, organization } = useOrganization();
   const { isLoaded: isUserLoaded, user } = useUser();
   const [token, setToken] = useState<string | null>(null);
@@ -63,27 +81,32 @@ function ClerkContextProvider({ children }: { children: ReactNode }) {
     void fetchToken();
   }, [isAuthenticated, clerkGetToken]);
 
-  const organizationMetadata = organization ? {
-    id: organization.id,
-    rootId: (organization.publicMetadata?.rootId as string) ?? '',
-    slug: typeof organization.publicMetadata?.slug === 'string'
-      ? organization.publicMetadata.slug
-      : 'default',
-    name: organization.name
-  } : null;
+  const organizationMetadata = organization
+    ? {
+        id: organization.id,
+        rootId: (organization.publicMetadata?.rootId as string) ?? '',
+        slug:
+          typeof organization.publicMetadata?.slug === 'string'
+            ? organization.publicMetadata.slug
+            : 'default',
+        name: organization.name
+      }
+    : null;
 
-  const userMetadata = user ? {
-    id: user.id,
-    email: user.primaryEmailAddress?.emailAddress ?? '',
-    firstName: user.firstName,
-    lastName: user.lastName,
-    imageUrl: user.imageUrl,
-    publicMetadata: user.publicMetadata as {
-      user_id?: string;
-      email?: string;
-      api_key?: string;
-    }
-  } : null;
+  const userMetadata = user
+    ? {
+        id: user.id,
+        email: user.primaryEmailAddress?.emailAddress ?? '',
+        firstName: user.firstName,
+        lastName: user.lastName,
+        imageUrl: user.imageUrl,
+        publicMetadata: user.publicMetadata as {
+          user_id?: string;
+          email?: string;
+          api_key?: string;
+        }
+      }
+    : null;
 
   const getToken = useCallback(async () => {
     const newToken = await clerkGetToken();
@@ -95,14 +118,16 @@ function ClerkContextProvider({ children }: { children: ReactNode }) {
   }, [clerkGetToken]);
 
   return (
-    <ClerkContext.Provider value={{
-      organizationMetadata,
-      userMetadata,
-      token,
-      isLoading,
-      isAuthenticated,
-      getToken
-    }}>
+    <ClerkContext.Provider
+      value={{
+        organizationMetadata,
+        userMetadata,
+        token,
+        isLoading,
+        isAuthenticated,
+        getToken
+      }}
+    >
       {children}
     </ClerkContext.Provider>
   );
@@ -118,9 +143,7 @@ export function ClerkProviderWrapper({ children }: { children: ReactNode }) {
         }
       }}
     >
-      <ClerkContextProvider>
-        {children}
-      </ClerkContextProvider>
+      <ClerkContextProvider>{children}</ClerkContextProvider>
     </ClerkProvider>
   );
 }
@@ -128,7 +151,9 @@ export function ClerkProviderWrapper({ children }: { children: ReactNode }) {
 export function useClerkContext() {
   const context = useContext(ClerkContext);
   if (context === undefined) {
-    throw new Error('useClerkContext must be used within a ClerkProviderWrapper');
+    throw new Error(
+      'useClerkContext must be used within a ClerkProviderWrapper'
+    );
   }
   return context;
 }

@@ -1,6 +1,7 @@
 'use client';
 
 import { ProfileDetail } from '@/components/containers/profile-detail';
+import { paths } from '@/lib/routes/paths';
 import { useClerkContext } from '@/providers/clerk-provider';
 import { redirect } from 'next/navigation';
 
@@ -19,7 +20,7 @@ export default function Profile() {
   }
 
   if (!isAuthenticated) {
-    redirect('/sign-in');
+    redirect(paths.signIn);
   }
 
   if (!organizationMetadata) {
