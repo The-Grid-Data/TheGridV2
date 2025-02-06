@@ -1,7 +1,5 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
-import type { DataTableFilterField, ExtendedSortingState } from '../types';
 import {
   getCoreRowModel,
   getFacetedRowModel,
@@ -13,14 +11,19 @@ import {
   type ColumnFiltersState,
   type PaginationState,
   type RowSelectionState,
-  type SortingState,
   type TableOptions,
   type TableState,
   type Updater,
   type VisibilityState
 } from '@tanstack/react-table';
+import { useEffect, useState } from 'react';
+import type {
+  DataTableFilterField,
+  DataTableMeta,
+  ExtendedSortingState
+} from '../types';
 
-interface UseDataTableProps<TData>
+export interface UseDataTableProps<TData>
   extends Omit<
     TableOptions<TData>,
     // | 'data'
@@ -30,12 +33,29 @@ interface UseDataTableProps<TData>
     | 'manualFiltering'
     | 'manualPagination'
     | 'manualSorting'
+    | 'meta'
   > {
   /**
    * Total number of pages
    * @default -1
    */
   pageCount: number;
+
+  /**
+   * Enable cell editing functionality
+   * @default false
+   */
+  isEditable?: boolean;
+
+  /**
+   * Callback when a cell is edited
+   * @param data { id: string; field: string; value: any }
+   */
+  onCellSubmit?: (data: {
+    id: string;
+    field: string;
+    value: any;
+  }) => Promise<boolean>;
 
   /**
    * Defines filter fields for the table. Supports both dynamic faceted filters and search filters.
@@ -83,6 +103,8 @@ interface UseDataTableProps<TData>
    * Callback when state changes
    */
   onStateChange?: (updater: Updater<TableState>) => void;
+
+  meta?: DataTableMeta<TData>;
 }
 
 export function useDataTable<TData>({
@@ -94,6 +116,9 @@ export function useDataTable<TData>({
   enablePinning = false,
   initialState,
   onStateChange,
+  onCellSubmit,
+  isEditable,
+  meta: customMeta,
   ...props
 }: UseDataTableProps<TData>) {
   // Row selection state
@@ -122,6 +147,13 @@ export function useDataTable<TData>({
     initialState?.columnFilters ?? []
   );
 
+  // Create meta object for custom options
+  const meta: DataTableMeta<TData> = {
+    ...customMeta,
+    isEditable,
+    onCellSubmit
+  };
+
   // Create the table instance
   const table = useReactTable({
     ...props,
@@ -144,6 +176,7 @@ export function useDataTable<TData>({
     enableRowSelection,
     enableColumnResizing,
     enablePinning,
+    meta, // Pass custom options through meta
     onRowSelectionChange: setRowSelection,
     onColumnVisibilityChange: setColumnVisibility,
     onPaginationChange: setPagination,

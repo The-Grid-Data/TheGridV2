@@ -36,6 +36,15 @@ export interface DataTableAdvancedFilterField<TData>
   type: 'text' | 'number' | 'date' | 'boolean' | 'select' | 'multi-select';
 }
 
+export interface DataTableMeta<TData> {
+  isEditable?: boolean;
+  onCellSubmit?: (data: {
+    id: string;
+    field: string;
+    value: any;
+  }) => Promise<boolean>;
+}
+
 export type Filter<TData> = Prettify<{
   id: StringKeyOf<TData>;
 }>;

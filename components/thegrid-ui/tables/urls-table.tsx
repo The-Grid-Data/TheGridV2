@@ -2,11 +2,11 @@
 
 import { DataTable } from '@/components/thegrid-ui/data-table/data-table';
 import { useDataTable } from '@/components/thegrid-ui/data-table/hooks/use-data-table';
-import { type ColumnDef } from '@tanstack/react-table';
-import { TableContainer } from '../lenses/base/components/table-container';
 import { ProductFieldsFragmentFragment } from '@/lib/graphql/generated/graphql';
+import { type ColumnDef } from '@tanstack/react-table';
 import { useMemo } from 'react';
 import { DataTableColumnHeader } from '../data-table/data-table-column-header';
+import { TableContainer } from '../lenses/base/components/table-container';
 
 type Urls = ProductFieldsFragmentFragment['urls'];
 type Url = NonNullable<Urls>[number];
@@ -44,6 +44,12 @@ export function UrlsTable({ urls }: UrlsTableProps) {
   const table = useDataTable({
     data,
     columns,
+    isEditable: true,
+    onCellSubmit: async ({ id, field, value }) => {
+      // TODO: Implement the actual update logic here
+      console.log('Updating cell:', { id, field, value });
+      return true; // Return true to indicate success
+    },
     pageCount: Math.ceil(urls?.length ?? 0 / 10),
     initialState: {
       pagination: {

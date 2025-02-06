@@ -1,11 +1,11 @@
-import * as React from 'react';
 import {
   flexRender,
   Row,
   type Table as TanstackTable
 } from '@tanstack/react-table';
+import * as React from 'react';
 
-import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 import {
   Table,
   TableBody,
@@ -14,11 +14,13 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table';
-import { getCommonPinningStyles } from './lib/data-table';
-import { DataTablePagination } from './data-table-pagination';
-import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { Fragment } from 'react';
+import { DataTableCell } from './data-table-cell';
+import { DataTablePagination } from './data-table-pagination';
+import { getCommonPinningStyles } from './lib/data-table';
+import type { DataTableMeta } from './types';
 
 interface DataTableProps<TData> extends React.HTMLAttributes<HTMLDivElement> {
   /**
@@ -47,6 +49,15 @@ export function DataTable<TData>({
   ...props
 }: DataTableProps<TData>) {
   const [openRows, setOpenRows] = React.useState<Record<string, boolean>>({});
+
+  // Get editable config from table meta
+  const meta = table.options.meta as DataTableMeta<TData>;
+  const isEditable = meta?.isEditable;
+  const onCellSubmit = meta?.onCellSubmit;
+
+  console.log('table', table);
+  console.log('isEditable', isEditable);
+  console.log('onCellSubmit', onCellSubmit);
 
   const toggleRow = (rowId: string) => {
     setOpenRows(prev => ({
@@ -109,17 +120,12 @@ export function DataTable<TData>({
                         </Button>
                       </TableCell>
                       {row.getVisibleCells().map(cell => (
-                        <TableCell
+                        <DataTableCell
                           key={cell.id}
-                          style={{
-                            ...getCommonPinningStyles({ column: cell.column })
-                          }}
-                        >
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </TableCell>
+                          cell={cell}
+                          isEditable={isEditable}
+                          onSubmit={onCellSubmit}
+                        />
                       ))}
                     </TableRow>
                     {openRows[row.id] && (
@@ -136,17 +142,12 @@ export function DataTable<TData>({
                     data-state={row.getIsSelected() && 'selected'}
                   >
                     {row.getVisibleCells().map(cell => (
-                      <TableCell
+                      <DataTableCell
                         key={cell.id}
-                        style={{
-                          ...getCommonPinningStyles({ column: cell.column })
-                        }}
-                      >
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </TableCell>
+                        cell={cell}
+                        isEditable={isEditable}
+                        onSubmit={onCellSubmit}
+                      />
                     ))}
                   </TableRow>
                 )
