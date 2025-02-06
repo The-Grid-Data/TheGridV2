@@ -16,7 +16,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { uploadToS3 } from '@/lib/s3-upload';
 import { getTgsData, TgsFieldNames } from '@/lib/tgs';
 import { useState } from 'react';
-import { SelectField } from './select-field';
+import { SingleCombobox } from '@/components/ui/single-combobox';
 
 type TgsSFieldProps = {
   label: string;
@@ -54,14 +54,14 @@ export function TgsField({
   const isEnum = !isToggle && tgsData.is_enum === 'true';
   const isTextArea = tgsData.parameter_id.toLowerCase().includes('description');
   const isDate = tgsData.parameter_id.toLowerCase().includes('date');
-  const isImage = tgsData.parameter_id.toLowerCase().includes('logo') ||
-                 tgsData.parameter_id.toLowerCase().includes('icon') ||
-                 tgsData.parameter_id.toLowerCase().includes('image') ||
-                 tgsData.parameter_id.toLowerCase().includes('avatar');
+  const isImage =
+    tgsData.parameter_id.toLowerCase().includes('logo') ||
+    tgsData.parameter_id.toLowerCase().includes('icon') ||
+    tgsData.parameter_id.toLowerCase().includes('image') ||
+    tgsData.parameter_id.toLowerCase().includes('avatar');
   const isText = !isEnum && !isDate && !isTextArea && !isToggle && !isImage;
 
   if (tgsData.isDataValid === true) {
-
     return (
       <>
         {isEnum && (
@@ -73,11 +73,10 @@ export function TgsField({
                 description={tgsData.description}
                 isRequired={isRequired}
               >
-                <SelectField
+                <SingleCombobox
                   {...field}
-                  defaultValue={field.value}
                   placeholder={placeholder}
-                  onChange={field.onChange}
+                  onValueChange={field.onChange}
                   value={field.value}
                   error={fieldState.error?.message}
                   options={tgsData.possible_values
@@ -140,10 +139,12 @@ export function TgsField({
                 description={tgsData.description}
                 isRequired={isRequired}
               >
-                <div className="flex flex-row gap-2 pt-2 h-9">
+                <div className="flex h-9 flex-row gap-2 pt-2">
                   <Switch
                     checked={field.value === 'true'}
-                    onCheckedChange={(checked) => field.onChange(checked ? 'true' : 'false')}
+                    onCheckedChange={checked =>
+                      field.onChange(checked ? 'true' : 'false')
+                    }
                   />
                   <span className="text-sm text-muted-foreground">
                     {field.value === 'true' ? 'Yes' : 'No'}
@@ -196,15 +197,11 @@ export function TgsField({
                 description={tgsData.description}
                 isRequired={isRequired}
               >
-                <DatePicker
-                  error={fieldState.error?.message}
-                  {...field}
-                />
+                <DatePicker error={fieldState.error?.message} {...field} />
               </FieldWrapper>
             )}
           />
         )}
-
       </>
     );
   }
