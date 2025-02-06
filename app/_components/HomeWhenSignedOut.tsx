@@ -57,12 +57,12 @@ export const HomeWhenSignedOut = () => {
         </div>
         <Card className="w-full">
           <CardHeader>
-            <CardTitle>Haven't got your code yet?</CardTitle>
+            <CardTitle>Haven&apos;t got your code yet?</CardTitle>
             <CardDescription>
               <span>
-                If you haven't received your profile code yet, you can join our
-                waitlist to get early access to the portal and be notified when
-                your code is ready.
+                If you haven&apos;t received your profile code yet, you can join
+                our waitlist to get early access to the portal and be notified
+                when your code is ready.
               </span>
             </CardDescription>
           </CardHeader>
