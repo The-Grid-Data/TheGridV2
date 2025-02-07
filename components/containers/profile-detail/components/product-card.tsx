@@ -13,7 +13,7 @@ import { DeepLinkBadge } from '@/components/ui/deep-link-badge';
 import { Separator } from '@/components/ui/separator';
 import { FragmentType, graphql, useFragment } from '@/lib/graphql/generated';
 import { paths } from '@/lib/routes/paths';
-import { Edit, Package } from 'lucide-react';
+import { Banknote, Edit, Package } from 'lucide-react';
 import Link from 'next/link';
 import { ContractAddressesBadge } from './contract-address-badge';
 import { InlineDataPoint } from './inline-data-point';
@@ -40,7 +40,9 @@ export const ProductFragment = graphql(`
       definition
     }
     productDeployments {
+      id
       smartContractDeployment {
+        id
         deployedOnProduct {
           id
           name
@@ -50,6 +52,7 @@ export const ProductFragment = graphql(`
         }
         assetStandard {
           id
+          name
         }
         deploymentType {
           name
@@ -66,6 +69,7 @@ export const ProductFragment = graphql(`
       }
     }
     supportsProducts {
+      id
       supportsProduct {
         name
         id
@@ -75,6 +79,7 @@ export const ProductFragment = graphql(`
       }
     }
     urls(order_by: { urlTypeId: Asc }) {
+      id
       url
       urlType {
         name
@@ -83,6 +88,7 @@ export const ProductFragment = graphql(`
       }
     }
     productAssetRelationships {
+      id
       assetId
       asset {
         name
@@ -134,13 +140,9 @@ export const ProductCard = ({
           )}
           <div className="ml-auto">
             <EditProductOverlay
-              lensData={product}
+              product={product}
               triggerNode={
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  type="button"
-                >
+                <Button variant="ghost" size="icon" type="button">
                   <Edit className="h-4 w-4" />
                 </Button>
               }
@@ -204,7 +206,7 @@ export const ProductCard = ({
               renderItem={relationship => (
                 <div className="flex gap-2">
                   <DeepLinkBadge
-                    icon={<Package size={16} />}
+                    icon={<Banknote size={16} />}
                     href={
                       relationship.asset?.root?.slug &&
                       paths.profile.detail(relationship.asset?.root?.slug, {

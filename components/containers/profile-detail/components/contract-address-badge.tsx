@@ -1,12 +1,12 @@
+import { Badge } from '@/components/ui/badge';
+import { CopyButton } from '@/components/ui/copy-button';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger
 } from '@/components/ui/tooltip';
-import { Badge } from '@/components/ui/badge';
 import { Link2 } from 'lucide-react';
-import { CopyButton } from '@/components/ui/copy-button';
 
 type ContractAddressBadgeProps = {
   smartContracts:
@@ -35,27 +35,23 @@ export const ContractAddressesBadge = ({
 
   return contracts.map(contract => (
     <div key={contract.address} className="flex w-full gap-2">
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger className="hover:cursor-text">
-            <Badge
-              variant="secondary"
-              className="flex gap-2 font-mono text-xs hover:cursor-text"
-            >
-              <Link2 size={16} className="flex-shrink-0" />
-              <CopyButton value={contract.address}>
-                <span className="truncate">
-                  {formatAddress(contract.address, 6)}
-                </span>
-                <CopyButton className="ml-2" value={contract.address} />
-              </CopyButton>
-            </Badge>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p className="font-mono text-xs">{contract.address}</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+      <Badge
+        variant="secondary"
+        className="flex gap-2 font-mono text-xs hover:cursor-text"
+      >
+        <Link2 size={16} className="flex-shrink-0" />
+        <span className="truncate">{formatAddress(contract.address, 6)}</span>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <CopyButton className="ml-2" value={contract.address} />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p className="font-mono text-xs">{contract.address}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      </Badge>
     </div>
   ));
 };

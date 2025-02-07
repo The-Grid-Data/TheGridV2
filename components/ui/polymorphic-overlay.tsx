@@ -8,7 +8,7 @@ import {
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { cn } from '@/lib/utils';
 import { X } from 'lucide-react';
-import { PropsWithChildren, createContext, useContext, useState } from 'react';
+import { PropsWithChildren } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -19,6 +19,8 @@ import {
 } from './dialog';
 import { ScrollArea } from './scroll-area';
 
+export type OverlaySize = 'small' | 'medium' | 'full';
+
 export type PolymorphicOverlayProps = PropsWithChildren<{
   title: string;
   triggerNode?: React.ReactNode;
@@ -26,7 +28,36 @@ export type PolymorphicOverlayProps = PropsWithChildren<{
   onOpenChange: (open: boolean) => void;
   className?: string;
   footer?: React.ReactNode;
+  size?: OverlaySize;
 }>;
+
+type SizeConfig = {
+  width: string;
+  desktopHeight: string;
+  mobileHeight: string;
+  contentHeight: string;
+};
+
+const sizeVariants: Record<OverlaySize, SizeConfig> = {
+  small: {
+    width: 'max-w-lg',
+    desktopHeight: 'max-h-[70vh]',
+    mobileHeight: 'h-[70vh]',
+    contentHeight: 'max-h-[calc(70vh-14rem)]'
+  },
+  medium: {
+    width: 'max-w-3xl',
+    desktopHeight: 'max-h-[90vh]',
+    mobileHeight: 'h-[90vh]',
+    contentHeight: 'max-h-[calc(90vh-14rem)]'
+  },
+  full: {
+    width: 'max-w-[95vw]',
+    desktopHeight: 'max-h-[98vh]',
+    mobileHeight: 'h-[98vh]',
+    contentHeight: 'max-h-[calc(98vh-14rem)]'
+  }
+};
 
 export function PolymorphicOverlay({
   title,
@@ -34,15 +65,17 @@ export function PolymorphicOverlay({
   className,
   children,
   open,
-  onOpenChange
+  onOpenChange,
+  size = 'medium'
 }: PolymorphicOverlayProps) {
   const isDesktop = useMediaQuery('(min-width: 768px)');
+  const sizeConfig = sizeVariants[size];
 
   if (isDesktop) {
     return (
       <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogTrigger asChild>{triggerNode}</DialogTrigger>
-        <DialogContent className="max-h-[90vh] max-w-3xl">
+        <DialogContent className={cn(sizeConfig.width, sizeConfig.desktopHeight)}>
           <DialogHeader className="px-6 py-4">
             <div className="flex items-center justify-between">
               <DialogTitle>{title}</DialogTitle>
@@ -58,7 +91,7 @@ export function PolymorphicOverlay({
           <DialogDescription className="sr-only">
             {title} form dialog
           </DialogDescription>
-          <ScrollArea className="max-h-[calc(90vh-14rem)]">
+          <ScrollArea className={sizeConfig.contentHeight}>
             <div className={cn('p-6', className)}>{children}</div>
           </ScrollArea>
         </DialogContent>
@@ -82,7 +115,7 @@ export function PolymorphicOverlay({
             </Button>
           </div>
         </DrawerHeader>
-        <ScrollArea className="h-[calc(100vh-14rem)]">
+        <ScrollArea className={sizeConfig.contentHeight}>
           <div className={cn('p-6', className)}>{children}</div>
         </ScrollArea>
       </DrawerContent>

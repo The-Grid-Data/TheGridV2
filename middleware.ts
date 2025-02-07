@@ -1,8 +1,14 @@
 import { authMiddleware } from '@clerk/nextjs/server';
+import { paths } from './lib/routes/paths';
 
 export default authMiddleware({
-  publicRoutes: ['/', '/sign-in/(.*)', '/sign-up/(.*)', '/api/graphql'],
-  ignoredRoutes: ['/api/graphql']
+  publicRoutes: [
+    '/',
+    `${paths.signIn}/(.*)`,
+    `${paths.signUp}/(.*)`,
+    '/api/graphql'
+  ],
+  ignoredRoutes: ['/api/graphql', '/monitoring', '/api/webhooks/clerk']
 });
 
 export const config = {

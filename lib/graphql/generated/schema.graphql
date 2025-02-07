@@ -996,6 +996,7 @@ type ProfileInfos {
   descriptionLong: String1!
   descriptionShort: String1!
   foundingDate: Date
+  icon: String1!
   id: String1!
   logo: String1
   name: String1!
@@ -1017,6 +1018,7 @@ type ProfileInfosAggExp {
   descriptionLong: StringAggExp!
   descriptionShort: StringAggExp!
   foundingDate: DateAggExp!
+  icon: StringAggExp!
   id: StringAggExp!
   logo: StringAggExp!
   name: StringAggExp!
@@ -1034,6 +1036,7 @@ input ProfileInfosBoolExp {
   descriptionLong: StringBoolExp
   descriptionShort: StringBoolExp
   foundingDate: DateBoolExp
+  icon: StringBoolExp
   id: StringBoolExp
   logo: StringBoolExp
   name: StringBoolExp
@@ -1059,6 +1062,7 @@ input ProfileInfosOrderBy {
   descriptionLong: OrderBy
   descriptionShort: OrderBy
   foundingDate: OrderBy
+  icon: OrderBy
   id: OrderBy
   logo: OrderBy
   name: OrderBy

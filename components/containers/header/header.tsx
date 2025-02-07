@@ -1,67 +1,44 @@
 'use client';
 
-import { OrganizationSwitcher, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+import {
+  SignedIn,
+  SignedOut,
+  UserButton
+} from '@clerk/nextjs';
 import { MenuIcon } from 'lucide-react';
 import Link from 'next/link';
-import { SiGithub } from 'react-icons/si';
 
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { paths } from '@/lib/routes/paths';
 import { Logo } from './logo';
 import { ToggleThemeButton } from './toggle-theme-button';
 
-const learnMoreButton = (
-  <Link
-    target="_blank"
-    rel="noopener noreferrer"
-    href="https://docs.thegrid.id"
-  >
-    <Button className="w-full md:w-fit">Read the docs</Button>
-  </Link>
-);
-
 const claimProfileButton = (
-  <Link
-    target="_blank"
-    rel="noopener noreferrer"
-    href="https://enter.thegrid.id/claimprofile"
-  >
-    <Button variant="outline" className="w-full md:w-fit">
+  <Button asChild variant="outline" className="w-full md:w-fit">
+    <Link
+      target="_blank"
+      rel="noopener noreferrer"
+      href={paths.externalUrls.claimProfile}
+    >
       Claim your profile
-    </Button>
-  </Link>
-);
-
-const cloneRepoButton = (
-  <Link
-    href="https://github.com/The-Grid-Data/Explorer"
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    <Button className="w-full md:w-fit" variant="outline">
-      <SiGithub className="mr-2" size={18} />
-      Clone project
-    </Button>
-  </Link>
+    </Link>
+  </Button>
 );
 
 const viewProfileButton = (
-  <Link
-    target="_blank"
-    rel="noopener noreferrer"
-    href="/profile"
-  >
-    <Button variant="outline" className="w-full md:w-fit">
+  <Button asChild variant="outline" className="w-full md:w-fit">
+    <Link target="_blank" rel="noopener noreferrer" href={paths.profile.base}>
       View your profile
-    </Button>
-  </Link>
+    </Link>
+  </Button>
 );
 
 export const Header = () => {
   return (
     <header className="container flex w-full items-center py-4">
       <div className="w-full items-center justify-start">
-        <Link href="/" className="flex items-center">
+        <Link href={paths.base} className="flex items-center">
           <Logo />
         </Link>
       </div>
@@ -69,28 +46,17 @@ export const Header = () => {
       <div className="hidden w-full items-center justify-end gap-4 md:flex">
         <SignedOut>
           {claimProfileButton}
-          <Link href="/sign-in">
-            <Button variant="outline">Sign in</Button>
-          </Link>
+          <Button asChild variant="outline">
+            <Link href={paths.signIn}>Sign in</Link>
+          </Button>
         </SignedOut>
         <SignedIn>
           {viewProfileButton}
           <UserButton
-            afterSignOutUrl="/"
+            afterSignOutUrl={paths.base}
             appearance={{
               elements: {
-                avatarBox: "h-10 w-10"
-              }
-            }}
-          />
-          <OrganizationSwitcher
-            afterCreateOrganizationUrl="/profile"
-            afterLeaveOrganizationUrl="/profile"
-            afterSelectOrganizationUrl="/profile"
-            appearance={{
-              elements: {
-                rootBox: "flex justify-center",
-                organizationSwitcherTrigger: "flex justify-center"
+                avatarBox: 'h-10 w-10'
               }
             }}
           />
@@ -107,7 +73,7 @@ export const Header = () => {
         </SheetTrigger>
 
         <SheetContent>
-          <Link className="flex items-center gap-3" href="/">
+          <Link className="flex items-center gap-3" href={paths.base}>
             <h3 className="text-lg font-semibold tracking-tight">The Grid</h3>
             <ToggleThemeButton />
           </Link>
@@ -116,9 +82,9 @@ export const Header = () => {
             <SignedOut>
               <li>
                 <SheetTrigger asChild>
-                  <Link href="/sign-in">
-                    <Button variant="outline" className="w-full">Sign in</Button>
-                  </Link>
+                  <Button asChild variant="outline" className="w-full">
+                    <Link href={paths.signIn}>Sign in</Link>
+                  </Button>
                 </SheetTrigger>
               </li>
               <li>
@@ -128,26 +94,16 @@ export const Header = () => {
             <SignedIn>
               <li className="flex justify-center">
                 <UserButton
-                  afterSignOutUrl="/"
+                  afterSignOutUrl={paths.base}
                   appearance={{
                     elements: {
-                      avatarBox: "h-10 w-10"
+                      avatarBox: 'h-10 w-10'
                     }
                   }}
                 />
               </li>
-              <li className="flex justify-center">
-                <OrganizationSwitcher
-                  afterCreateOrganizationUrl="/profile"
-                  afterLeaveOrganizationUrl="/profile"
-                  afterSelectOrganizationUrl="/profile"
-                  appearance={{
-                    elements: {
-                      rootBox: "flex justify-center",
-                      organizationSwitcherTrigger: "flex justify-center"
-                    }
-                  }}
-                />
+              <li>
+                <SheetTrigger asChild>{viewProfileButton}</SheetTrigger>
               </li>
             </SignedIn>
           </ul>

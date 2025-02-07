@@ -6,7 +6,7 @@ import { CreateEntityOverlay } from '@/components/thegrid-ui/lenses/entity';
 import { Button } from '@/components/ui/button';
 import { execute } from '@/lib/graphql/execute';
 import { graphql } from '@/lib/graphql/generated';
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { Banknote, Building2, Package, Plus } from 'lucide-react';
 import { AssetCard } from './components/asset-card';
 import { EditProfileInfo } from './components/edit-profile-info';
@@ -63,14 +63,15 @@ export const ProfileDetail = ({ profileId, metadata }: ProfileDetailProps) => {
     where: { root: { id: { _eq: profileId } } }
   };
 
-  const { data, isFetching } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['profile', profileId],
+    placeholderData: keepPreviousData,
     queryFn: () => execute(ProfileDetailQuery, query)
   });
 
   const profile = data?.profileInfos?.[0];
 
-  if (isFetching) {
+  if (isLoading) {
     return <ProfileLoading />;
   }
 
@@ -86,7 +87,7 @@ export const ProfileDetail = ({ profileId, metadata }: ProfileDetailProps) => {
         profile={profile}
       />
 
-      <div className="flex flex-row gap-16 justify-between items-end">
+      <div className="flex flex-row items-end justify-between gap-16">
         <section className="space-y-3">
           <ProfileDataPoint label="Tagline" value={profile.tagLine} />
           <ProfileDataPoint
@@ -156,8 +157,7 @@ export const ProfileDetail = ({ profileId, metadata }: ProfileDetailProps) => {
           {Boolean(profile.root?.entities?.length) &&
             profile.root?.entities?.map(asset => (
               <EntityCard key={asset.id} entity={asset} />
-            ))
-          }
+            ))}
           <div className="flex h-full min-h-[200px] items-center justify-center rounded-xl border-2 border-dashed">
             <CreateEntityOverlay
               triggerNode={
