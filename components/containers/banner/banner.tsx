@@ -1,20 +1,9 @@
-import { paths } from '@/lib/routes/paths';
-
 export const Banner = () => {
   return (
-    <section className="flex justify-center bg-foreground p-2">
-      <span className="text-center text-sm font-light text-muted/70">
-        YOU SHOULD NOT USE THIS AS A DAILY DRIVER. This is a reference
-        implementation of{' '}
-        <a
-          target="_blank"
-          href={paths.externalUrls.termsOfService}
-          className="underline"
-        >
-          The Grid&apos;s data
-        </a>{' '}
-        which is in Beta - API users can pick and show data relevant to their
-        users.
+    <section className="flex justify-center bg-foreground p-2 dark:bg-primary/15">
+      <span className="text-center text-sm font-light text-muted/70 dark:text-muted-foreground">
+        The claim profile portal is in early beta. This is only the start.
+        Feedback is always welcome.
       </span>
     </section>
   );
