@@ -13,7 +13,8 @@
     "shadcn": "pnpx shadcn-ui@latest add -y",
     "typecheck": "tsc --noEmit",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "test:webhook": "tsx scripts/test-clerk-webhook.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.738.0",
@@ -23,6 +24,7 @@
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
     "@hookform/resolvers": "^3.10.0",
+    "@intercom/messenger-js-sdk": "^0.0.14",
     "@radix-ui/react-alert-dialog": "^1.1.5",
     "@radix-ui/react-avatar": "^1.1.0",
     "@radix-ui/react-checkbox": "^1.1.1",
@@ -59,6 +61,7 @@
     "lucide-react": "^0.378.0",
     "nanoid": "^5.0.9",
     "next": "15.1.5",
+    "next-auth": "^4.24.11",
     "next-themes": "^0.4.4",
     "nuqs": "^2.3.1",
     "pluralize": "^8.0.0",
@@ -70,6 +73,7 @@
     "react-icons": "^5.3.0",
     "react-intersection-observer": "^9.13.1",
     "sonner": "^1.7.3",
+    "svix": "^1.45.1",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
     "ts-deepmerge": "^7.0.2",
@@ -100,6 +104,7 @@
     "prettier-plugin-tailwindcss": "^0.5.14",
     "tailwindcss": "^3.4.11",
     "ts-jest": "^29.2.5",
+    "tsx": "^4.19.2",
     "typescript": "^5.6.2"
   },
   "packageManager": "pnpm@9.14.4+sha512.c8180b3fbe4e4bca02c94234717896b5529740a6cbadf19fa78254270403ea2f27d4e1d46a08a0f56c89b63dc8ebfd3ee53326da720273794e6200fcf0d184ab"

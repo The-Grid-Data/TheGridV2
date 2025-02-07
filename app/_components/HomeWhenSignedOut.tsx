@@ -1,4 +1,3 @@
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -7,10 +6,25 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card';
+import { ControlledOverlay } from '@/components/ui/controlled-overlay';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { paths } from '@/lib/routes/paths';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 export const HomeWhenSignedOut = () => {
+  const router = useRouter();
+  const [code, setCode] = useState('');
+
+  const handleContinue = (closeDialog: () => void) => {
+    if (code.trim()) {
+      router.push(`${paths.signUp}?code=${encodeURIComponent(code.trim())}`);
+      closeDialog();
+    }
+  };
+
   return (
     <section className="container mx-auto flex max-w-4xl flex-col items-center gap-6 py-8 md:py-12 md:pb-8 lg:py-12 lg:pb-12">
       <h1 className="scroll-m-20 text-balance text-center text-4xl font-extrabold leading-tight tracking-tight lg:text-5xl lg:leading-[1.1]">
@@ -49,9 +63,35 @@ export const HomeWhenSignedOut = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Button variant="default" asChild>
-                <Link href={paths.signUp}>Create account</Link>
-              </Button>
+              <ControlledOverlay
+                title="Create account"
+                size="small"
+                triggerNode={
+                  <Button variant="default">Create account</Button>
+                }
+                render={({ closeDialog }) => (
+                  <div className="flex flex-col gap-4">
+                      <Label htmlFor="code">Profile Code</Label>
+                      <Input
+                        id="code"
+                        placeholder="Enter your profile code"
+                        value={code}
+                        onChange={(e) => setCode(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            handleContinue(closeDialog);
+                          }
+                        }}
+                      />
+                    <Button
+                      className="w-full"
+                      onClick={() => handleContinue(closeDialog)}
+                    >
+                      Continue
+                    </Button>
+                  </div>
+                )}
+              />
             </CardContent>
           </Card>
         </div>

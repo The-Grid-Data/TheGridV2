@@ -8,7 +8,7 @@ export default authMiddleware({
     `${paths.signUp}/(.*)`,
     '/api/graphql'
   ],
-  ignoredRoutes: ['/api/graphql']
+  ignoredRoutes: ['/api/graphql', '/monitoring', '/api/webhooks/clerk']
 });
 
 export const config = {

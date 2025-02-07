@@ -8,8 +8,7 @@ import { redirect } from 'next/navigation';
 export const dynamic = 'force-dynamic';
 
 export default function Profile() {
-  const { isLoading, isAuthenticated, organizationMetadata } =
-    useClerkContext();
+  const { isLoading, isAuthenticated, profileMetadata } = useClerkContext();
 
   if (isLoading) {
     return (
@@ -23,12 +22,12 @@ export default function Profile() {
     redirect(paths.signIn);
   }
 
-  if (!organizationMetadata) {
+  if (!profileMetadata) {
     return (
       <div className="container py-10">
-        <h1 className="text-2xl font-bold">No Organization Found</h1>
+        <h1 className="text-2xl font-bold">No Profile Found</h1>
         <p className="mt-4">
-          You need to be part of an organization to view this profile.
+          Your profile is not properly set up. Please contact support.
         </p>
       </div>
     );
@@ -38,8 +37,8 @@ export default function Profile() {
     <div>
       <div className="h-10" />
       <ProfileDetail
-        profileId={organizationMetadata.rootId}
-        metadata={organizationMetadata}
+        profileId={profileMetadata.rootId}
+        metadata={profileMetadata}
       />
     </div>
   );

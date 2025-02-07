@@ -1,7 +1,6 @@
 'use client';
 
 import {
-  OrganizationSwitcher,
   SignedIn,
   SignedOut,
   UserButton
@@ -11,9 +10,9 @@ import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { paths } from '@/lib/routes/paths';
 import { Logo } from './logo';
 import { ToggleThemeButton } from './toggle-theme-button';
-import { paths } from '@/lib/routes/paths';
 
 const claimProfileButton = (
   <Link
@@ -61,17 +60,6 @@ export const Header = () => {
               }
             }}
           />
-          <OrganizationSwitcher
-            afterCreateOrganizationUrl={paths.profile.base}
-            afterLeaveOrganizationUrl={paths.profile.base}
-            afterSelectOrganizationUrl={paths.profile.base}
-            appearance={{
-              elements: {
-                rootBox: 'flex justify-center',
-                organizationSwitcherTrigger: 'flex justify-center'
-              }
-            }}
-          />
         </SignedIn>
         <ToggleThemeButton />
       </div>
@@ -116,18 +104,8 @@ export const Header = () => {
                   }}
                 />
               </li>
-              <li className="flex justify-center">
-                <OrganizationSwitcher
-                  afterCreateOrganizationUrl={paths.profile.base}
-                  afterLeaveOrganizationUrl={paths.profile.base}
-                  afterSelectOrganizationUrl={paths.profile.base}
-                  appearance={{
-                    elements: {
-                      rootBox: 'flex justify-center',
-                      organizationSwitcherTrigger: 'flex justify-center'
-                    }
-                  }}
-                />
+              <li>
+                <SheetTrigger asChild>{viewProfileButton}</SheetTrigger>
               </li>
             </SignedIn>
           </ul>
