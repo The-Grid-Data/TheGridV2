@@ -6,11 +6,12 @@ export const metadata: Metadata = {
   description: 'Create your account'
 };
 
-export default function SignUpPage({
-  searchParams
-}: {
-  searchParams: { [key: string]: string | string[] | undefined }
-}) {
+export default async function SignUpPage(
+  props: {
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+  }
+) {
+  const searchParams = await props.searchParams;
   const code = searchParams.code as string | undefined;
 
   return (
