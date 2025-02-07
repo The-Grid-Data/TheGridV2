@@ -1,17 +1,18 @@
 'use client';
 
 import {
-    ClerkProvider as BaseClerkProvider,
-    useAuth,
-    useUser
+  ClerkProvider as BaseClerkProvider,
+  useAuth,
+  useUser
 } from '@clerk/nextjs';
 import {
-    type ReactNode,
-    createContext,
-    useCallback,
-    useContext,
-    useEffect,
-    useState
+  type ReactNode,
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState
 } from 'react';
 
 type UserMetadata = {
@@ -61,8 +62,10 @@ function ClerkContextProvider({ children }: { children: ReactNode }) {
   } = useAuth();
   const { isLoaded: isUserLoaded, user } = useUser();
   const [token, setToken] = useState<string | null>(null);
+  const [isPollingMetadata, setIsPollingMetadata] = useState(false);
+  const pollingTimeoutRef = useRef<NodeJS.Timeout>();
 
-  const isLoading = !isAuthLoaded || !isUserLoaded;
+  const isLoading = !isAuthLoaded || !isUserLoaded || isPollingMetadata;
   const isAuthenticated = isSignedIn ?? false;
 
   useEffect(() => {
@@ -77,6 +80,65 @@ function ClerkContextProvider({ children }: { children: ReactNode }) {
 
     void fetchToken();
   }, [isAuthenticated, clerkGetToken]);
+
+  // Poll for metadata updates after sign-up
+  useEffect(() => {
+    // Cleanup function for the polling timeout
+    const cleanup = () => {
+      if (pollingTimeoutRef.current) {
+        clearTimeout(pollingTimeoutRef.current);
+        pollingTimeoutRef.current = undefined;
+      }
+      setIsPollingMetadata(false);
+    };
+
+    // If we already have metadata or user is not authenticated, don't poll
+    if (!user || user.publicMetadata?.rootId || !isAuthenticated) {
+      cleanup();
+      return;
+    }
+
+    let attempts = 0;
+    const maxAttempts = 20; // Increased max attempts
+    const baseInterval = 500; // Start with 500ms
+
+    const pollMetadata = async () => {
+      try {
+        if (!user) {
+          cleanup();
+          return;
+        }
+
+        setIsPollingMetadata(true);
+        await user.reload();
+
+        // Check if metadata is available after reload
+        if (user.publicMetadata?.rootId) {
+          cleanup();
+          return;
+        }
+
+        attempts++;
+        if (attempts >= maxAttempts) {
+          console.error('Failed to load user metadata after maximum attempts');
+          cleanup();
+          return;
+        }
+
+        // Exponential backoff with a maximum of 2 seconds
+        const nextInterval = Math.min(baseInterval * Math.pow(1.5, attempts), 2000);
+        pollingTimeoutRef.current = setTimeout(pollMetadata, nextInterval);
+      } catch (error) {
+        console.error('Error polling metadata:', error);
+        cleanup();
+      }
+    };
+
+    void pollMetadata();
+
+    // Cleanup on unmount or when dependencies change
+    return cleanup;
+  }, [user, isAuthenticated]);
 
   const userMetadata = user
     ? {

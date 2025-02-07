@@ -15,23 +15,23 @@ import { Logo } from './logo';
 import { ToggleThemeButton } from './toggle-theme-button';
 
 const claimProfileButton = (
-  <Link
-    target="_blank"
-    rel="noopener noreferrer"
-    href={paths.externalUrls.claimProfile}
-  >
-    <Button variant="outline" className="w-full md:w-fit">
+  <Button asChild variant="outline" className="w-full md:w-fit">
+    <Link
+      target="_blank"
+      rel="noopener noreferrer"
+      href={paths.externalUrls.claimProfile}
+    >
       Claim your profile
-    </Button>
-  </Link>
+    </Link>
+  </Button>
 );
 
 const viewProfileButton = (
-  <Link target="_blank" rel="noopener noreferrer" href={paths.profile.base}>
-    <Button variant="outline" className="w-full md:w-fit">
+  <Button asChild variant="outline" className="w-full md:w-fit">
+    <Link target="_blank" rel="noopener noreferrer" href={paths.profile.base}>
       View your profile
-    </Button>
-  </Link>
+    </Link>
+  </Button>
 );
 
 export const Header = () => {
@@ -46,9 +46,9 @@ export const Header = () => {
       <div className="hidden w-full items-center justify-end gap-4 md:flex">
         <SignedOut>
           {claimProfileButton}
-          <Link href={paths.signIn}>
-            <Button variant="outline">Sign in</Button>
-          </Link>
+          <Button asChild variant="outline">
+            <Link href={paths.signIn}>Sign in</Link>
+          </Button>
         </SignedOut>
         <SignedIn>
           {viewProfileButton}
@@ -82,11 +82,9 @@ export const Header = () => {
             <SignedOut>
               <li>
                 <SheetTrigger asChild>
-                  <Link href={paths.signIn}>
-                    <Button variant="outline" className="w-full">
-                      Sign in
-                    </Button>
-                  </Link>
+                  <Button asChild variant="outline" className="w-full">
+                    <Link href={paths.signIn}>Sign in</Link>
+                  </Button>
                 </SheetTrigger>
               </li>
               <li>
