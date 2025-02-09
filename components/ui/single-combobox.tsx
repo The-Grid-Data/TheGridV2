@@ -13,14 +13,8 @@ import {
   CommandList
 } from '@/components/ui/command';
 import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger
-} from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
 import { ChevronsUpDown } from 'lucide-react';
-import { InfoIconTooltip } from './info-icon';
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from './dialog';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 
@@ -139,7 +133,7 @@ function OptionList({
       }}
     >
       <CommandInput placeholder="Filter options..." />
-      <CommandList>
+      <CommandList className="min-h-[300px] w-[400px] overflow-y-auto">
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup>
           {options.map(option => (

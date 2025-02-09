@@ -1,10 +1,6 @@
 'use client';
 
-import {
-  SignedIn,
-  SignedOut,
-  UserButton
-} from '@clerk/nextjs';
+import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import { MenuIcon } from 'lucide-react';
 import Link from 'next/link';
 
@@ -29,7 +25,7 @@ const claimProfileButton = (
 const viewProfileButton = (
   <Button asChild variant="outline" className="w-full md:w-fit">
     <Link target="_blank" rel="noopener noreferrer" href={paths.profile.base}>
-      View your profile
+      Edit your profile
     </Link>
   </Button>
 );

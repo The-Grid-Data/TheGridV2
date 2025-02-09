@@ -1,12 +1,12 @@
 export const siteConfig = {
-  pageTitle: 'The Grid | Data Explorer',
+  pageTitle: 'The Grid | Management Portal',
   verifiedTagId: '7',
   logoSrc: {
     dark: '/thegrid-logo-white.svg',
     light: '/thegrid-logo.svg'
   },
   pageDescription:
-    'Powering Discoverability of Assets, Products, and Services in Web3.',
+    ' Take control of your profile data. Easily update, customize, and manage and manage your profile information all in one place.',
   displayQueries: true,
   allowHeroFiltersSearch: true,
   overrideFilterValues: {

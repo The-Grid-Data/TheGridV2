@@ -3233,6 +3233,13 @@ export type __EnumValue = {
   deprecationReason?: Maybe<Scalars['String']['output']>;
 };
 
+export type GetProfileNameQueryVariables = Exact<{
+  where?: InputMaybe<ProfileInfosBoolExp>;
+}>;
+
+
+export type GetProfileNameQuery = { __typename?: 'Query', profileInfos?: Array<{ __typename?: 'ProfileInfos', name: string, root?: { __typename?: 'Roots', id: string, slug: string } | null }> | null };
+
 export type AssetFieldsFragmentFragment = { __typename?: 'Assets', ticker: string, rootId: string, name: string, id: string, icon: string, description: string, assetTypeId?: string | null, assetStatusId?: string | null, assetType?: { __typename?: 'AssetTypes', definition: string, id: string, name: string } | null, assetStatus?: { __typename?: 'AssetStatuses', name: string, id: string, definition: string } | null, assetDeployments?: Array<{ __typename?: 'AssetDeployments', id: string, deploymentId: string, assetId: string, smartContractDeployment?: { __typename?: 'SmartContractDeployments', id: string, deployedOnProduct?: { __typename?: 'Products', id: string, name: string, root?: { __typename?: 'Roots', slug: string } | null } | null, assetStandard?: { __typename?: 'AssetStandards', id: string } | null, smartContracts?: Array<{ __typename?: 'SmartContracts', name: string, id: string, deploymentId?: string | null, deploymentDate?: string | null, address: string }> | null, deploymentType?: { __typename?: 'DeploymentTypes', name: string, id: string, definition: string } | null } | null }> | null, urls?: Array<{ __typename?: 'AssetUrls', url: string, urlType?: { __typename?: 'UrlTypes', name: string, id: string, definition: string } | null }> | null } & { ' $fragmentName'?: 'AssetFieldsFragmentFragment' };
 
 export type ProfileInfoFragmentFragment = { __typename?: 'ProfileInfos', rootId: string, id: string, name: string, tagLine: string, descriptionShort: string, descriptionLong: string, foundingDate?: string | null, profileType?: { __typename?: 'ProfileTypes', id: string, name: string, definition: string } | null, profileStatus?: { __typename?: 'ProfileStatuses', id: string, name: string, definition: string } | null, profileSector?: { __typename?: 'ProfileSectors', id: string, name: string, definition: string } | null } & { ' $fragmentName'?: 'ProfileInfoFragmentFragment' };
@@ -3406,6 +3413,13 @@ export type GetTagsOptionsQueryVariables = Exact<{
 
 
 export type GetTagsOptionsQuery = { __typename?: 'Query', tags?: Array<{ __typename?: 'Tags', description: string, value: string, label: string, profileTagsAggregate: { __typename?: 'ProfileTagsAggExp', _count: number } }> | null };
+
+export type GetValidationLogQueryVariables = Exact<{
+  where?: InputMaybe<ValidationBoolExp>;
+}>;
+
+
+export type GetValidationLogQuery = { __typename?: 'Query', validation?: Array<{ __typename?: 'Validation', referencedTable?: string | null, referencedField?: string | null, isPending?: string | null, field?: string | null, destinationValue?: string | null, createdAt?: string | null, committedAt?: string | null, comment?: string | null, updatedBy?: string | null, updatedFrom?: string | null, resolution?: any | null, resolvedAt?: string | null, resolvedBy?: string | null, rootId?: string | null, rowId?: string | null, sourceValue?: string | null }> | null };
 
 export class TypedDocumentString<TResult, TVariables>
   extends String
@@ -3910,6 +3924,17 @@ fragment ProductFieldsFragment on Products {
     }
   }
 }`, {"fragmentName":"ProfileCardFragment"}) as unknown as TypedDocumentString<ProfileCardFragmentFragment, unknown>;
+export const GetProfileNameDocument = new TypedDocumentString(`
+    query getProfileName($where: ProfileInfosBoolExp) {
+  profileInfos(limit: 1, offset: 0, where: $where) {
+    name
+    root {
+      id
+      slug
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<GetProfileNameQuery, GetProfileNameQueryVariables>;
 export const GetProfileDataDocument = new TypedDocumentString(`
     query getProfileData($where: ProfileInfosBoolExp) {
   profileInfos(limit: 1, offset: 0, where: $where) {
@@ -4586,3 +4611,25 @@ export const GetTagsOptionsDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<GetTagsOptionsQuery, GetTagsOptionsQueryVariables>;
+export const GetValidationLogDocument = new TypedDocumentString(`
+    query getValidationLog($where: validationBoolExp) {
+  validation(where: $where) {
+    referencedTable
+    referencedField
+    isPending
+    field
+    destinationValue
+    createdAt
+    committedAt
+    comment
+    updatedBy
+    updatedFrom
+    resolution
+    resolvedAt
+    resolvedBy
+    rootId
+    rowId
+    sourceValue
+  }
+}
+    `) as unknown as TypedDocumentString<GetValidationLogQuery, GetValidationLogQueryVariables>;

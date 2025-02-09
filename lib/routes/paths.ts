@@ -6,7 +6,7 @@ export const paths = {
     base: '/profile',
     detail: (slug: string, opts?: { section?: string }) => {
       const section = opts?.section;
-      return `/profiles/${slug}${section ? `#${section}` : ''}`;
+      return `https://explorer.thegrid.id/profiles/${slug}${section ? `#${section}` : ''}`;
     }
   },
 
