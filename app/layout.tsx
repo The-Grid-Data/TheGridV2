@@ -9,6 +9,7 @@ import { Header } from '@/components/containers/header';
 import { siteConfig } from '@/lib/site-config';
 import { Providers } from '@/providers';
 import { Analytics } from '@vercel/analytics/react';
+import { Footer } from '@/components/containers/footer';
 
 type TLayout = Readonly<{
   children: React.ReactNode;
@@ -37,14 +38,17 @@ export default function Layout({ children }: TLayout) {
           dmSans.className,
           dmSans.variable,
           archivo.variable,
-          'h-full '
+          'flex min-h-screen flex-col'
         )}
       >
         <Analytics />
         <Providers>
-          <Banner />
-          <Header />
-          {children}
+          <div className="flex min-h-screen flex-col">
+            <Banner />
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </div>
         </Providers>
       </body>
     </html>

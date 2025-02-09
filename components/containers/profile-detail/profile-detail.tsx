@@ -80,7 +80,7 @@ export const ProfileDetail = ({ profileId, metadata }: ProfileDetailProps) => {
   }
 
   return (
-    <div className="container w-full space-y-10 pb-12">
+    <div className="container w-full space-y-10">
       <ProfileHeading
         query={ProfileDetailQuery.toString()}
         queryVariables={query}
@@ -153,7 +153,7 @@ export const ProfileDetail = ({ profileId, metadata }: ProfileDetailProps) => {
         icon={<Building2 className="h-6 w-6" />}
         title="Entities"
       >
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {Boolean(profile.root?.entities?.length) &&
             profile.root?.entities?.map(asset => (
               <EntityCard key={asset.id} entity={asset} />
