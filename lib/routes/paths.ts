@@ -12,6 +12,8 @@ export const paths = {
 
   externalUrls: {
     claimProfile: 'https://enter.thegrid.id/claimprofile',
-    termsOfService: 'https://thegrid.id/legal/web-services-terms'
+    termsOfService: 'https://thegrid.id/legal/web-services-terms',
+    docs: 'https://docs.thegrid.id',
+    privacyPolicy: 'https://thegrid.id/legal/privacy-policy'
   }
 } as const;
