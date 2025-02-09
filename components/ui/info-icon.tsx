@@ -11,12 +11,17 @@ import { InfoIcon } from 'lucide-react';
 export type InfoIconProps = {
   text: string;
   className?: string;
+  delayDuration?: number;
 };
 
-export function InfoIconTooltip({ text, className }: InfoIconProps) {
+export function InfoIconTooltip({
+  text,
+  className,
+  delayDuration = 100
+}: InfoIconProps) {
   return (
     <TooltipProvider>
-      <Tooltip>
+      <Tooltip delayDuration={delayDuration}>
         <TooltipTrigger asChild>
           <InfoIcon
             className={cn(
@@ -26,7 +31,7 @@ export function InfoIconTooltip({ text, className }: InfoIconProps) {
           />
         </TooltipTrigger>
         <TooltipContent className="max-w-64 text-base">
-          <p>{text}</p>
+          <p className="text-sm">{text}</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
