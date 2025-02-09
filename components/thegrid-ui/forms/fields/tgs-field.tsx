@@ -17,6 +17,7 @@ import { uploadToS3 } from '@/lib/s3-upload';
 import { getTgsData, TgsFieldNames } from '@/lib/tgs';
 import { useState } from 'react';
 import { SingleCombobox } from '@/components/ui/single-combobox';
+import { InfoIconTooltip } from '@/components/ui/info-icon';
 
 type TgsSFieldProps = {
   label: string;
@@ -70,8 +71,8 @@ export function TgsField({
             render={({ field, fieldState }) => (
               <FieldWrapper
                 label={label}
-                description={tgsData.description}
                 isRequired={isRequired}
+                infoTooltipText={tgsData.description}
               >
                 <SingleCombobox
                   {...field}
@@ -83,7 +84,8 @@ export function TgsField({
                     .map(value => ({
                       id: value.id,
                       label: value.name,
-                      value: value.id
+                      value: value.id,
+                      description: value.definition
                     }))
                     .sort((a, b) => a.label.localeCompare(b.label))}
                 />
@@ -98,8 +100,8 @@ export function TgsField({
             render={({ field, fieldState }) => (
               <FieldWrapper
                 label={label}
-                description={tgsData.description}
                 isRequired={isRequired}
+                infoTooltipText={tgsData.description}
               >
                 <Input
                   placeholder={placeholder}
@@ -117,8 +119,8 @@ export function TgsField({
             render={({ field, fieldState }) => (
               <FieldWrapper
                 label={label}
-                description={tgsData.description}
                 isRequired={isRequired}
+                infoTooltipText={tgsData.description}
               >
                 <Textarea
                   placeholder={placeholder}
@@ -136,8 +138,8 @@ export function TgsField({
             render={({ field, fieldState }) => (
               <FieldWrapper
                 label={label}
-                description={tgsData.description}
                 isRequired={isRequired}
+                infoTooltipText={tgsData.description}
               >
                 <div className="flex h-9 flex-row gap-2 pt-2">
                   <Switch
@@ -174,8 +176,8 @@ export function TgsField({
               return (
                 <FieldWrapper
                   label={label}
-                  description={tgsData.description}
                   isRequired={isRequired}
+                  infoTooltipText={tgsData.description}
                 >
                   <FileUpload
                     value={field.value}
@@ -194,8 +196,8 @@ export function TgsField({
             render={({ field, fieldState }) => (
               <FieldWrapper
                 label={label}
-                description={tgsData.description}
                 isRequired={isRequired}
+                infoTooltipText={tgsData.description}
               >
                 <DatePicker error={fieldState.error?.message} {...field} />
               </FieldWrapper>
@@ -213,22 +215,29 @@ const FieldWrapper = ({
   children,
   label,
   description,
-  isRequired
+  isRequired,
+  infoTooltipText
 }: {
   children: React.ReactNode;
   label: string;
-  description: string;
+  description?: string;
   isRequired?: boolean;
+  infoTooltipText?: string;
 }) => {
   return (
     <FormItem>
-      <FormLabel>
-        {label}
-        {isRequired && <span className="ml-1 text-destructive">*</span>}
+      <FormLabel className="flex flex-row gap-2">
+        <div>
+          {label}
+          {isRequired && <span className="ml-1 text-destructive">*</span>}
+        </div>
+        {infoTooltipText && (
+          <InfoIconTooltip delayDuration={100} text={infoTooltipText} />
+        )}
       </FormLabel>
       <FormControl>{children}</FormControl>
       <FormMessage />
-      <FormDescription>{description}</FormDescription>
+      {description && <FormDescription>{description}</FormDescription>}
     </FormItem>
   );
 };

@@ -4,17 +4,8 @@ export const Banner = () => {
   return (
     <section className="flex justify-center bg-foreground p-2">
       <span className="text-center text-sm font-light text-muted/70">
-        YOU SHOULD NOT USE THIS AS A DAILY DRIVER. This is a reference
-        implementation of{' '}
-        <a
-          target="_blank"
-          href={paths.externalUrls.termsOfService}
-          className="underline"
-        >
-          The Grid&apos;s data
-        </a>{' '}
-        which is in Beta - API users can pick and show data relevant to their
-        users.
+        Welcome to the Beta release of The Grid&apos;s profile manger. This is
+        only the start. Questions and feedback to be sent via Intercom.
       </span>
     </section>
   );

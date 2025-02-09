@@ -20,10 +20,14 @@ import {
 } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
 import { ChevronsUpDown } from 'lucide-react';
+import { InfoIconTooltip } from './info-icon';
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from './dialog';
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 
 export type Option = {
   value: string;
   label: string;
+  description?: string;
 };
 export type SingleComboboxProps = Omit<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
@@ -52,12 +56,12 @@ export function SingleCombobox({
 
   if (isDesktop) {
     return (
-      <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger asChild>
           <Button
             variant="outline"
             className={cn(
-              'w-full justify-between',
+              'flex w-full flex-1 justify-between gap-2 truncate',
               error && 'border-destructive',
               className
             )}
@@ -66,15 +70,21 @@ export function SingleCombobox({
             {selectedOption ? selectedOption.label : placeholder}
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
-        </PopoverTrigger>
-        <PopoverContent className="w-[200px] p-0" align="start">
+        </DialogTrigger>
+        <DialogContent
+          className="w-fit gap-0 rounded-md p-0"
+          aria-describedby={undefined}
+        >
+          <VisuallyHidden asChild>
+            <DialogTitle>{placeholder}</DialogTitle>
+          </VisuallyHidden>
           <OptionList
             options={options}
             setOpen={setOpen}
             onSelect={onValueChange}
           />
-        </PopoverContent>
-      </Popover>
+        </DialogContent>
+      </Dialog>
     );
   }
 
@@ -84,14 +94,16 @@ export function SingleCombobox({
         <Button
           variant="outline"
           className={cn(
-            'w-full justify-between',
+            'flex w-full flex-1 justify-between gap-2 truncate',
             error && 'border-destructive',
             className
           )}
           {...props}
         >
-          {selectedOption ? selectedOption.label : placeholder}
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          <span className="truncate">
+            {selectedOption ? selectedOption.label : placeholder}
+          </span>
+          <ChevronsUpDown className="h-4 w-4 flex-shrink-0 opacity-50" />
         </Button>
       </DrawerTrigger>
       <DrawerContent>
@@ -140,7 +152,14 @@ function OptionList({
                 setOpen(false);
               }}
             >
-              {option.label}
+              <div>
+                <div className="text font-medium">{option.label}</div>
+                {option.description !== null && (
+                  <div className="text text-sm text-muted-foreground">
+                    {option.description || 'No description provided'}
+                  </div>
+                )}
+              </div>
             </CommandItem>
           ))}
         </CommandGroup>
