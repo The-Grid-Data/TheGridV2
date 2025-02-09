@@ -71,7 +71,6 @@ export function TgsField({
             render={({ field, fieldState }) => (
               <FieldWrapper
                 label={label}
-                description={tgsData.description}
                 isRequired={isRequired}
                 infoTooltipText={tgsData.description}
               >
@@ -85,7 +84,8 @@ export function TgsField({
                     .map(value => ({
                       id: value.id,
                       label: value.name,
-                      value: value.id
+                      value: value.id,
+                      description: value.definition
                     }))
                     .sort((a, b) => a.label.localeCompare(b.label))}
                 />
@@ -100,7 +100,6 @@ export function TgsField({
             render={({ field, fieldState }) => (
               <FieldWrapper
                 label={label}
-                description={tgsData.description}
                 isRequired={isRequired}
                 infoTooltipText={tgsData.description}
               >
@@ -120,7 +119,6 @@ export function TgsField({
             render={({ field, fieldState }) => (
               <FieldWrapper
                 label={label}
-                description={tgsData.description}
                 isRequired={isRequired}
                 infoTooltipText={tgsData.description}
               >
@@ -140,7 +138,6 @@ export function TgsField({
             render={({ field, fieldState }) => (
               <FieldWrapper
                 label={label}
-                description={tgsData.description}
                 isRequired={isRequired}
                 infoTooltipText={tgsData.description}
               >
@@ -179,7 +176,6 @@ export function TgsField({
               return (
                 <FieldWrapper
                   label={label}
-                  description={tgsData.description}
                   isRequired={isRequired}
                   infoTooltipText={tgsData.description}
                 >
@@ -200,7 +196,6 @@ export function TgsField({
             render={({ field, fieldState }) => (
               <FieldWrapper
                 label={label}
-                description={tgsData.description}
                 isRequired={isRequired}
                 infoTooltipText={tgsData.description}
               >
@@ -225,7 +220,7 @@ const FieldWrapper = ({
 }: {
   children: React.ReactNode;
   label: string;
-  description: string;
+  description?: string;
   isRequired?: boolean;
   infoTooltipText?: string;
 }) => {
@@ -242,7 +237,7 @@ const FieldWrapper = ({
       </FormLabel>
       <FormControl>{children}</FormControl>
       <FormMessage />
-      <FormDescription>{description}</FormDescription>
+      {description && <FormDescription>{description}</FormDescription>}
     </FormItem>
   );
 };
