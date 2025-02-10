@@ -102,16 +102,13 @@ function ClerkContextProvider({ children }: { children: ReactNode }) {
     : null;
 
   const getToken = useCallback(async () => {
-    if (!token) {
-      const newToken = await clerkGetToken();
-      if (!newToken) {
-        throw new Error('Failed to get authentication token');
-      }
-      setToken(newToken);
-      return newToken;
+    const newToken = await clerkGetToken();
+    if (!newToken) {
+      throw new Error('Failed to get authentication token');
     }
-    return token;
-  }, [token, clerkGetToken]);
+    setToken(newToken);
+    return newToken;
+  }, [clerkGetToken]);
 
   return (
     <ClerkContext.Provider
