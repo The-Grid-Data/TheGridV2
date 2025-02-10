@@ -2,6 +2,7 @@ export const paths = {
   base: '/',
   signIn: '/sign-in',
   signUp: '/sign-up',
+  verifyProfile: '/verify-profile',
   profile: {
     base: '/profile',
     detail: (slug: string, opts?: { section?: string }) => {
