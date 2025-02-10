@@ -1,14 +1,11 @@
 import { Button } from '@/components/ui/button';
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle
 } from '@/components/ui/card';
-import { ControlledOverlay } from '@/components/ui/controlled-overlay';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { paths } from '@/lib/routes/paths';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -63,35 +60,9 @@ export const HomeWhenSignedOut = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <ControlledOverlay
-                title="Create account"
-                size="small"
-                triggerNode={
-                  <Button variant="default">Create account</Button>
-                }
-                render={({ closeDialog }) => (
-                  <div className="flex flex-col gap-4">
-                      <Label htmlFor="code">Profile Code</Label>
-                      <Input
-                        id="code"
-                        placeholder="Enter your profile code"
-                        value={code}
-                        onChange={(e) => setCode(e.target.value)}
-                        onKeyDown={(e) => {
-                          if (e.key === 'Enter') {
-                            handleContinue(closeDialog);
-                          }
-                        }}
-                      />
-                    <Button
-                      className="w-full"
-                      onClick={() => handleContinue(closeDialog)}
-                    >
-                      Continue
-                    </Button>
-                  </div>
-                )}
-              />
+              <Button variant="default" asChild>
+                <Link href={paths.signUp}>Create account</Link>
+              </Button>
             </CardContent>
           </Card>
         </div>
