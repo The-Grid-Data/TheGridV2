@@ -38,16 +38,19 @@ export default function VerifyProfilePage() {
         throw new Error(error.message || 'Failed to verify profile code');
       }
 
-      // Reload user data to get updated metadata
-      await user?.reload();
-
       toast({
         title: 'Profile verified successfully',
         description: 'You will be redirected to your profile page.',
       });
 
-      // Redirect to profile page after successful verification
-      router.push(paths.profile.base);
+      // Wait for user data to be reloaded
+      await user?.reload();
+
+      // Add a small delay to ensure Clerk context is updated
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      // Use window.location for a full page reload to ensure fresh state
+      window.location.href = paths.profile.base;
     } catch (error) {
       toast({
         variant: 'destructive',
