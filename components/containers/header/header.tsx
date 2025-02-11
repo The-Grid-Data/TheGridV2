@@ -24,7 +24,7 @@ const claimProfileButton = (
 
 const viewProfileButton = (
   <Button asChild variant="outline" className="w-full md:w-fit">
-    <Link target="_blank" rel="noopener noreferrer" href={paths.profile.base}>
+    <Link rel="noopener noreferrer" href={paths.profile.base}>
       Edit your profile
     </Link>
   </Button>

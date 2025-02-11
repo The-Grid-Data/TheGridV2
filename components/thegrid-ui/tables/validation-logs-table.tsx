@@ -131,7 +131,7 @@ export function ValidationLogsTable({ rootId }: ValidationLogsTableProps) {
 
   const table = useDataTable({
     data: validationLogs,
-    //@ts-ignore
+    // @ts-ignore
     columns,
     pageCount: Math.ceil(validationLogs.length / 50),
     enableExpanding: true,
