@@ -1,18 +1,18 @@
 import {
-  flexRender,
-  Row,
-  type Table as TanstackTable
+    flexRender,
+    Row,
+    type Table as TanstackTable
 } from '@tanstack/react-table';
 import * as React from 'react';
 
 import { Button } from '@/components/ui/button';
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow
 } from '@/components/ui/table';
 import { cn } from '@/lib/utils';
 import { ChevronDown, ChevronUp } from 'lucide-react';
