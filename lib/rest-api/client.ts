@@ -2,8 +2,10 @@
 
 import { useClerkContext } from '@/providers/clerk-provider';
 
-const API_ENDPOINT =
-  'https://a2f6zzrqop62jwep7ehq53nn2m0rkwqq.lambda-url.eu-central-1.on.aws/';
+const API_ENDPOINT = process.env.NEXT_PUBLIC_GO_BACKEND_ENDPOINT;
+if (!API_ENDPOINT) {
+  throw new Error('Go backend endpoint is not defined');
+}
 
 export const DB_NAME = 'A';
 

@@ -2,14 +2,14 @@
 
 import { DataTable } from '@/components/thegrid-ui/data-table/data-table';
 import { useDataTable } from '@/components/thegrid-ui/data-table/hooks/use-data-table';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { execute } from '@/lib/graphql/execute';
+import { graphql } from '@/lib/graphql/generated';
 import { Validation } from '@/lib/graphql/generated/graphql';
+import { useQuery } from '@tanstack/react-query';
 import { type ColumnDef } from '@tanstack/react-table';
 import { useMemo } from 'react';
 import { DataTableColumnHeader } from '../data-table/data-table-column-header';
-import { graphql } from '@/lib/graphql/generated';
-import { useQuery } from '@tanstack/react-query';
-import { execute } from '@/lib/graphql/execute';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { DataTableToolbar } from '../data-table/data-table-toolbar';
 import { DataTableAdvancedFilterField } from '../data-table/types';
 
@@ -38,6 +38,40 @@ export const ValidationLogsQuery = graphql(`
 
 const columns: ColumnDef<Validation>[] = [
   {
+    accessorKey: 'isPending',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Is Pending" />
+    )
+  },
+  {
+    accessorKey: 'resolution',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Resolution" />
+    )
+  },
+  {
+    accessorKey: 'destinationValue',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Old Data" />
+    ),
+    cell: ({ row }) => (
+      <div className="w-xl truncate" title={row.getValue('destinationValue')}>
+        {row.getValue('destinationValue')}
+      </div>
+    )
+  },
+  {
+    accessorKey: 'sourceValue',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="New Data" />
+    ),
+    cell: ({ row }) => (
+      <div className="w-xl truncate" title={row.getValue('sourceValue')}>
+        {row.getValue('sourceValue')}
+      </div>
+    )
+  },
+  {
     accessorKey: 'field',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Field" />
@@ -50,89 +84,11 @@ const columns: ColumnDef<Validation>[] = [
     )
   },
   {
-    accessorKey: 'referencedField',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Referenced Field" />
-    )
-  },
-  {
-    accessorKey: 'isPending',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Is Pending" />
-    )
-  },
-  {
-    accessorKey: 'destinationValue',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Destination Value" />
-    )
-  },
-  {
     accessorKey: 'createdAt',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Created At" />
     )
   },
-  {
-    accessorKey: 'committedAt',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Committed At" />
-    )
-  },
-  {
-    accessorKey: 'comment',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Comment" />
-    )
-  },
-  {
-    accessorKey: 'updatedBy',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Updated By" />
-    )
-  },
-  {
-    accessorKey: 'updatedFrom',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Updated From" />
-    )
-  },
-  {
-    accessorKey: 'resolution',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Resolution" />
-    )
-  },
-  {
-    accessorKey: 'resolvedAt',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Resolved At" />
-    )
-  },
-  {
-    accessorKey: 'resolvedBy',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Resolved By" />
-    )
-  },
-  {
-    accessorKey: 'rootId',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Root ID" />
-    )
-  },
-  {
-    accessorKey: 'rowId',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Row ID" />
-    )
-  },
-  {
-    accessorKey: 'sourceValue',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Source Value" />
-    )
-  }
 ];
 
 type ValidationLogsTableProps = {
@@ -175,9 +131,9 @@ export function ValidationLogsTable({ rootId }: ValidationLogsTableProps) {
 
   const table = useDataTable({
     data: validationLogs,
-    //@ts-ignore
+    // @ts-ignore
     columns,
-    pageCount: Math.ceil(validationLogs.length / 10),
+    pageCount: Math.ceil(validationLogs.length / 50),
     enableExpanding: true,
     //@ts-ignore
     filterFields,
@@ -185,7 +141,7 @@ export function ValidationLogsTable({ rootId }: ValidationLogsTableProps) {
       sorting: [{ id: 'createdAt', desc: true }],
       // columnFilters: [{ id: 'isPending', value: 'No' }],
       pagination: {
-        pageSize: 100,
+        pageSize: 50,
         pageIndex: 0
       }
     }
@@ -197,7 +153,7 @@ export function ValidationLogsTable({ rootId }: ValidationLogsTableProps) {
         <CardHeader>
           <CardTitle>Validation Logs</CardTitle>
         </CardHeader>
-        <CardContent className="max-w-6xl">
+        <CardContent className="w-full">
           {/* @ts-ignore */}
           <DataTableToolbar table={table} filterFields={filterFields} />
 

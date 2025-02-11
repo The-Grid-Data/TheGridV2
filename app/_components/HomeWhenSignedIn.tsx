@@ -1,13 +1,13 @@
 'use client';
-import { Button } from '@/components/ui/button';
-import { paths } from '@/lib/routes/paths';
-import { useClerkContext } from '@/providers/clerk-provider';
-import Link from 'next/link';
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import { execute } from '@/lib/graphql/execute';
-import { graphql } from '@/lib/graphql/generated';
 import ProfileLoading from '@/components/containers/profile-detail/components/profile-loading';
 import { ValidationLogsTable } from '@/components/thegrid-ui/tables/validation-logs-table';
+import { Button } from '@/components/ui/button';
+import { execute } from '@/lib/graphql/execute';
+import { graphql } from '@/lib/graphql/generated';
+import { paths } from '@/lib/routes/paths';
+import { useClerkContext } from '@/providers/clerk-provider';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import Link from 'next/link';
 
 export const ProfileNameQuery = graphql(`
   query getProfileName($where: ProfileInfosBoolExp) {
@@ -68,7 +68,11 @@ export const HomeWhenSignedIn = () => {
         )}
       </div>
 
-      {profile?.root?.id && <ValidationLogsTable rootId={profile?.root?.id} />}
+      {profile?.root?.id && (
+        <div className="mt-12">
+          <ValidationLogsTable rootId={profile?.root?.id} />
+        </div>
+      )}
     </section>
   );
 };
