@@ -2,6 +2,7 @@
 
 import { DeploymentsTable } from '@/components/thegrid-ui/tables/deployments-table';
 import { RelatedAssetsTable } from '@/components/thegrid-ui/tables/related-assets-table';
+import { SupportsProductsTable } from '@/components/thegrid-ui/tables/supports-products-table';
 import { UrlsTable } from '@/components/thegrid-ui/tables/urls-table';
 import { ControlledOverlay } from '@/components/ui/controlled-overlay';
 import { ProductFieldsFragmentFragment } from '@/lib/graphql/generated/graphql';
@@ -30,9 +31,15 @@ export function EditProductOverlay({
           />
           <div className="flex flex-col gap-12">
             <UrlsTable urls={product.urls} rootId={product.rootId} />
-            <DeploymentsTable productDeployments={product.productDeployments} />
+            <DeploymentsTable
+              productDeployments={product.productDeployments}
+              rootId={product.rootId}
+            />
             <RelatedAssetsTable
               productAssetRelationships={product.productAssetRelationships}
+            />
+            <SupportsProductsTable
+              supportsProducts={product.supportsProducts}
             />
           </div>
         </div>

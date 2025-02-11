@@ -42,6 +42,7 @@ const documents = {
     "\n          query getProfileTypeOptions($where: ProfileTypesBoolExp) {\n            profileTypes(where: $where) {\n              label: name\n              value: id\n              description: definition\n            }\n          }\n        ": types.GetProfileTypeOptionsDocument,
     "\n          query getSupportsProductsOptions($where: SupportsProductsBoolExp) {\n            supportsProducts(where: $where) {\n              supportsProduct {\n                name\n                id\n                description\n              }\n            }\n          }\n        ": types.GetSupportsProductsOptionsDocument,
     "\n          query getTagsOptions(\n            $where: TagsBoolExp\n            $aggregateInput: ProfileTagsFilterInput\n          ) {\n            tags(where: $where) {\n              value: id\n              label: name\n              description\n              profileTagsAggregate(filter_input: $aggregateInput) {\n                _count\n              }\n            }\n          }\n        ": types.GetTagsOptionsDocument,
+    "\n    query getProductsLayers {\n      products(where: {productTypeId: {_in: [15, 16, 17]}}) {\n        id\n        name\n      }\n    }\n  ": types.GetProductsLayersDocument,
     "\n  query getValidationLog($where: validationBoolExp) {\n    validation(where: $where) {\n      referencedTable\n      referencedField\n      isPending\n      field\n      destinationValue\n      createdAt\n      committedAt\n      comment\n      updatedBy\n      updatedFrom\n      resolution\n      resolvedAt\n      resolvedBy\n      rootId\n      rowId\n      sourceValue\n    }\n  }\n": types.GetValidationLogDocument,
 };
 
@@ -153,6 +154,10 @@ export function graphql(source: "\n          query getSupportsProductsOptions($w
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n          query getTagsOptions(\n            $where: TagsBoolExp\n            $aggregateInput: ProfileTagsFilterInput\n          ) {\n            tags(where: $where) {\n              value: id\n              label: name\n              description\n              profileTagsAggregate(filter_input: $aggregateInput) {\n                _count\n              }\n            }\n          }\n        "): typeof import('./graphql').GetTagsOptionsDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n    query getProductsLayers {\n      products(where: {productTypeId: {_in: [15, 16, 17]}}) {\n        id\n        name\n      }\n    }\n  "): typeof import('./graphql').GetProductsLayersDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
