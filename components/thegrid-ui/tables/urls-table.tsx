@@ -76,6 +76,7 @@ export function UrlsTable({ urls, rootId }: UrlsTableProps) {
     data,
     columns,
     pageCount: 1,
+    getRowId: row => row.id,
     onCellSubmit: async (data) => {
       try {
         await urlsApi.update(data);

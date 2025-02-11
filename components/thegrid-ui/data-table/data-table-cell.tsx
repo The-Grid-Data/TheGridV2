@@ -1,11 +1,11 @@
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
 } from "@/components/ui/select";
 import { TableCell } from '@/components/ui/table';
 import { cn } from '@/lib/utils';
@@ -34,6 +34,8 @@ export function DataTableCell<TData>({
 
   const handleClick = () => {
     if (!isEditable || !onSubmit) return;
+    console.log('handleClick', cell);
+    console.log('cell value', cell.getValue());
     setValue(String(cell.getValue()));
     setError(null);
     setIsEditing(true);
@@ -71,7 +73,7 @@ export function DataTableCell<TData>({
       }
 
       const success = await onSubmit({
-        id: String((cell.row.original as any).id),
+        id: cell.row.id,
         [field]: valueToSubmit
       });
 
