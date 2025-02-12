@@ -47,17 +47,21 @@ export const ProductsLayersDictionaryQuery = graphql(`
 type DeploymentsTableProps = {
   productDeployments: Deployments;
   rootId: string;
+  lensName: string;
+  lensRecordId: string;
 };
 
 export function DeploymentsTable({
   productDeployments,
-  rootId
+  rootId,
+  lensName,
+  lensRecordId
 }: DeploymentsTableProps) {
   const client = useRestApiClient();
-  const smartContractDeploymentsApi = useSmartContractDeploymentsApi(client);
+  const smartContractDeploymentsApi = useSmartContractDeploymentsApi(client, lensName, lensRecordId);
   const queryClient = useQueryClient();
 
-  const { data: productsLayersDictionaryData, isLoading: productsLayersDictionaryLoading } = useQuery({
+  const { data: productsLayersDictionaryData } = useQuery({
     queryKey: ['products-layers-dictionary'],
     queryFn: () => execute(ProductsLayersDictionaryQuery)
   });
@@ -120,13 +124,18 @@ export function DeploymentsTable({
     enableExpanding: true,
     getRowId: row => row.smartContractDeployment?.id ?? row.id,
     onCellSubmit: async (data) => {
-      await smartContractDeploymentsApi.update(data);
-      queryClient.invalidateQueries({
-        queryKey: ['profile', rootId],
-        exact: true,
-        refetchType: 'all'
-      });
-      return true;
+      try {
+        await smartContractDeploymentsApi.upsert(data);
+        queryClient.invalidateQueries({
+          queryKey: ['profile', rootId],
+          exact: true,
+          refetchType: 'all'
+        });
+        return true;
+      } catch (error) {
+        console.error('Failed to upsert smart contract deployment:', error);
+        return false;
+      }
     }
   });
 
@@ -195,7 +204,11 @@ export function DeploymentSubRow({ deployment, rootId }: { deployment: Deploymen
     getRowId: row => row.id,
     onCellSubmit: async (data) => {
         try {
-            await smartContractsApi.update(data);
+            const input = {
+              ...data,
+              deploymentId: deployment.smartContractDeployment?.id
+            }
+            await smartContractsApi.upsert(input);
             queryClient.invalidateQueries({
               queryKey: ['profile', rootId],
               exact: true,
@@ -203,7 +216,7 @@ export function DeploymentSubRow({ deployment, rootId }: { deployment: Deploymen
             });
             return true;
         } catch (error) {
-          console.error('Failed to update URL:', error);
+          console.error('Failed to upsert smart contract:', error);
           return false;
         }
       },

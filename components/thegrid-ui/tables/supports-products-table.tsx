@@ -21,11 +21,13 @@ type SupportsProduct = NonNullable<SupportsProducts>[number];
 
 type SupportsProductsTableProps = {
   supportsProducts?: SupportsProducts;
+  productId: string;
   rootId: string;
 };
 
 export function SupportsProductsTable({
   supportsProducts,
+  productId,
   rootId
 }: SupportsProductsTableProps) {
   const data = useMemo(() => {
@@ -72,7 +74,10 @@ export function SupportsProductsTable({
     getRowId: row => row.id,
     onCellSubmit: async (data) => {
         try {
-          await supportsProductsApi.update(data);
+          await supportsProductsApi.upsert({
+            ...data,
+            productId
+          });
           queryClient.invalidateQueries({
             queryKey: ['profile', rootId],
             exact: true,
@@ -80,7 +85,7 @@ export function SupportsProductsTable({
           });
           return true;
         } catch (error) {
-          console.error('Failed to update URL:', error);
+          console.error('Failed to upsert product support:', error);
           return false;
         }
       }

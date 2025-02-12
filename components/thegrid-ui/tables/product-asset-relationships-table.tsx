@@ -38,11 +38,13 @@ const assetSupportTypeOptions = assetSupportTypeData.isDataValid && assetSupport
 
 type ProductAssetRelationshipsTableProps = {
   productAssetRelationships?: ProductAssetRelationships;
+  productId: string;
   rootId: string;
 };
 
 export function ProductAssetRelationshipsTable({
   productAssetRelationships,
+  productId,
   rootId
 }: ProductAssetRelationshipsTableProps) {
   const { data: assetsDictionaryData, isLoading: assetsDictionaryLoading } = useQuery({
@@ -99,13 +101,21 @@ export function ProductAssetRelationshipsTable({
     pageCount: 1,
     getRowId: row => row.id,
     onCellSubmit: async (data) => {
-      await productAssetRelationshipsApi.update(data);
-      queryClient.invalidateQueries({
-        queryKey: ['profile', rootId],
-        exact: true,
-        refetchType: 'all'
-      });
-      return true;
+      try {
+        await productAssetRelationshipsApi.upsert({
+          ...data,
+          productId
+        });
+        queryClient.invalidateQueries({
+          queryKey: ['profile', rootId],
+          exact: true,
+          refetchType: 'all'
+        });
+        return true;
+      } catch (error) {
+        console.error('Failed to upsert product asset relationship:', error);
+        return false;
+      }
     }
   });
 

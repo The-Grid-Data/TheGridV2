@@ -3,6 +3,9 @@ import { RestClient } from './client';
 
 export type CreateSmartContractInput = Partial<SmartContracts>;
 export type UpdateSmartContractInput = Partial<SmartContracts> & { id: string };
+export type UpsertSmartContractInput = Partial<SmartContracts> & {
+  id?: string;
+};
 
 const TABLE_NAME = 'smartContracts';
 
@@ -16,6 +19,17 @@ export const createSmartContractsApi = (client: RestClient) => {
     return client.update(TABLE_NAME, id, data);
   };
 
+  const upsert = async (input: UpsertSmartContractInput) => {
+    const { id, ...data } = input;
+    let result;
+    if (id) {
+      result = await client.update(TABLE_NAME, id, data);
+    } else {
+      result = await client.create(TABLE_NAME, data);
+    }
+    return result.results[0];
+  };
+
   const remove = async (id: string) => {
     return client.delete(TABLE_NAME, id);
   };
@@ -23,6 +37,7 @@ export const createSmartContractsApi = (client: RestClient) => {
   return {
     create,
     update,
+    upsert,
     delete: remove
   };
 };
