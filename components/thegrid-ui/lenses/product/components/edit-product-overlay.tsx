@@ -1,7 +1,7 @@
 'use client';
 
 import { DeploymentsTable } from '@/components/thegrid-ui/tables/deployments-table';
-import { RelatedAssetsTable } from '@/components/thegrid-ui/tables/related-assets-table';
+import { ProductAssetRelationshipsTable } from '@/components/thegrid-ui/tables/product-asset-relationships-table';
 import { SupportsProductsTable } from '@/components/thegrid-ui/tables/supports-products-table';
 import { UrlsTable } from '@/components/thegrid-ui/tables/urls-table';
 import { ControlledOverlay } from '@/components/ui/controlled-overlay';
@@ -35,11 +35,13 @@ export function EditProductOverlay({
               productDeployments={product.productDeployments}
               rootId={product.rootId}
             />
-            <RelatedAssetsTable
+            <ProductAssetRelationshipsTable
               productAssetRelationships={product.productAssetRelationships}
+              rootId={product.rootId}
             />
             <SupportsProductsTable
               supportsProducts={product.supportsProducts}
+              rootId={product.rootId}
             />
           </div>
         </div>

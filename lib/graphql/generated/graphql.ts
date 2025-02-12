@@ -3414,10 +3414,15 @@ export type GetTagsOptionsQueryVariables = Exact<{
 
 export type GetTagsOptionsQuery = { __typename?: 'Query', tags?: Array<{ __typename?: 'Tags', description: string, value: string, label: string, profileTagsAggregate: { __typename?: 'ProfileTagsAggExp', _count: number } }> | null };
 
-export type GetProductsLayersQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetProductsLayersDictionaryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetProductsLayersQuery = { __typename?: 'Query', products?: Array<{ __typename?: 'Products', id: string, name: string }> | null };
+export type GetProductsLayersDictionaryQuery = { __typename?: 'Query', products?: Array<{ __typename?: 'Products', id: string, name: string }> | null };
+
+export type GetAssetsDictionaryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAssetsDictionaryQuery = { __typename?: 'Query', assets?: Array<{ __typename?: 'Assets', id: string, name: string }> | null };
 
 export type GetValidationLogQueryVariables = Exact<{
   where?: InputMaybe<ValidationBoolExp>;
@@ -4616,14 +4621,22 @@ export const GetTagsOptionsDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<GetTagsOptionsQuery, GetTagsOptionsQueryVariables>;
-export const GetProductsLayersDocument = new TypedDocumentString(`
-    query getProductsLayers {
+export const GetProductsLayersDictionaryDocument = new TypedDocumentString(`
+    query getProductsLayersDictionary {
   products(where: {productTypeId: {_in: [15, 16, 17]}}) {
     id
     name
   }
 }
-    `) as unknown as TypedDocumentString<GetProductsLayersQuery, GetProductsLayersQueryVariables>;
+    `) as unknown as TypedDocumentString<GetProductsLayersDictionaryQuery, GetProductsLayersDictionaryQueryVariables>;
+export const GetAssetsDictionaryDocument = new TypedDocumentString(`
+    query getAssetsDictionary {
+  assets {
+    id
+    name
+  }
+}
+    `) as unknown as TypedDocumentString<GetAssetsDictionaryQuery, GetAssetsDictionaryQueryVariables>;
 export const GetValidationLogDocument = new TypedDocumentString(`
     query getValidationLog($where: validationBoolExp) {
   validation(where: $where) {

@@ -6,8 +6,8 @@ import { execute } from '@/lib/graphql/execute';
 import { graphql } from '@/lib/graphql/generated';
 import { ProductFieldsFragmentFragment } from '@/lib/graphql/generated/graphql';
 import { useRestApiClient } from '@/lib/rest-api/client';
-import { useSmartContractDeploymentsApi } from '@/lib/rest-api/smartContractDeployments';
-import { useSmartContractsApi } from '@/lib/rest-api/smartContracts';
+import { useSmartContractDeploymentsApi } from '@/lib/rest-api/smart-contract-deployments';
+import { useSmartContractsApi } from '@/lib/rest-api/smart-contracts';
 import { getTgsData } from '@/lib/tgs';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { type ColumnDef } from '@tanstack/react-table';
@@ -35,8 +35,8 @@ const isOfStandardOptions = isOfStandardData.isDataValid && isOfStandardData.is_
     }))
 : [];
 
-export const ProductsLayersQuery = graphql(`
-    query getProductsLayers {
+export const ProductsLayersDictionaryQuery = graphql(`
+    query getProductsLayersDictionary {
       products(where: {productTypeId: {_in: [15, 16, 17]}}) {
         id
         name
@@ -57,20 +57,20 @@ export function DeploymentsTable({
   const smartContractDeploymentsApi = useSmartContractDeploymentsApi(client);
   const queryClient = useQueryClient();
 
-  const { data, isLoading } = useQuery({
-    queryKey: ['products-layers'],
-    queryFn: () => execute(ProductsLayersQuery)
+  const { data: productsLayersDictionaryData, isLoading: productsLayersDictionaryLoading } = useQuery({
+    queryKey: ['products-layers-dictionary'],
+    queryFn: () => execute(ProductsLayersDictionaryQuery)
   });
-  const productsLayersOptions = useMemo(() => {
+  const productsLayersDictionaryOptions = useMemo(() => {
     return (
-      data?.products?.map(item => ({
+      productsLayersDictionaryData?.products?.map(item => ({
         value: item.id,
         label: item.name
       }))?.sort((a, b) => a.label.localeCompare(b.label)) ?? []
     );
-  }, [data]);
+  }, [productsLayersDictionaryData]);
 
-  const columns: ColumnDef<Deployment>[] = [
+  const columns: ColumnDef<Deployment>[] = useMemo(() => [
     {
       accessorKey: 'smartContractDeployment.deploymentType.name',
       header: ({ column }) => (
@@ -91,7 +91,7 @@ export function DeploymentsTable({
       meta: {
         type: 'tag',
         isEditable: true,
-        options: productsLayersOptions,
+        options: productsLayersDictionaryOptions,
         field: 'deployedOn.id'
       } satisfies ColumnMeta
     },
@@ -107,7 +107,7 @@ export function DeploymentsTable({
         field: 'isOfStandard.id'
       } satisfies ColumnMeta
     }
-  ];
+  ], [productsLayersDictionaryOptions]);
 
   const deploymentsData = useMemo(() => {
     return productDeployments ?? [];
