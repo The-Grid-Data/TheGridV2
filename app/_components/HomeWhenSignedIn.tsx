@@ -8,18 +8,7 @@ import { paths } from '@/lib/routes/paths';
 import { useClerkContext } from '@/providers/clerk-provider';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
-
-export const ProfileNameQuery = graphql(`
-  query getProfileName($where: ProfileInfosBoolExp) {
-    profileInfos(limit: 1, offset: 0, where: $where) {
-      name
-      root {
-        id
-        slug
-      }
-    }
-  }
-`);
+import { Changelog } from './changelog';
 
 export const HomeWhenSignedIn = () => {
   const { isLoading: isClerkLoading, profileMetadata } = useClerkContext();
@@ -43,36 +32,78 @@ export const HomeWhenSignedIn = () => {
   }
 
   return (
-    <section className="container mx-auto flex max-w-4xl flex-col items-center gap-6 py-8 md:py-12 md:pb-8 lg:py-12 lg:pb-12">
-      <h1 className="scroll-m-20 text-balance text-center text-4xl font-extrabold leading-tight tracking-tight lg:text-5xl lg:leading-[1.1]">
-        Manage the {profile?.name} profile
-      </h1>
-      <p className="max-w-xl text-center text-lg font-light text-foreground">
-        Easily update, customize, and manage your profile information all in one
-        place.
-      </p>
+    <div className="min-h-screen bg-background">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <section className="flex flex-col items-center space-y-8 py-16 md:py-24">
+          <div className="max-w-4xl space-y-6 text-center">
+            <h1 className="scroll-m-20 text-balance text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+              Manage the {profile?.name} profile
+            </h1>
+            <p className="mx-auto max-w-2xl text-lg font-light text-muted-foreground">
+              Easily update, customize, and manage your profile information all
+              in one place.
+            </p>
+          </div>
 
-      <div className="flex flex-row gap-4">
-        <Button variant="default" asChild>
-          <Link href={paths.profile.base}>Edit your profile</Link>
-        </Button>
-        {profile?.root?.slug && (
-          <Button variant="outline" asChild>
-            <Link
-              href={paths.profile.detail(profile?.root?.slug)}
-              target="_blank"
-            >
-              View on the Explorer
-            </Link>
-          </Button>
-        )}
+          <div className="flex flex-col gap-4 sm:flex-row">
+            <Button size="lg" variant="default" asChild>
+              <Link href={paths.profile.base}>Edit your profile</Link>
+            </Button>
+            {profile?.root?.slug && (
+              <Button size="lg" variant="outline" asChild>
+                <Link
+                  href={paths.profile.detail(profile?.root?.slug)}
+                  target="_blank"
+                >
+                  View on the Explorer
+                </Link>
+              </Button>
+            )}
+          </div>
+
+          <div className="w-full max-w-4xl pt-8">
+            <Changelog
+              entries={[
+                {
+                  date: 'February 11, 2024',
+                  title: 'Known issues',
+                  description:
+                    'Unable to edit product + asset deployments, product supports and URLs. This functionality is coming very soon.'
+                },
+                {
+                  date: 'February 11, 2024',
+                  title: 'Other changes',
+                  description:
+                    'Updated edit log load. Updated logo upload to work on black background.'
+                },
+                {
+                  date: 'February 9, 2024',
+                  title: 'Initial push',
+                  description: 'First release of the platform'
+                }
+              ]}
+            />
+          </div>
+        </section>
+
+        <section className="pb-16">
+          {profile?.root?.id && (
+            <ValidationLogsTable rootId={profile?.root?.id} />
+          )}
+        </section>
       </div>
-
-      {profile?.root?.id && (
-        <div className="mt-12">
-          <ValidationLogsTable rootId={profile?.root?.id} />
-        </div>
-      )}
-    </section>
+    </div>
   );
 };
+
+export const ProfileNameQuery = graphql(`
+  query getProfileName($where: ProfileInfosBoolExp) {
+    profileInfos(limit: 1, offset: 0, where: $where) {
+      name
+      root {
+        id
+        slug
+      }
+    }
+  }
+`);

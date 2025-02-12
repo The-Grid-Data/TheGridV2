@@ -44,6 +44,8 @@ export function getCommonPinningStyles<TData>({
     position: isPinned ? 'sticky' : 'relative',
     background: isPinned ? 'hsl(var(--background))' : 'hsl(var(--background))',
     width: column.getSize(),
+    maxWidth: column.getSize(),
+    minWidth: column.getSize(),
     zIndex: isPinned ? 1 : 0
   };
 }

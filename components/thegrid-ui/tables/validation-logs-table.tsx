@@ -53,22 +53,12 @@ const columns: ColumnDef<Validation>[] = [
     accessorKey: 'destinationValue',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Old Data" />
-    ),
-    cell: ({ row }) => (
-      <div className="w-xl truncate" title={row.getValue('destinationValue')}>
-        {row.getValue('destinationValue')}
-      </div>
     )
   },
   {
     accessorKey: 'sourceValue',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="New Data" />
-    ),
-    cell: ({ row }) => (
-      <div className="w-xl truncate" title={row.getValue('sourceValue')}>
-        {row.getValue('sourceValue')}
-      </div>
     )
   },
   {
@@ -88,7 +78,7 @@ const columns: ColumnDef<Validation>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Created At" />
     )
-  },
+  }
 ];
 
 type ValidationLogsTableProps = {
@@ -134,7 +124,7 @@ export function ValidationLogsTable({ rootId }: ValidationLogsTableProps) {
     // @ts-ignore
     columns,
     pageCount: Math.ceil(validationLogs.length / 50),
-    enableExpanding: true,
+    // enableExpanding: true,
     //@ts-ignore
     filterFields,
     initialState: {
@@ -148,18 +138,25 @@ export function ValidationLogsTable({ rootId }: ValidationLogsTableProps) {
   });
 
   return (
-    <div>
-      <Card>
-        <CardHeader>
-          <CardTitle>Validation Logs</CardTitle>
-        </CardHeader>
-        <CardContent className="w-full">
+    <div className="mx-auto max-w-[90vw] px-4 py-8">
+      <div className="mb-8 space-y-2">
+        <h2 className="text-2xl font-bold tracking-tight">Validation Logs</h2>
+        <p className="text-base text-muted-foreground">
+          View and monitor validation status updates for your profile data
+        </p>
+      </div>
+
+      <div className="rounded-lg border bg-card shadow">
+        <div className="p-4">
           {/* @ts-ignore */}
           <DataTableToolbar table={table} filterFields={filterFields} />
+        </div>
 
-          <DataTable table={table} />
-        </CardContent>
-      </Card>
+        <DataTable
+          className="w-full [&_table]:divide-y [&_tbody]:divide-y"
+          table={table}
+        />
+      </div>
     </div>
   );
 }

@@ -1,12 +1,12 @@
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '@/components/ui/select';
 import { TableCell } from '@/components/ui/table';
 import { cn } from '@/lib/utils';
 import { Cell, flexRender } from '@tanstack/react-table';
@@ -107,7 +107,7 @@ export function DataTableCell<TData>({
         <Select
           defaultValue={currentValue}
           onOpenChange={setIsEditing}
-          onValueChange={async (newValue) => {
+          onValueChange={async newValue => {
             setValue(newValue);
             await handleSubmit(newValue);
             setIsEditing(false);
@@ -117,7 +117,7 @@ export function DataTableCell<TData>({
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            {columnMeta.options.map((option) => (
+            {columnMeta.options.map(option => (
               <SelectItem key={option.value} value={option.value}>
                 {option.label}
               </SelectItem>
@@ -140,9 +140,9 @@ export function DataTableCell<TData>({
             }}
             onKeyDown={handleKeyDown}
             className={cn(
-              "h-6",
-              "rounded-sm",
-              error && "border-destructive focus-visible:ring-destructive"
+              'h-6',
+              'rounded-sm',
+              error && 'border-destructive focus-visible:ring-destructive'
             )}
             disabled={isSubmitting}
           />
@@ -176,9 +176,12 @@ export function DataTableCell<TData>({
       )}
       onClick={handleClick}
       tabIndex={isEditable ? 0 : undefined}
-      onBlur={(e) => {
+      onBlur={e => {
         // Only handle blur for non-select inputs
-        if (columnMeta?.type !== 'tag' && !e.currentTarget.contains(e.relatedTarget)) {
+        if (
+          columnMeta?.type !== 'tag' &&
+          !e.currentTarget.contains(e.relatedTarget)
+        ) {
           setIsEditing(false);
           setError(null);
         }
