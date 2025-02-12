@@ -4,7 +4,7 @@ import { DataTable } from '@/components/thegrid-ui/data-table/data-table';
 import { useDataTable } from '@/components/thegrid-ui/data-table/hooks/use-data-table';
 import { execute } from '@/lib/graphql/execute';
 import { graphql } from '@/lib/graphql/generated';
-import { ProductFieldsFragmentFragment } from '@/lib/graphql/generated/graphql';
+import { AssetFieldsFragmentFragment, ProductFieldsFragmentFragment } from '@/lib/graphql/generated/graphql';
 import { useRestApiClient } from '@/lib/rest-api/client';
 import { useSmartContractDeploymentsApi } from '@/lib/rest-api/smart-contract-deployments';
 import { useSmartContractsApi } from '@/lib/rest-api/smart-contracts';
@@ -16,7 +16,7 @@ import { DataTableColumnHeader } from '../data-table/data-table-column-header';
 import { ColumnMeta } from '../data-table/types';
 import { TableContainer } from '../lenses/base/components/table-container';
 
-type Deployments = ProductFieldsFragmentFragment['productDeployments'];
+type Deployments = ProductFieldsFragmentFragment['productDeployments'] | AssetFieldsFragmentFragment['assetDeployments'];
 type Deployment = NonNullable<Deployments>[number];
 
 const deploymentTypeData = getTgsData('smartContractDeployments.deploymentTypes');
@@ -45,22 +45,18 @@ export const ProductsLayersDictionaryQuery = graphql(`
   `);
 
 type DeploymentsTableProps = {
-  productDeployments: Deployments;
+  deployments: Deployments;
   rootId: string;
   lensName: string;
   lensRecordId: string;
 };
 
 export function DeploymentsTable({
-  productDeployments,
+  deployments,
   rootId,
   lensName,
   lensRecordId
 }: DeploymentsTableProps) {
-  const client = useRestApiClient();
-  const smartContractDeploymentsApi = useSmartContractDeploymentsApi(client, lensName, lensRecordId);
-  const queryClient = useQueryClient();
-
   const { data: productsLayersDictionaryData } = useQuery({
     queryKey: ['products-layers-dictionary'],
     queryFn: () => execute(ProductsLayersDictionaryQuery)
@@ -114,8 +110,12 @@ export function DeploymentsTable({
   ], [productsLayersDictionaryOptions]);
 
   const deploymentsData = useMemo(() => {
-    return productDeployments ?? [];
-  }, [productDeployments]);
+    return deployments ?? [];
+  }, [deployments]);
+
+  const client = useRestApiClient();
+  const smartContractDeploymentsApi = useSmartContractDeploymentsApi(client, lensName, lensRecordId);
+  const queryClient = useQueryClient();
 
   const table = useDataTable({
     data: deploymentsData,
@@ -139,8 +139,10 @@ export function DeploymentsTable({
     }
   });
 
+  const title = lensName === 'products' ? 'Product Deployments' : 'Asset Deployments';
+
   return (
-    <TableContainer title="Product Deployments">
+    <TableContainer title={title}>
       <div className="space-y-4">
         <DataTable
           table={table}

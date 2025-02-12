@@ -31,24 +31,24 @@ export function EditProductOverlay({
           />
           <div className="flex flex-col gap-12">
             <UrlsTable
-              urls={product.urls}
+              urls={product?.urls ?? []}
               rootId={product.rootId}
               lensName="products"
               lensRowId={product.id}
             />
             <DeploymentsTable
-              productDeployments={product.productDeployments}
+              deployments={product?.productDeployments ?? []}
               rootId={product.rootId}
               lensName="products"
               lensRecordId={product.id}
             />
             <ProductAssetRelationshipsTable
-              productAssetRelationships={product.productAssetRelationships}
+              productAssetRelationships={product?.productAssetRelationships ?? []}
               rootId={product.rootId}
               productId={product.id}
             />
             <SupportsProductsTable
-              supportsProducts={product.supportsProducts}
+              supportsProducts={product?.supportsProducts ?? []}
               rootId={product.rootId}
               productId={product.id}
             />

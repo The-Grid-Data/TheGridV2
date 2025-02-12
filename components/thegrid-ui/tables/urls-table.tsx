@@ -2,7 +2,7 @@
 
 import { DataTable } from '@/components/thegrid-ui/data-table/data-table';
 import { useDataTable } from '@/components/thegrid-ui/data-table/hooks/use-data-table';
-import { ProductFieldsFragmentFragment } from '@/lib/graphql/generated/graphql';
+import { AssetFieldsFragmentFragment, ProductFieldsFragmentFragment } from '@/lib/graphql/generated/graphql';
 import { useRestApiClient } from '@/lib/rest-api/client';
 import { useUrlsApi } from '@/lib/rest-api/urls';
 import { getTgsData } from '@/lib/tgs';
@@ -13,7 +13,7 @@ import { DataTableColumnHeader } from '../data-table/data-table-column-header';
 import { type ColumnMeta } from '../data-table/types';
 import { TableContainer } from '../lenses/base/components/table-container';
 
-type Urls = ProductFieldsFragmentFragment['urls'];
+type Urls = ProductFieldsFragmentFragment['urls'] | AssetFieldsFragmentFragment['urls'];
 type Url = NonNullable<Urls>[number];
 
 const urlTypeData = getTgsData('urls.urlType');

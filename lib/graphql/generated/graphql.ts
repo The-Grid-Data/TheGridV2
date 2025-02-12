@@ -3240,7 +3240,7 @@ export type GetProfileNameQueryVariables = Exact<{
 
 export type GetProfileNameQuery = { __typename?: 'Query', profileInfos?: Array<{ __typename?: 'ProfileInfos', name: string, root?: { __typename?: 'Roots', id: string, slug: string } | null }> | null };
 
-export type AssetFieldsFragmentFragment = { __typename?: 'Assets', ticker: string, rootId: string, name: string, id: string, icon: string, description: string, assetTypeId?: string | null, assetStatusId?: string | null, assetType?: { __typename?: 'AssetTypes', definition: string, id: string, name: string } | null, assetStatus?: { __typename?: 'AssetStatuses', name: string, id: string, definition: string } | null, assetDeployments?: Array<{ __typename?: 'AssetDeployments', id: string, deploymentId: string, assetId: string, smartContractDeployment?: { __typename?: 'SmartContractDeployments', id: string, deployedOnProduct?: { __typename?: 'Products', id: string, name: string, root?: { __typename?: 'Roots', slug: string } | null } | null, assetStandard?: { __typename?: 'AssetStandards', id: string } | null, smartContracts?: Array<{ __typename?: 'SmartContracts', name: string, id: string, deploymentId?: string | null, deploymentDate?: string | null, address: string }> | null, deploymentType?: { __typename?: 'DeploymentTypes', name: string, id: string, definition: string } | null } | null }> | null, urls?: Array<{ __typename?: 'AssetUrls', url: string, urlType?: { __typename?: 'UrlTypes', name: string, id: string, definition: string } | null }> | null } & { ' $fragmentName'?: 'AssetFieldsFragmentFragment' };
+export type AssetFieldsFragmentFragment = { __typename?: 'Assets', ticker: string, rootId: string, name: string, id: string, icon: string, description: string, assetTypeId?: string | null, assetStatusId?: string | null, assetType?: { __typename?: 'AssetTypes', definition: string, id: string, name: string } | null, assetStatus?: { __typename?: 'AssetStatuses', name: string, id: string, definition: string } | null, assetDeployments?: Array<{ __typename?: 'AssetDeployments', id: string, deploymentId: string, assetId: string, smartContractDeployment?: { __typename?: 'SmartContractDeployments', id: string, deployedOnProduct?: { __typename?: 'Products', id: string, name: string, root?: { __typename?: 'Roots', slug: string } | null } | null, assetStandard?: { __typename?: 'AssetStandards', id: string } | null, smartContracts?: Array<{ __typename?: 'SmartContracts', name: string, id: string, deploymentId?: string | null, deploymentDate?: string | null, address: string }> | null, deploymentType?: { __typename?: 'DeploymentTypes', name: string, id: string, definition: string } | null } | null }> | null, derivativeAssets?: Array<{ __typename?: 'DerivativeAssets', id: string, asset?: { __typename?: 'Assets', id: string, name: string } | null }> | null, urls?: Array<{ __typename?: 'AssetUrls', id: string, url: string, urlType?: { __typename?: 'UrlTypes', name: string, id: string, definition: string } | null }> | null } & { ' $fragmentName'?: 'AssetFieldsFragmentFragment' };
 
 export type ProfileInfoFragmentFragment = { __typename?: 'ProfileInfos', rootId: string, id: string, name: string, tagLine: string, descriptionShort: string, descriptionLong: string, foundingDate?: string | null, profileType?: { __typename?: 'ProfileTypes', id: string, name: string, definition: string } | null, profileStatus?: { __typename?: 'ProfileStatuses', id: string, name: string, definition: string } | null, profileSector?: { __typename?: 'ProfileSectors', id: string, name: string, definition: string } | null } & { ' $fragmentName'?: 'ProfileInfoFragmentFragment' };
 
@@ -3701,7 +3701,15 @@ export const AssetFieldsFragmentFragmentDoc = new TypedDocumentString(`
       }
     }
   }
+  derivativeAssets {
+    id
+    asset {
+      id
+      name
+    }
+  }
   urls(order_by: {urlTypeId: Asc}) {
+    id
     url
     urlType {
       name
@@ -3835,7 +3843,15 @@ export const ProfileCardFragmentFragmentDoc = new TypedDocumentString(`
       }
     }
   }
+  derivativeAssets {
+    id
+    asset {
+      id
+      name
+    }
+  }
   urls(order_by: {urlTypeId: Asc}) {
+    id
     url
     urlType {
       name
@@ -4019,7 +4035,15 @@ export const GetProfileDataDocument = new TypedDocumentString(`
       }
     }
   }
+  derivativeAssets {
+    id
+    asset {
+      id
+      name
+    }
+  }
   urls(order_by: {urlTypeId: Asc}) {
+    id
     url
     urlType {
       name
@@ -4279,7 +4303,15 @@ export const SearchProfilesDocument = new TypedDocumentString(`
       }
     }
   }
+  derivativeAssets {
+    id
+    asset {
+      id
+      name
+    }
+  }
   urls(order_by: {urlTypeId: Asc}) {
+    id
     url
     urlType {
       name

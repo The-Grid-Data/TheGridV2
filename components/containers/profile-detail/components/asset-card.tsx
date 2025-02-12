@@ -67,7 +67,15 @@ export const AssetFragment = graphql(`
         }
       }
     }
+    derivativeAssets {
+      id
+      asset {
+        id
+        name
+      }
+    }
     urls(order_by: { urlTypeId: Asc }) {
+      id
       url
       urlType {
         name
@@ -112,7 +120,7 @@ export const AssetCard = ({ asset: assetData, variant }: AssetCardProps) => {
             </>
           )}
           <EditAssetOverlay
-            lensData={asset}
+            asset={asset}
             triggerNode={
               <Button variant="ghost" size="icon" className="ml-auto">
                 <Edit className="h-4 w-4" />
