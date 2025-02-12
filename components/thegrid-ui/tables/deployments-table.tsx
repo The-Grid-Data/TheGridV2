@@ -4,10 +4,10 @@ import { DataTable } from '@/components/thegrid-ui/data-table/data-table';
 import { useDataTable } from '@/components/thegrid-ui/data-table/hooks/use-data-table';
 import { execute } from '@/lib/graphql/execute';
 import { graphql } from '@/lib/graphql/generated';
-import { ProductFieldsFragmentFragment } from '@/lib/graphql/generated/graphql';
+import { AssetFieldsFragmentFragment, ProductFieldsFragmentFragment } from '@/lib/graphql/generated/graphql';
 import { useRestApiClient } from '@/lib/rest-api/client';
-import { useSmartContractDeploymentsApi } from '@/lib/rest-api/smartContractDeployments';
-import { useSmartContractsApi } from '@/lib/rest-api/smartContracts';
+import { useSmartContractDeploymentsApi } from '@/lib/rest-api/smart-contract-deployments';
+import { useSmartContractsApi } from '@/lib/rest-api/smart-contracts';
 import { getTgsData } from '@/lib/tgs';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { type ColumnDef } from '@tanstack/react-table';
@@ -16,7 +16,7 @@ import { DataTableColumnHeader } from '../data-table/data-table-column-header';
 import { ColumnMeta } from '../data-table/types';
 import { TableContainer } from '../lenses/base/components/table-container';
 
-type Deployments = ProductFieldsFragmentFragment['productDeployments'];
+type Deployments = ProductFieldsFragmentFragment['productDeployments'] | AssetFieldsFragmentFragment['assetDeployments'];
 type Deployment = NonNullable<Deployments>[number];
 
 const deploymentTypeData = getTgsData('smartContractDeployments.deploymentTypes');
@@ -35,8 +35,8 @@ const isOfStandardOptions = isOfStandardData.isDataValid && isOfStandardData.is_
     }))
 : [];
 
-export const ProductsLayersQuery = graphql(`
-    query getProductsLayers {
+export const ProductsLayersDictionaryQuery = graphql(`
+    query getProductsLayersDictionary {
       products(where: {productTypeId: {_in: [15, 16, 17]}}) {
         id
         name
@@ -45,32 +45,32 @@ export const ProductsLayersQuery = graphql(`
   `);
 
 type DeploymentsTableProps = {
-  productDeployments: Deployments;
+  deployments: Deployments;
   rootId: string;
+  lensName: string;
+  lensRecordId: string;
 };
 
 export function DeploymentsTable({
-  productDeployments,
-  rootId
+  deployments,
+  rootId,
+  lensName,
+  lensRecordId
 }: DeploymentsTableProps) {
-  const client = useRestApiClient();
-  const smartContractDeploymentsApi = useSmartContractDeploymentsApi(client);
-  const queryClient = useQueryClient();
-
-  const { data, isLoading } = useQuery({
-    queryKey: ['products-layers'],
-    queryFn: () => execute(ProductsLayersQuery)
+  const { data: productsLayersDictionaryData } = useQuery({
+    queryKey: ['products-layers-dictionary'],
+    queryFn: () => execute(ProductsLayersDictionaryQuery)
   });
-  const productsLayersOptions = useMemo(() => {
+  const productsLayersDictionaryOptions = useMemo(() => {
     return (
-      data?.products?.map(item => ({
+      productsLayersDictionaryData?.products?.map(item => ({
         value: item.id,
         label: item.name
       }))?.sort((a, b) => a.label.localeCompare(b.label)) ?? []
     );
-  }, [data]);
+  }, [productsLayersDictionaryData]);
 
-  const columns: ColumnDef<Deployment>[] = [
+  const columns: ColumnDef<Deployment>[] = useMemo(() => [
     {
       accessorKey: 'smartContractDeployment.deploymentType.name',
       header: ({ column }) => (
@@ -91,7 +91,7 @@ export function DeploymentsTable({
       meta: {
         type: 'tag',
         isEditable: true,
-        options: productsLayersOptions,
+        options: productsLayersDictionaryOptions,
         field: 'deployedOn.id'
       } satisfies ColumnMeta
     },
@@ -107,11 +107,15 @@ export function DeploymentsTable({
         field: 'isOfStandard.id'
       } satisfies ColumnMeta
     }
-  ];
+  ], [productsLayersDictionaryOptions]);
 
   const deploymentsData = useMemo(() => {
-    return productDeployments ?? [];
-  }, [productDeployments]);
+    return deployments ?? [];
+  }, [deployments]);
+
+  const client = useRestApiClient();
+  const smartContractDeploymentsApi = useSmartContractDeploymentsApi(client, lensName, lensRecordId);
+  const queryClient = useQueryClient();
 
   const table = useDataTable({
     data: deploymentsData,
@@ -120,18 +124,25 @@ export function DeploymentsTable({
     enableExpanding: true,
     getRowId: row => row.smartContractDeployment?.id ?? row.id,
     onCellSubmit: async (data) => {
-      await smartContractDeploymentsApi.update(data);
-      queryClient.invalidateQueries({
-        queryKey: ['profile', rootId],
-        exact: true,
-        refetchType: 'all'
-      });
-      return true;
+      try {
+        await smartContractDeploymentsApi.upsert(data);
+        queryClient.invalidateQueries({
+          queryKey: ['profile', rootId],
+          exact: true,
+          refetchType: 'all'
+        });
+        return true;
+      } catch (error) {
+        console.error('Failed to upsert smart contract deployment:', error);
+        return false;
+      }
     }
   });
 
+  const title = lensName === 'products' ? 'Product Deployments' : 'Asset Deployments';
+
   return (
-    <TableContainer title="Product Deployments">
+    <TableContainer title={title}>
       <div className="space-y-4">
         <DataTable
           table={table}
@@ -195,7 +206,11 @@ export function DeploymentSubRow({ deployment, rootId }: { deployment: Deploymen
     getRowId: row => row.id,
     onCellSubmit: async (data) => {
         try {
-            await smartContractsApi.update(data);
+            const input = {
+              ...data,
+              deploymentId: deployment.smartContractDeployment?.id
+            }
+            await smartContractsApi.upsert(input);
             queryClient.invalidateQueries({
               queryKey: ['profile', rootId],
               exact: true,
@@ -203,7 +218,7 @@ export function DeploymentSubRow({ deployment, rootId }: { deployment: Deploymen
             });
             return true;
         } catch (error) {
-          console.error('Failed to update URL:', error);
+          console.error('Failed to upsert smart contract:', error);
           return false;
         }
       },

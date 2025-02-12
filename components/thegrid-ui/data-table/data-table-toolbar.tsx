@@ -1,15 +1,15 @@
 'use client';
 
-import * as React from 'react';
-import type { DataTableFilterField } from './types';
 import type { Table } from '@tanstack/react-table';
 import { X } from 'lucide-react';
+import * as React from 'react';
+import type { DataTableFilterField } from './types';
 
-import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { DataTableViewOptions } from './data-table-view-options';
+import { cn } from '@/lib/utils';
 import { DataTableFacetedFilter } from './data-table-faceted-filter';
+import { DataTableViewOptions } from './data-table-view-options';
 
 interface DataTableToolbarProps<TData>
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -37,11 +37,22 @@ interface DataTableToolbarProps<TData>
    * ]
    */
   filterFields?: DataTableFilterField<TData>[];
+  /**
+   * Optional callback for adding a new row
+   */
+  onAddRow?: () => void;
+  /**
+   * Whether the add row button should be disabled
+   * @default false
+   */
+  disableAddRow?: boolean;
 }
 
 export function DataTableToolbar<TData>({
   table,
   filterFields = [],
+  onAddRow,
+  disableAddRow = false,
   children,
   className,
   ...props
@@ -111,6 +122,17 @@ export function DataTableToolbar<TData>({
         )}
       </div>
       <div className="flex items-center gap-2">
+        {onAddRow && (
+          <Button
+            onClick={onAddRow}
+            variant="outline"
+            size="sm"
+            className="h-8"
+            disabled={disableAddRow}
+          >
+            Add row
+          </Button>
+        )}
         {children}
         <DataTableViewOptions table={table} />
       </div>

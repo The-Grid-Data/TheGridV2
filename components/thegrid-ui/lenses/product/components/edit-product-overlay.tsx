@@ -1,7 +1,7 @@
 'use client';
 
 import { DeploymentsTable } from '@/components/thegrid-ui/tables/deployments-table';
-import { RelatedAssetsTable } from '@/components/thegrid-ui/tables/related-assets-table';
+import { ProductAssetRelationshipsTable } from '@/components/thegrid-ui/tables/product-asset-relationships-table';
 import { SupportsProductsTable } from '@/components/thegrid-ui/tables/supports-products-table';
 import { UrlsTable } from '@/components/thegrid-ui/tables/urls-table';
 import { ControlledOverlay } from '@/components/ui/controlled-overlay';
@@ -30,16 +30,27 @@ export function EditProductOverlay({
             onCancel={closeDialog}
           />
           <div className="flex flex-col gap-12">
-            <UrlsTable urls={product.urls} rootId={product.rootId} />
-            <DeploymentsTable
-              productDeployments={product.productDeployments}
+            <UrlsTable
+              urls={product?.urls ?? []}
               rootId={product.rootId}
+              lensName="products"
+              lensRowId={product.id}
             />
-            <RelatedAssetsTable
-              productAssetRelationships={product.productAssetRelationships}
+            <DeploymentsTable
+              deployments={product?.productDeployments ?? []}
+              rootId={product.rootId}
+              lensName="products"
+              lensRecordId={product.id}
+            />
+            <ProductAssetRelationshipsTable
+              productAssetRelationships={product?.productAssetRelationships ?? []}
+              rootId={product.rootId}
+              productId={product.id}
             />
             <SupportsProductsTable
-              supportsProducts={product.supportsProducts}
+              supportsProducts={product?.supportsProducts ?? []}
+              rootId={product.rootId}
+              productId={product.id}
             />
           </div>
         </div>

@@ -1,26 +1,27 @@
 import {
-    flexRender,
-    Row,
-    type Table as TanstackTable
+  flexRender,
+  Row,
+  type Table as TanstackTable
 } from '@tanstack/react-table';
 import * as React from 'react';
 
 import { Button } from '@/components/ui/button';
 import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow
 } from '@/components/ui/table';
 import { cn } from '@/lib/utils';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { Fragment } from 'react';
 import { DataTableCell } from './data-table-cell';
 import { DataTablePagination } from './data-table-pagination';
+import { DataTableToolbar } from './data-table-toolbar';
 import { getCommonPinningStyles } from './lib/data-table';
-import type { DataTableMeta } from './types';
+import type { DataTableFilterField, DataTableMeta } from './types';
 
 interface DataTableProps<TData> extends React.HTMLAttributes<HTMLDivElement> {
   /**
@@ -44,6 +45,17 @@ interface DataTableProps<TData> extends React.HTMLAttributes<HTMLDivElement> {
    */
   hideFooter?: boolean;
 
+  /**
+   * Hide the table toolbar
+   * @default false
+   */
+  hideToolbar?: boolean;
+
+  /**
+   * Filter fields for the toolbar
+   */
+  filterFields?: DataTableFilterField<TData>[];
+
   renderSubRow?: (row: Row<TData>) => React.ReactNode;
 }
 
@@ -54,13 +66,17 @@ export function DataTable<TData>({
   className,
   renderSubRow,
   hideFooter = false,
+  hideToolbar = false,
+  filterFields = [],
   ...props
 }: DataTableProps<TData>) {
   const [openRows, setOpenRows] = React.useState<Record<string, boolean>>({});
+  const [hasEmptyRow, setHasEmptyRow] = React.useState(false);
 
   // Get editable config from table meta
   const meta = table.options.meta as DataTableMeta<TData>;
   const onCellSubmit = meta?.onCellSubmit;
+  const setData = meta?.setData;
 
   const toggleRow = (rowId: string) => {
     setOpenRows(prev => ({
@@ -69,12 +85,42 @@ export function DataTable<TData>({
     }));
   };
 
+  const onAddRow = () => {
+    if (!setData || hasEmptyRow) return;
+
+    const newRow = {
+      id: ''
+    } as TData & { id: string };
+
+    setData(prev => [...prev, newRow]);
+    setHasEmptyRow(true);
+  };
+
+  // Handle cell submission to reset empty row state
+  const handleCellSubmit = async (data: { id: string } & Record<string, any>) => {
+    if (!onCellSubmit) return false;
+
+    const success = await onCellSubmit(data);
+    if (success && !data.id) {
+      setHasEmptyRow(false);
+    }
+    return success;
+  };
+
   return (
     <div
       className={cn('w-full space-y-2.5 overflow-auto', className)}
       {...props}
     >
       {children}
+      {!hideToolbar && (
+        <DataTableToolbar
+          table={table}
+          filterFields={filterFields}
+          onAddRow={onAddRow}
+          disableAddRow={hasEmptyRow}
+        />
+      )}
       <div className="overflow-hidden rounded-md border">
         <Table>
           <TableHeader>
@@ -126,7 +172,7 @@ export function DataTable<TData>({
                         <DataTableCell
                           key={cell.id}
                           cell={cell}
-                          onSubmit={onCellSubmit}
+                          onSubmit={handleCellSubmit}
                         />
                       ))}
                     </TableRow>
@@ -147,7 +193,7 @@ export function DataTable<TData>({
                       <DataTableCell
                         key={cell.id}
                         cell={cell}
-                        onSubmit={onCellSubmit}
+                        onSubmit={handleCellSubmit}
                       />
                     ))}
                   </TableRow>

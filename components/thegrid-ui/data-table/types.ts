@@ -50,6 +50,7 @@ export interface DataTableMeta<TData> {
   onCellSubmit?: (
     data: { id: string } & Record<string, any>
   ) => Promise<boolean>;
+  setData?: (updater: (prev: TData[]) => TData[]) => void;
 }
 
 export type Filter<TData> = Prettify<{

@@ -2,7 +2,6 @@
 
 import { DataTable } from '@/components/thegrid-ui/data-table/data-table';
 import { useDataTable } from '@/components/thegrid-ui/data-table/hooks/use-data-table';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { execute } from '@/lib/graphql/execute';
 import { graphql } from '@/lib/graphql/generated';
 import { Validation } from '@/lib/graphql/generated/graphql';
@@ -10,7 +9,6 @@ import { useQuery } from '@tanstack/react-query';
 import { type ColumnDef } from '@tanstack/react-table';
 import { useMemo } from 'react';
 import { DataTableColumnHeader } from '../data-table/data-table-column-header';
-import { DataTableToolbar } from '../data-table/data-table-toolbar';
 import { DataTableAdvancedFilterField } from '../data-table/types';
 
 export const ValidationLogsQuery = graphql(`
@@ -119,7 +117,9 @@ export function ValidationLogsTable({ rootId }: ValidationLogsTableProps) {
     }
   ];
 
+  // TODO: remove @ts-ignore
   const table = useDataTable({
+    // @ts-ignore
     data: validationLogs,
     // @ts-ignore
     columns,
@@ -147,11 +147,6 @@ export function ValidationLogsTable({ rootId }: ValidationLogsTableProps) {
       </div>
 
       <div className="rounded-lg border bg-card shadow">
-        <div className="p-4">
-          {/* @ts-ignore */}
-          <DataTableToolbar table={table} filterFields={filterFields} />
-        </div>
-
         <DataTable
           className="w-full [&_table]:divide-y [&_tbody]:divide-y"
           table={table}

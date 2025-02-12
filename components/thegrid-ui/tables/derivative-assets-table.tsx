@@ -3,68 +3,66 @@
 import { DataTable } from '@/components/thegrid-ui/data-table/data-table';
 import { useDataTable } from '@/components/thegrid-ui/data-table/hooks/use-data-table';
 import { execute } from '@/lib/graphql/execute';
-import { ProductFieldsFragmentFragment } from '@/lib/graphql/generated/graphql';
+import { AssetFieldsFragmentFragment } from '@/lib/graphql/generated/graphql';
 import { useRestApiClient } from '@/lib/rest-api/client';
-import { useSupportsProductsApi } from '@/lib/rest-api/supports-products';
+import { useDerivativeAssetsApi } from '@/lib/rest-api/derivative-assets';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { type ColumnDef } from '@tanstack/react-table';
 import { useMemo } from 'react';
 import { DataTableColumnHeader } from '../data-table/data-table-column-header';
 import { type ColumnMeta } from '../data-table/types';
 import { TableContainer } from '../lenses/base/components/table-container';
-import { ProductsLayersDictionaryQuery } from './deployments-table';
+import { AssetsDictionaryQuery } from './product-asset-relationships-table';
 
-type SupportsProducts =
-  ProductFieldsFragmentFragment['supportsProducts'];
-type SupportsProduct = NonNullable<SupportsProducts>[number];
+type DerivativeAssets =
+  AssetFieldsFragmentFragment['derivativeAssets'];
+type DerivativeAsset = NonNullable<DerivativeAssets>[number];
 
-
-type SupportsProductsTableProps = {
-  supportsProducts?: SupportsProducts;
-  productId: string;
+type DerivativeAssetsTableProps = {
+  derivativeAssets?: DerivativeAssets;
+  assetId: string;
   rootId: string;
 };
 
-export function SupportsProductsTable({
-  supportsProducts,
-  productId,
+export function DerivativeAssetsTable({
+  derivativeAssets,
+  assetId,
   rootId
-}: SupportsProductsTableProps) {
+}: DerivativeAssetsTableProps) {
   const data = useMemo(() => {
-    return supportsProducts ?? [];
-  }, [supportsProducts]);
+    return derivativeAssets ?? [];
+  }, [derivativeAssets]);
 
-  const { data: productsLayersDictionaryData, isLoading: productsLayersDictionaryLoading } = useQuery({
-    queryKey: ['products-layers-dictionary'],
-    queryFn: () => execute(ProductsLayersDictionaryQuery)
+  const { data: assetsDictionaryData } = useQuery({
+    queryKey: ['assets-dictionary'],
+    queryFn: () => execute(AssetsDictionaryQuery)
   });
-  const productsLayersDictionaryOptions = useMemo(() => {
+  const assetsDictionaryOptions = useMemo(() => {
     return (
-      productsLayersDictionaryData?.products?.map(item => ({
+      assetsDictionaryData?.assets?.map(item => ({
         value: item.id,
         label: item.name
       }))?.sort((a, b) => a.label.localeCompare(b.label)) ?? []
     );
-  }, [productsLayersDictionaryData]);
+  }, [assetsDictionaryData]);
 
-  const columns: ColumnDef<SupportsProduct, any>[] = useMemo(() => [
+  const columns: ColumnDef<DerivativeAsset, any>[] = useMemo(() => [
     {
-      accessorKey: 'supportsProduct.name',
+      accessorKey: 'asset.name',
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Product" />
+        <DataTableColumnHeader column={column} title="Asset" />
       ),
-      cell: ({ row }) => row.original.supportsProduct?.name,
       meta: {
           type: 'tag',
           isEditable: true,
-          options: productsLayersDictionaryOptions,
-          field: 'supportsProduct.id'
+          options: assetsDictionaryOptions,
+          field: 'derivativeAsset.id'
         } satisfies ColumnMeta
       },
-  ], [productsLayersDictionaryOptions]);
+  ], [assetsDictionaryOptions]);
 
   const client = useRestApiClient();
-  const supportsProductsApi = useSupportsProductsApi(client);
+  const derivativeAssetsApi = useDerivativeAssetsApi(client);
   const queryClient = useQueryClient();
 
   const table = useDataTable({
@@ -74,9 +72,9 @@ export function SupportsProductsTable({
     getRowId: row => row.id,
     onCellSubmit: async (data) => {
         try {
-          await supportsProductsApi.upsert({
+          await derivativeAssetsApi.upsert({
             ...data,
-            productId
+            baseAssetId: assetId
           });
           queryClient.invalidateQueries({
             queryKey: ['profile', rootId],
@@ -85,14 +83,14 @@ export function SupportsProductsTable({
           });
           return true;
         } catch (error) {
-          console.error('Failed to upsert product support:', error);
+          console.error('Failed to upsert derivative asset:', error);
           return false;
         }
       }
     });
 
   return (
-    <TableContainer title="Supports Products">
+    <TableContainer title="Derivative Assets">
       <div className="space-y-4">
         <DataTable table={table} hideFooter />
       </div>

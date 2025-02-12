@@ -34,11 +34,12 @@ export function DataTableCell<TData>({
 
   const handleClick = () => {
     if (!isEditable || !onSubmit) return;
-    console.log('handleClick', cell);
-    console.log('cell value', cell.getValue());
-    setValue(String(cell.getValue()));
+
+    const cellValue = cell.getValue() ?? '';
+    setValue(String(cellValue));
     setError(null);
     setIsEditing(true);
+
     // Focus input on next tick after render
     setTimeout(() => inputRef.current?.focus(), 0);
   };
@@ -153,6 +154,10 @@ export function DataTableCell<TData>({
           )}
         </div>
       );
+    }
+
+    if (cell.getValue() === undefined) {
+      return <div className="h-6">&nbsp;</div>;
     }
 
     // Tag type field rendering

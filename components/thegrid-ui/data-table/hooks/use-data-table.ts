@@ -26,7 +26,6 @@ import type {
 export interface UseDataTableProps<TData>
   extends Omit<
     TableOptions<TData>,
-    // | 'data'
     | 'state'
     | 'pageCount'
     | 'getCoreRowModel'
@@ -95,8 +94,6 @@ export interface UseDataTableProps<TData>
     sorting?: ExtendedSortingState<TData>;
   };
 
-  // data?: TableOptions<TData>['data'] | null;
-
   /**
    * Callback when state changes
    */
@@ -117,8 +114,17 @@ export function useDataTable<TData>({
   onCellSubmit,
   isEditable,
   meta: customMeta,
+  data: externalData,
   ...props
 }: UseDataTableProps<TData>) {
+  // Data state
+  const [data, setData] = useState<TData[]>(externalData ?? []);
+
+  // Update data when external data changes
+  useEffect(() => {
+    setData(externalData ?? []);
+  }, [externalData]);
+
   // Row selection state
   const [rowSelection, setRowSelection] = useState<RowSelectionState>(
     initialState?.rowSelection ?? {}
@@ -148,12 +154,14 @@ export function useDataTable<TData>({
   // Create meta object for custom options
   const meta = {
     ...customMeta,
-    onCellSubmit
+    onCellSubmit,
+    setData
   } as DataTableMeta<TData>;
 
   // Create the table instance
   const table = useReactTable({
     ...props,
+    data,
     pageCount,
     state: {
       rowSelection: enableRowSelection ? rowSelection : {},
@@ -173,7 +181,7 @@ export function useDataTable<TData>({
     enableRowSelection,
     enableColumnResizing,
     enablePinning,
-    meta, // Pass custom options through meta
+    meta,
     onRowSelectionChange: setRowSelection,
     onColumnVisibilityChange: setColumnVisibility,
     onPaginationChange: setPagination,
