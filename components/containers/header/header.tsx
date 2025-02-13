@@ -3,6 +3,7 @@
 import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import { MenuIcon } from 'lucide-react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -22,6 +23,14 @@ const claimProfileButton = (
   </Button>
 );
 
+const homeButton = (
+  <Button asChild variant="outline" className="w-full md:w-fit">
+    <Link rel="noopener noreferrer" href={paths.base}>
+      Overview
+    </Link>
+  </Button>
+);
+
 const viewProfileButton = (
   <Button asChild variant="outline" className="w-full md:w-fit">
     <Link rel="noopener noreferrer" href={paths.profile.base}>
@@ -31,6 +40,9 @@ const viewProfileButton = (
 );
 
 export const Header = () => {
+  const pathname = usePathname();
+  const isBasePath = pathname === paths.base;
+
   return (
     <header className="container flex w-full items-center py-4">
       <div className="w-full items-center justify-start">
@@ -47,7 +59,7 @@ export const Header = () => {
           </Button>
         </SignedOut>
         <SignedIn>
-          {viewProfileButton}
+          {isBasePath ? viewProfileButton : homeButton}
           <UserButton
             afterSignOutUrl={paths.base}
             appearance={{
@@ -99,7 +111,7 @@ export const Header = () => {
                 />
               </li>
               <li>
-                <SheetTrigger asChild>{viewProfileButton}</SheetTrigger>
+                <SheetTrigger asChild>{isBasePath ? viewProfileButton : homeButton}</SheetTrigger>
               </li>
             </SignedIn>
           </ul>

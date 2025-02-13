@@ -33,7 +33,8 @@ export const EntityFieldsFragment = graphql(`
       id
       code
     }
-    urls {
+    urls(order_by: { urlTypeId: Asc }) {
+      id
       url
       urlType {
         name

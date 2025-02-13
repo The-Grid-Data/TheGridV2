@@ -29,6 +29,15 @@ export const ProfileInfoFragment = graphql(`
       name
       definition
     }
+    urls(order_by: { urlTypeId: Asc }) {
+      id
+      url
+      urlType {
+        name
+        id
+        definition
+      }
+    }
   }
 `);
 
@@ -47,7 +56,7 @@ export const EditProfileInfo = ({
       triggerNode={
         <Button size="lg" className="ml-auto">
           <Edit className="mr-2 h-4 w-4" />
-          Edit Profile Info
+          Edit Profile Info & Links
         </Button>
       }
     />
