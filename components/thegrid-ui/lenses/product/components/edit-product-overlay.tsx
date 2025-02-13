@@ -23,35 +23,106 @@ export function EditProductOverlay({
       size="full"
       triggerNode={triggerNode}
       render={({ closeDialog }) => (
-        <div className="flex flex-row gap-16 [&>*:nth-child(1)]:w-1/3 [&>*:nth-child(2)]:w-2/3">
-          <EditProductForm
-            lensData={product}
-            onSuccess={closeDialog}
-            onCancel={closeDialog}
-          />
-          <div className="flex flex-col gap-12">
-            <UrlsTable
-              urls={product?.urls ?? []}
-              rootId={product.rootId}
-              lensName="products"
-              lensRowId={product.id}
-            />
-            <DeploymentsTable
-              deployments={product?.productDeployments ?? []}
-              rootId={product.rootId}
-              lensName="products"
-              lensRecordId={product.id}
-            />
-            <ProductAssetRelationshipsTable
-              productAssetRelationships={product?.productAssetRelationships ?? []}
-              rootId={product.rootId}
-              productId={product.id}
-            />
-            <SupportsProductsTable
-              supportsProducts={product?.supportsProducts ?? []}
-              rootId={product.rootId}
-              productId={product.id}
-            />
+        <div className="flex flex-row gap-4">
+          {/* Left Column - Core Product Information */}
+          <div className="flex w-1/3 flex-col gap-4">
+            <section className="rounded-lg border bg-card p-6 shadow-sm">
+              <div className="space-y-4">
+                <div className="border-b pb-4">
+                  <h2 className="text-lg font-medium tracking-tight">
+                    Product Details
+                  </h2>
+                  <p className="text-sm text-muted-foreground">
+                    Manage core product information and settings
+                  </p>
+                </div>
+                <EditProductForm
+                  lensData={product}
+                  onSuccess={closeDialog}
+                  onCancel={closeDialog}
+                />
+              </div>
+            </section>
+
+            <section className="rounded-lg border bg-card p-6 shadow-sm">
+              <div className="space-y-4">
+                <div className="border-b pb-4">
+                  <h2 className="text-lg font-medium tracking-tight">
+                    Product URLs
+                  </h2>
+                  <p className="text-sm text-muted-foreground">
+                    Associated links and references for this product
+                  </p>
+                </div>
+                <UrlsTable
+                  urls={product?.urls ?? []}
+                  rootId={product.rootId}
+                  lensName="products"
+                  lensRowId={product.id}
+                />
+              </div>
+            </section>
+          </div>
+
+          {/* Right Column - Related Data */}
+          <div className="w-2/3 space-y-4">
+            <section className="rounded-lg border bg-card p-6 shadow-sm">
+              <div className="space-y-4">
+                <div className="border-b pb-4">
+                  <h2 className="text-lg font-medium tracking-tight">
+                    Products Deployments
+                  </h2>
+                  <p className="text-sm text-muted-foreground">
+                    Track and manage product deployment history and status
+                  </p>
+                </div>
+                <DeploymentsTable
+                  deployments={product?.productDeployments ?? []}
+                  rootId={product.rootId}
+                  lensName="products"
+                  lensRecordId={product.id}
+                />
+              </div>
+            </section>
+
+            <section className="rounded-lg border bg-card p-6 shadow-sm">
+              <div className="space-y-4">
+                <div className="border-b pb-4">
+                  <h2 className="text-lg font-medium tracking-tight">
+                    Asset Relationships
+                  </h2>
+                  <p className="text-sm text-muted-foreground">
+                    Manage associated assets and their relationships with this
+                    product
+                  </p>
+                </div>
+                <ProductAssetRelationshipsTable
+                  productAssetRelationships={
+                    product?.productAssetRelationships ?? []
+                  }
+                  rootId={product.rootId}
+                  productId={product.id}
+                />
+              </div>
+            </section>
+
+            <section className="rounded-lg border bg-card p-6 shadow-sm">
+              <div className="space-y-4">
+                <div className="border-b pb-4">
+                  <h2 className="text-lg font-medium tracking-tight">
+                    Supported Products
+                  </h2>
+                  <p className="text-sm text-muted-foreground">
+                    View and configure product support relationships
+                  </p>
+                </div>
+                <SupportsProductsTable
+                  supportsProducts={product?.supportsProducts ?? []}
+                  rootId={product.rootId}
+                  productId={product.id}
+                />
+              </div>
+            </section>
           </div>
         </div>
       )}
