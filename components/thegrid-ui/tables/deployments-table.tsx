@@ -261,7 +261,7 @@ export function DeploymentSubRow({
   });
 
   return (
-    <div className="bg-gray-50 p-2">
+    <div className="bg-none p-2">
       <DataTable table={subTable} hideFooter />
     </div>
   );

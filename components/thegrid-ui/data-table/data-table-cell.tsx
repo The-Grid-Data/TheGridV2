@@ -35,13 +35,13 @@ export function DataTableCell<TData>({
   const handleClick = () => {
     if (!isEditable || !onSubmit) return;
 
-    const cellValue = cell.getValue() ?? '';
-    setValue(String(cellValue));
-    setError(null);
+    // const cellValue = cell.getValue() ?? '';
+    // setValue(String(cellValue));
+    // setError(null);
     setIsEditing(true);
 
     // Focus input on next tick after render
-    setTimeout(() => inputRef.current?.focus(), 0);
+    // setTimeout(() => inputRef.current?.focus(), 0);
   };
 
   const validate = (value: string): boolean => {
@@ -59,11 +59,6 @@ export function DataTableCell<TData>({
   const handleSubmit = async (submitValue?: string) => {
     if (!onSubmit) return;
 
-    const valueToSubmit = submitValue ?? value;
-    if (!validate(valueToSubmit)) {
-      return;
-    }
-
     setIsSubmitting(true);
     try {
       let field = columnMeta?.field || cell.column.id;
@@ -75,7 +70,7 @@ export function DataTableCell<TData>({
 
       const success = await onSubmit({
         id: cell.row.id,
-        [field]: valueToSubmit
+        [field]: submitValue
       });
 
       if (success) {
@@ -100,26 +95,15 @@ export function DataTableCell<TData>({
   const renderContent = () => {
     // Tag type field editing
     if (isEditing && columnMeta?.type === 'tag' && columnMeta.options) {
-      let currentValue;
-      if (columnMeta.field) {
-        const fieldPath = columnMeta.field.split('.');
-        let value = cell.row.original as any;
-        for (const key of fieldPath) {
-          value = value?.[key];
-        }
-        currentValue = String(value?.id ?? '');
-      } else {
-        currentValue = String(cell.getValue() ?? '');
-      }
-
       return (
         <div className="flex items-center gap-2">
+          {value}
           <SingleCombobox
-            value={currentValue}
+            value={value}
             options={columnMeta.options}
             onValueChange={async newValue => {
               if (newValue) {
-                setValue(newValue);
+                setValue('');
                 await handleSubmit(newValue);
                 setIsEditing(false);
               }
@@ -188,7 +172,7 @@ export function DataTableCell<TData>({
 
     // Tag type field rendering
     if (columnMeta?.type === 'tag') {
-      return <Badge variant="secondary">{String(cell.getValue())}</Badge>;
+      return <Badge variant="secondary">{value}</Badge>;
     }
 
     // Other type fields rendering
