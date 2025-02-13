@@ -184,7 +184,10 @@ export function DataTable<TData>({
                       ))}
                     </TableRow>
                     {openRows[row.id] && (
-                      <TableRow key={`${row.id}-subrow`}>
+                      <TableRow
+                        key={`${row.id}-subrow`}
+                        className="bg-foreground/5 hover:bg-foreground/5"
+                      >
                         <TableCell colSpan={table.getAllColumns().length + 1}>
                           {renderSubRow(row)}
                         </TableCell>

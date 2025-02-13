@@ -65,6 +65,12 @@ export const HomeWhenSignedIn = () => {
             <Changelog
               entries={[
                 {
+                  date: 'February 16, 2024',
+                  title: 'Improved validation logs table',
+                  description:
+                    'Redesigned the tables with improved styling, clearer information hierarchy, and more detailed results.'
+                },
+                {
                   date: 'February 11, 2024',
                   title: 'Known issues',
                   description:
