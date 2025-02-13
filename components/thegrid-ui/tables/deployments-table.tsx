@@ -4,7 +4,10 @@ import { DataTable } from '@/components/thegrid-ui/data-table/data-table';
 import { useDataTable } from '@/components/thegrid-ui/data-table/hooks/use-data-table';
 import { execute } from '@/lib/graphql/execute';
 import { graphql } from '@/lib/graphql/generated';
-import { AssetFieldsFragmentFragment, ProductFieldsFragmentFragment } from '@/lib/graphql/generated/graphql';
+import {
+  AssetFieldsFragmentFragment,
+  ProductFieldsFragmentFragment
+} from '@/lib/graphql/generated/graphql';
 import { useRestApiClient } from '@/lib/rest-api/client';
 import { useSmartContractDeploymentsApi } from '@/lib/rest-api/smart-contract-deployments';
 import { useSmartContractsApi } from '@/lib/rest-api/smart-contracts';
@@ -16,33 +19,39 @@ import { DataTableColumnHeader } from '../data-table/data-table-column-header';
 import { ColumnMeta } from '../data-table/types';
 import { TableContainer } from '../lenses/base/components/table-container';
 
-type Deployments = ProductFieldsFragmentFragment['productDeployments'] | AssetFieldsFragmentFragment['assetDeployments'];
+type Deployments =
+  | ProductFieldsFragmentFragment['productDeployments']
+  | AssetFieldsFragmentFragment['assetDeployments'];
 type Deployment = NonNullable<Deployments>[number];
 
-const deploymentTypeData = getTgsData('smartContractDeployments.deploymentTypes');
-const deploymentTypeOptions = deploymentTypeData.isDataValid && deploymentTypeData.is_enum === 'true'
-  ? deploymentTypeData.possible_values.map(value => ({
-      label: value.name,
-      value: value.id
-    }))
-  : [];
+const deploymentTypeData = getTgsData(
+  'smartContractDeployments.deploymentTypes'
+);
+const deploymentTypeOptions =
+  deploymentTypeData.isDataValid && deploymentTypeData.is_enum === 'true'
+    ? deploymentTypeData.possible_values.map(value => ({
+        label: value.name,
+        value: value.id
+      }))
+    : [];
 
 const isOfStandardData = getTgsData('smartContractDeployments.assetStandards');
-const isOfStandardOptions = isOfStandardData.isDataValid && isOfStandardData.is_enum === 'true'
-? isOfStandardData.possible_values.map(value => ({
-    label: value.name,
-    value: value.id
-    }))
-: [];
+const isOfStandardOptions =
+  isOfStandardData.isDataValid && isOfStandardData.is_enum === 'true'
+    ? isOfStandardData.possible_values.map(value => ({
+        label: value.name,
+        value: value.id
+      }))
+    : [];
 
 export const ProductsLayersDictionaryQuery = graphql(`
-    query getProductsLayersDictionary {
-      products(where: {productTypeId: {_in: [15, 16, 17]}}) {
-        id
-        name
-      }
+  query getProductsLayersDictionary {
+    products(where: { productTypeId: { _in: [15, 16, 17] } }) {
+      id
+      name
     }
-  `);
+  }
+`);
 
 type DeploymentsTableProps = {
   deployments: Deployments;
@@ -63,58 +72,67 @@ export function DeploymentsTable({
   });
   const productsLayersDictionaryOptions = useMemo(() => {
     return (
-      productsLayersDictionaryData?.products?.map(item => ({
-        value: item.id,
-        label: item.name
-      }))?.sort((a, b) => a.label.localeCompare(b.label)) ?? []
+      productsLayersDictionaryData?.products
+        ?.map(item => ({
+          value: item.id,
+          label: item.name
+        }))
+        ?.sort((a, b) => a.label.localeCompare(b.label)) ?? []
     );
   }, [productsLayersDictionaryData]);
 
-  const columns: ColumnDef<Deployment>[] = useMemo(() => [
-    {
-      accessorKey: 'smartContractDeployment.deploymentType.name',
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Deployment Type" />
-      ),
-      meta: {
-        type: 'tag',
-        isEditable: true,
-        options: deploymentTypeOptions,
-        field: 'deploymentType.id'
-      } satisfies ColumnMeta
-    },
-    {
-      accessorKey: 'smartContractDeployment.deployedOnProduct.name',
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Deployed On" />
-      ),
-      meta: {
-        type: 'tag',
-        isEditable: true,
-        options: productsLayersDictionaryOptions,
-        field: 'deployedOn.id'
-      } satisfies ColumnMeta
-    },
-    {
-      accessorKey: 'smartContractDeployment.assetStandard.name',
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Is Of Standard" />
-      ),
-      meta: {
-        type: 'tag',
-        isEditable: true,
-        options: isOfStandardOptions,
-        field: 'isOfStandard.id'
-      } satisfies ColumnMeta
-    }
-  ], [productsLayersDictionaryOptions]);
+  const columns: ColumnDef<Deployment>[] = useMemo(
+    () => [
+      {
+        accessorKey: 'smartContractDeployment.deploymentType.name',
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Deployment Type" />
+        ),
+        meta: {
+          type: 'tag',
+          isEditable: true,
+          options: deploymentTypeOptions,
+          field: 'deploymentType.id'
+        } satisfies ColumnMeta
+      },
+      {
+        accessorKey: 'smartContractDeployment.deployedOnProduct.name',
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Deployed On" />
+        ),
+        meta: {
+          type: 'tag',
+          isEditable: true,
+          options: productsLayersDictionaryOptions,
+          field: 'deployedOn.id'
+        } satisfies ColumnMeta
+      },
+      {
+        accessorKey: 'smartContractDeployment.assetStandard.name',
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Is Of Standard" />
+        ),
+        meta: {
+          type: 'tag',
+          isEditable: true,
+          options: isOfStandardOptions,
+          field: 'isOfStandard.id'
+        } satisfies ColumnMeta
+      }
+    ],
+    [productsLayersDictionaryOptions]
+  );
 
   const deploymentsData = useMemo(() => {
     return deployments ?? [];
   }, [deployments]);
 
   const client = useRestApiClient();
-  const smartContractDeploymentsApi = useSmartContractDeploymentsApi(client, lensName, lensRecordId);
+  const smartContractDeploymentsApi = useSmartContractDeploymentsApi(
+    client,
+    lensName,
+    lensRecordId
+  );
   const queryClient = useQueryClient();
 
   const table = useDataTable({
@@ -123,7 +141,7 @@ export function DeploymentsTable({
     pageCount: 1,
     enableExpanding: true,
     getRowId: row => row.smartContractDeployment?.id ?? row.id,
-    onCellSubmit: async (data) => {
+    onCellSubmit: async data => {
       try {
         await smartContractDeploymentsApi.upsert(data);
         queryClient.invalidateQueries({
@@ -139,22 +157,26 @@ export function DeploymentsTable({
     }
   });
 
-  const title = lensName === 'products' ? 'Product Deployments' : 'Asset Deployments';
-
   return (
-    <TableContainer title={title}>
-      <div className="space-y-4">
-        <DataTable
-          table={table}
-          hideFooter
-          renderSubRow={row => <DeploymentSubRow deployment={row.original} rootId={rootId} />}
-        />
-      </div>
-    </TableContainer>
+    <div className="space-y-4">
+      <DataTable
+        table={table}
+        hideFooter
+        renderSubRow={row => (
+          <DeploymentSubRow deployment={row.original} rootId={rootId} />
+        )}
+      />
+    </div>
   );
 }
 
-export function DeploymentSubRow({ deployment, rootId }: { deployment: Deployment, rootId: string }) {
+export function DeploymentSubRow({
+  deployment,
+  rootId
+}: {
+  deployment: Deployment;
+  rootId: string;
+}) {
   const data = useMemo(() => {
     return deployment.smartContractDeployment?.smartContracts ?? [];
   }, [deployment.smartContractDeployment?.smartContracts]);
@@ -172,7 +194,7 @@ export function DeploymentSubRow({ deployment, rootId }: { deployment: Deploymen
         ),
         meta: {
           type: 'text',
-          isEditable: true,
+          isEditable: true
         } satisfies ColumnMeta
       },
       {
@@ -181,8 +203,8 @@ export function DeploymentSubRow({ deployment, rootId }: { deployment: Deploymen
           <DataTableColumnHeader column={column} title="Address" />
         ),
         meta: {
-            type: 'text',
-            isEditable: true,
+          type: 'text',
+          isEditable: true
         } satisfies ColumnMeta
       },
       {
@@ -191,10 +213,10 @@ export function DeploymentSubRow({ deployment, rootId }: { deployment: Deploymen
           <DataTableColumnHeader column={column} title="Deployment Date" />
         ),
         meta: {
-            type: 'text',
-            isEditable: true,
-          } satisfies ColumnMeta
-        }
+          type: 'text',
+          isEditable: true
+        } satisfies ColumnMeta
+      }
     ],
     []
   );
@@ -204,25 +226,25 @@ export function DeploymentSubRow({ deployment, rootId }: { deployment: Deploymen
     columns: subColumns,
     pageCount: 1,
     getRowId: row => row.id,
-    onCellSubmit: async (data) => {
-        try {
-            const input = {
-              ...data,
-              deploymentId: deployment.smartContractDeployment?.id
-            }
-            await smartContractsApi.upsert(input);
-            queryClient.invalidateQueries({
-              queryKey: ['profile', rootId],
-              exact: true,
-              refetchType: 'all'
-            });
-            return true;
-        } catch (error) {
-          console.error('Failed to upsert smart contract:', error);
-          return false;
-        }
-      },
-      enableExpanding: false
+    onCellSubmit: async data => {
+      try {
+        const input = {
+          ...data,
+          deploymentId: deployment.smartContractDeployment?.id
+        };
+        await smartContractsApi.upsert(input);
+        queryClient.invalidateQueries({
+          queryKey: ['profile', rootId],
+          exact: true,
+          refetchType: 'all'
+        });
+        return true;
+      } catch (error) {
+        console.error('Failed to upsert smart contract:', error);
+        return false;
+      }
+    },
+    enableExpanding: false
   });
 
   return (

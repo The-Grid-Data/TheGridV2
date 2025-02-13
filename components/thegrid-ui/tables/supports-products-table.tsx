@@ -14,10 +14,8 @@ import { type ColumnMeta } from '../data-table/types';
 import { TableContainer } from '../lenses/base/components/table-container';
 import { ProductsLayersDictionaryQuery } from './deployments-table';
 
-type SupportsProducts =
-  ProductFieldsFragmentFragment['supportsProducts'];
+type SupportsProducts = ProductFieldsFragmentFragment['supportsProducts'];
 type SupportsProduct = NonNullable<SupportsProducts>[number];
-
 
 type SupportsProductsTableProps = {
   supportsProducts?: SupportsProducts;
@@ -34,34 +32,42 @@ export function SupportsProductsTable({
     return supportsProducts ?? [];
   }, [supportsProducts]);
 
-  const { data: productsLayersDictionaryData, isLoading: productsLayersDictionaryLoading } = useQuery({
+  const {
+    data: productsLayersDictionaryData,
+    isLoading: productsLayersDictionaryLoading
+  } = useQuery({
     queryKey: ['products-layers-dictionary'],
     queryFn: () => execute(ProductsLayersDictionaryQuery)
   });
   const productsLayersDictionaryOptions = useMemo(() => {
     return (
-      productsLayersDictionaryData?.products?.map(item => ({
-        value: item.id,
-        label: item.name
-      }))?.sort((a, b) => a.label.localeCompare(b.label)) ?? []
+      productsLayersDictionaryData?.products
+        ?.map(item => ({
+          value: item.id,
+          label: item.name
+        }))
+        ?.sort((a, b) => a.label.localeCompare(b.label)) ?? []
     );
   }, [productsLayersDictionaryData]);
 
-  const columns: ColumnDef<SupportsProduct, any>[] = useMemo(() => [
-    {
-      accessorKey: 'supportsProduct.name',
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Product" />
-      ),
-      cell: ({ row }) => row.original.supportsProduct?.name,
-      meta: {
+  const columns: ColumnDef<SupportsProduct, any>[] = useMemo(
+    () => [
+      {
+        accessorKey: 'supportsProduct.name',
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Product" />
+        ),
+        cell: ({ row }) => row.original.supportsProduct?.name,
+        meta: {
           type: 'tag',
           isEditable: true,
           options: productsLayersDictionaryOptions,
           field: 'supportsProduct.id'
         } satisfies ColumnMeta
-      },
-  ], [productsLayersDictionaryOptions]);
+      }
+    ],
+    [productsLayersDictionaryOptions]
+  );
 
   const client = useRestApiClient();
   const supportsProductsApi = useSupportsProductsApi(client);
@@ -72,30 +78,24 @@ export function SupportsProductsTable({
     columns,
     pageCount: 1,
     getRowId: row => row.id,
-    onCellSubmit: async (data) => {
-        try {
-          await supportsProductsApi.upsert({
-            ...data,
-            productId
-          });
-          queryClient.invalidateQueries({
-            queryKey: ['profile', rootId],
-            exact: true,
-            refetchType: 'all'
-          });
-          return true;
-        } catch (error) {
-          console.error('Failed to upsert product support:', error);
-          return false;
-        }
+    onCellSubmit: async data => {
+      try {
+        await supportsProductsApi.upsert({
+          ...data,
+          productId
+        });
+        queryClient.invalidateQueries({
+          queryKey: ['profile', rootId],
+          exact: true,
+          refetchType: 'all'
+        });
+        return true;
+      } catch (error) {
+        console.error('Failed to upsert product support:', error);
+        return false;
       }
-    });
+    }
+  });
 
-  return (
-    <TableContainer title="Supports Products">
-      <div className="space-y-4">
-        <DataTable table={table} hideFooter />
-      </div>
-    </TableContainer>
-  );
+  return <DataTable table={table} hideFooter />;
 }

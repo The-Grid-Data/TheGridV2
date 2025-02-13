@@ -1,30 +1,30 @@
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from '@/components/ui/select';
 import { TableCell } from '@/components/ui/table';
 import { cn } from '@/lib/utils';
 import { Cell, flexRender } from '@tanstack/react-table';
 import * as React from 'react';
 import { getCommonPinningStyles } from './lib/data-table';
 import { type ColumnMeta } from './types';
+import { Loader2, Pencil, Save, X } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { SingleCombobox } from '@/components/ui/single-combobox';
 
 interface DataTableCellProps<TData> {
   cell: Cell<TData, unknown>;
   onSubmit?: (data: { id: string } & Record<string, any>) => Promise<boolean>;
+  isNewRow?: boolean;
 }
 
 export function DataTableCell<TData>({
   cell,
-  onSubmit
+  onSubmit,
+  isNewRow
 }: DataTableCellProps<TData>) {
-  const [isEditing, setIsEditing] = React.useState(false);
-  const [value, setValue] = React.useState<string>('');
+  const [isEditing, setIsEditing] = React.useState(isNewRow);
+  const [value, setValue] = React.useState<string>(
+    String(cell.getValue() ?? '')
+  );
   const [error, setError] = React.useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -100,55 +100,81 @@ export function DataTableCell<TData>({
   const renderContent = () => {
     // Tag type field editing
     if (isEditing && columnMeta?.type === 'tag' && columnMeta.options) {
-      const currentValue = columnMeta.field
-        ? String((cell.row.original as any)[columnMeta.field.split('.')[0]]?.id)
-        : String(cell.getValue());
+      let currentValue;
+      if (columnMeta.field) {
+        const fieldPath = columnMeta.field.split('.');
+        let value = cell.row.original as any;
+        for (const key of fieldPath) {
+          value = value?.[key];
+        }
+        currentValue = String(value?.id ?? '');
+      } else {
+        currentValue = String(cell.getValue() ?? '');
+      }
 
       return (
-        <Select
-          defaultValue={currentValue}
-          onOpenChange={setIsEditing}
-          onValueChange={async newValue => {
-            setValue(newValue);
-            await handleSubmit(newValue);
-            setIsEditing(false);
-          }}
-        >
-          <SelectTrigger className="h-8">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            {columnMeta.options.map(option => (
-              <SelectItem key={option.value} value={option.value}>
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <div className="flex items-center gap-2">
+          <SingleCombobox
+            value={currentValue}
+            options={columnMeta.options}
+            onValueChange={async newValue => {
+              if (newValue) {
+                setValue(newValue);
+                await handleSubmit(newValue);
+                setIsEditing(false);
+              }
+            }}
+            className="h-8"
+          />
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={e => {
+              e.stopPropagation();
+              setIsEditing(false);
+            }}
+            className="h-6 w-6"
+          >
+            <X className="h-4 w-4" />
+          </Button>
+        </div>
       );
     }
 
     // Other type fields editing
     if (isEditing) {
       return (
-        <div className="relative">
-          <Input
-            ref={inputRef}
-            value={value}
-            onChange={e => {
-              setValue(e.target.value);
-              validate(e.target.value);
-            }}
-            onKeyDown={handleKeyDown}
-            className={cn(
-              'h-6',
-              'rounded-sm',
-              error && 'border-destructive focus-visible:ring-destructive'
-            )}
-            disabled={isSubmitting}
-          />
+        <div className="flex flex-col items-center gap-2">
+          <div className="relative flex w-full flex-1 items-center gap-2">
+            <Input
+              ref={inputRef}
+              value={value}
+              onChange={e => {
+                setValue(e.target.value);
+                validate(e.target.value);
+              }}
+              onKeyDown={handleKeyDown}
+              className={cn(
+                'h-6',
+                'rounded-sm',
+                error && 'border-destructive focus-visible:ring-destructive'
+              )}
+              disabled={isSubmitting}
+            />
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={e => {
+                e.stopPropagation();
+                handleSubmit();
+              }}
+              className="h-6 w-6"
+            >
+              <Save className="h-4 w-4" />
+            </Button>
+          </div>
           {error && (
-            <div className="absolute left-0 top-full mt-1 text-xs text-destructive">
+            <div className="top-full mt-1 w-full text-xs text-destructive">
               {error}
             </div>
           )}
@@ -175,12 +201,11 @@ export function DataTableCell<TData>({
         ...getCommonPinningStyles({ column: cell.column })
       }}
       className={cn(
-        'relative',
-        isEditable && !isEditing && 'cursor-pointer hover:!bg-muted',
-        isSubmitting && 'opacity-50'
+        'group relative cursor-pointer',
+        isEditable && !isEditing && 'hover:!bg-muted'
       )}
-      onClick={handleClick}
       tabIndex={isEditable ? 0 : undefined}
+      onClick={handleClick}
       onBlur={e => {
         // Only handle blur for non-select inputs
         if (
@@ -192,7 +217,19 @@ export function DataTableCell<TData>({
         }
       }}
     >
-      {renderContent()}
+      <div className="relative">
+        {renderContent()}
+        {isEditable && !isEditing && (
+          <button className="absolute right-2 top-1/2 -translate-y-1/2 opacity-70 group-hover:opacity-100">
+            <Pencil className="h-4 w-4 text-muted-foreground" />
+          </button>
+        )}
+        {isSubmitting && (
+          <div className="absolute inset-0 flex items-center justify-start bg-background pl-2">
+            <Loader2 className="h-4 w-4 animate-spin" />
+          </div>
+        )}
+      </div>
     </TableCell>
   );
 }
