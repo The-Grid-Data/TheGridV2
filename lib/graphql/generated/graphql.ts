@@ -3242,9 +3242,9 @@ export type GetProfileNameQuery = { __typename?: 'Query', profileInfos?: Array<{
 
 export type AssetFieldsFragmentFragment = { __typename?: 'Assets', ticker: string, rootId: string, name: string, id: string, icon: string, description: string, assetTypeId?: string | null, assetStatusId?: string | null, assetType?: { __typename?: 'AssetTypes', definition: string, id: string, name: string } | null, assetStatus?: { __typename?: 'AssetStatuses', name: string, id: string, definition: string } | null, assetDeployments?: Array<{ __typename?: 'AssetDeployments', id: string, deploymentId: string, assetId: string, smartContractDeployment?: { __typename?: 'SmartContractDeployments', id: string, deployedOnProduct?: { __typename?: 'Products', id: string, name: string, root?: { __typename?: 'Roots', slug: string } | null } | null, assetStandard?: { __typename?: 'AssetStandards', id: string } | null, smartContracts?: Array<{ __typename?: 'SmartContracts', name: string, id: string, deploymentId?: string | null, deploymentDate?: string | null, address: string }> | null, deploymentType?: { __typename?: 'DeploymentTypes', name: string, id: string, definition: string } | null } | null }> | null, derivativeAssets?: Array<{ __typename?: 'DerivativeAssets', id: string, asset?: { __typename?: 'Assets', id: string, name: string } | null }> | null, urls?: Array<{ __typename?: 'AssetUrls', id: string, url: string, urlType?: { __typename?: 'UrlTypes', name: string, id: string, definition: string } | null }> | null } & { ' $fragmentName'?: 'AssetFieldsFragmentFragment' };
 
-export type ProfileInfoFragmentFragment = { __typename?: 'ProfileInfos', rootId: string, id: string, name: string, tagLine: string, descriptionShort: string, descriptionLong: string, foundingDate?: string | null, profileType?: { __typename?: 'ProfileTypes', id: string, name: string, definition: string } | null, profileStatus?: { __typename?: 'ProfileStatuses', id: string, name: string, definition: string } | null, profileSector?: { __typename?: 'ProfileSectors', id: string, name: string, definition: string } | null } & { ' $fragmentName'?: 'ProfileInfoFragmentFragment' };
+export type ProfileInfoFragmentFragment = { __typename?: 'ProfileInfos', rootId: string, id: string, name: string, tagLine: string, descriptionShort: string, descriptionLong: string, foundingDate?: string | null, profileType?: { __typename?: 'ProfileTypes', id: string, name: string, definition: string } | null, profileStatus?: { __typename?: 'ProfileStatuses', id: string, name: string, definition: string } | null, profileSector?: { __typename?: 'ProfileSectors', id: string, name: string, definition: string } | null, urls?: Array<{ __typename?: 'ProfileInfoUrls', id: string, url: string, urlType?: { __typename?: 'UrlTypes', name: string, id: string, definition: string } | null }> | null } & { ' $fragmentName'?: 'ProfileInfoFragmentFragment' };
 
-export type EntityFieldsFragmentFragment = { __typename?: 'Entities', rootId: string, name: string, tradeName: string, taxIdentificationNumber: string, localRegistrationNumber: string, leiNumber: string, id: string, dateOfIncorporation?: string | null, address: string, entityType?: { __typename?: 'EntityTypes', name: string, id: string, definition: string } | null, country?: { __typename?: 'Countries', name: string, id: string, code: string } | null, urls?: Array<{ __typename?: 'EntityUrls', url: string, urlType?: { __typename?: 'UrlTypes', name: string, id: string, definition: string } | null }> | null } & { ' $fragmentName'?: 'EntityFieldsFragmentFragment' };
+export type EntityFieldsFragmentFragment = { __typename?: 'Entities', rootId: string, name: string, tradeName: string, taxIdentificationNumber: string, localRegistrationNumber: string, leiNumber: string, id: string, dateOfIncorporation?: string | null, address: string, entityType?: { __typename?: 'EntityTypes', name: string, id: string, definition: string } | null, country?: { __typename?: 'Countries', name: string, id: string, code: string } | null, urls?: Array<{ __typename?: 'EntityUrls', id: string, url: string, urlType?: { __typename?: 'UrlTypes', name: string, id: string, definition: string } | null }> | null } & { ' $fragmentName'?: 'EntityFieldsFragmentFragment' };
 
 export type ProfileFragmentFragment = { __typename?: 'ProfileInfos', profileSector?: { __typename?: 'ProfileSectors', name: string } | null, profileType?: { __typename?: 'ProfileTypes', name: string } | null, root?: { __typename?: 'Roots', assets?: Array<{ __typename?: 'Assets', ticker: string }> | null, profileTags?: Array<{ __typename?: 'ProfileTags', tag?: { __typename?: 'Tags', name: string, id: string } | null }> | null } | null, profileStatus?: { __typename?: 'ProfileStatuses', name: string, id: string } | null, mainProduct?: { __typename?: 'Roots', products?: Array<{ __typename?: 'Products', productType?: { __typename?: 'ProductTypes', name: string } | null }> | null } | null } & { ' $fragmentName'?: 'ProfileFragmentFragment' };
 
@@ -3469,6 +3469,15 @@ export const ProfileInfoFragmentFragmentDoc = new TypedDocumentString(`
     name
     definition
   }
+  urls(order_by: {urlTypeId: Asc}) {
+    id
+    url
+    urlType {
+      name
+      id
+      definition
+    }
+  }
 }
     `, {"fragmentName":"ProfileInfoFragment"}) as unknown as TypedDocumentString<ProfileInfoFragmentFragment, unknown>;
 export const EntityFieldsFragmentFragmentDoc = new TypedDocumentString(`
@@ -3492,7 +3501,8 @@ export const EntityFieldsFragmentFragmentDoc = new TypedDocumentString(`
     id
     code
   }
-  urls {
+  urls(order_by: {urlTypeId: Asc}) {
+    id
     url
     urlType {
       name
@@ -4075,6 +4085,15 @@ fragment ProfileInfoFragment on ProfileInfos {
     name
     definition
   }
+  urls(order_by: {urlTypeId: Asc}) {
+    id
+    url
+    urlType {
+      name
+      id
+      definition
+    }
+  }
 }
 fragment EntityFieldsFragment on Entities {
   rootId
@@ -4096,7 +4115,8 @@ fragment EntityFieldsFragment on Entities {
     id
     code
   }
-  urls {
+  urls(order_by: {urlTypeId: Asc}) {
+    id
     url
     urlType {
       name

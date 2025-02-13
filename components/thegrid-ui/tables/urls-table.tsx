@@ -4,7 +4,9 @@ import { DataTable } from '@/components/thegrid-ui/data-table/data-table';
 import { useDataTable } from '@/components/thegrid-ui/data-table/hooks/use-data-table';
 import {
   AssetFieldsFragmentFragment,
-  ProductFieldsFragmentFragment
+  EntityFieldsFragmentFragment,
+  ProductFieldsFragmentFragment,
+  ProfileInfoFragmentFragment
 } from '@/lib/graphql/generated/graphql';
 import { useRestApiClient } from '@/lib/rest-api/client';
 import { useUrlsApi } from '@/lib/rest-api/urls';
@@ -14,11 +16,12 @@ import { type ColumnDef } from '@tanstack/react-table';
 import React from 'react';
 import { DataTableColumnHeader } from '../data-table/data-table-column-header';
 import { type ColumnMeta } from '../data-table/types';
-import { TableContainer } from '../lenses/base/components/table-container';
 
 type Urls =
   | ProductFieldsFragmentFragment['urls']
-  | AssetFieldsFragmentFragment['urls'];
+  | AssetFieldsFragmentFragment['urls']
+  | ProfileInfoFragmentFragment['urls']
+  | EntityFieldsFragmentFragment['urls'];
 type Url = NonNullable<Urls>[number];
 
 const urlTypeData = getTgsData('urls.urlType');
@@ -136,6 +139,13 @@ export function UrlsTable({
           exact: true,
           refetchType: 'all'
         });
+        if (rootId) {
+          queryClient.invalidateQueries({
+            queryKey: ['validation-logs', rootId],
+            exact: true,
+            refetchType: 'all'
+          });
+        }
         return true;
       } catch (error) {
         console.error('Failed to upsert URL:', error);

@@ -81,6 +81,9 @@ export const ProfileDetail = ({ profileId, metadata }: ProfileDetailProps) => {
 
   return (
     <div className="container w-full space-y-10">
+      <div className="float-right mt-4">
+        <EditProfileInfo profile={profile} />
+      </div>
       <ProfileHeading
         query={ProfileDetailQuery.toString()}
         queryVariables={query}
@@ -99,7 +102,6 @@ export const ProfileDetail = ({ profileId, metadata }: ProfileDetailProps) => {
             value={profile.descriptionLong}
           />
         </section>
-        <EditProfileInfo profile={profile} />
       </div>
 
       <OverviewSection profile={profile} />

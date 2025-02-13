@@ -35,7 +35,6 @@ export default function Profile() {
 
   return (
     <div>
-      <div className="h-10" />
       <ProfileDetail
         profileId={profileMetadata.rootId}
         metadata={profileMetadata}

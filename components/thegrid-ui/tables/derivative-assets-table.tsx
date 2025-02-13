@@ -11,7 +11,6 @@ import { type ColumnDef } from '@tanstack/react-table';
 import { useMemo } from 'react';
 import { DataTableColumnHeader } from '../data-table/data-table-column-header';
 import { type ColumnMeta } from '../data-table/types';
-import { TableContainer } from '../lenses/base/components/table-container';
 import { AssetsDictionaryQuery } from './product-asset-relationships-table';
 
 type DerivativeAssets = AssetFieldsFragmentFragment['derivativeAssets'];
@@ -85,6 +84,13 @@ export function DerivativeAssetsTable({
           exact: true,
           refetchType: 'all'
         });
+        if (rootId) {
+          queryClient.invalidateQueries({
+            queryKey: ['validation-logs', rootId],
+            exact: true,
+            refetchType: 'all'
+          });
+        }
         return true;
       } catch (error) {
         console.error('Failed to upsert derivative asset:', error);
