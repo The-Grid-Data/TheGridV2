@@ -95,6 +95,13 @@ export function useLensForm<
         exact: true,
         refetchType: 'all'
       });
+      if (rootId) {
+        queryClient.invalidateQueries({
+          queryKey: ['validation-logs', rootId],
+          exact: true,
+          refetchType: 'all'
+        });
+      }
 
       toast({
         title: mode === 'create' ? 'Created!' : 'Updated!',

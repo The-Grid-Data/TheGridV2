@@ -13,7 +13,6 @@ import { type ColumnDef } from '@tanstack/react-table';
 import { useMemo } from 'react';
 import { DataTableColumnHeader } from '../data-table/data-table-column-header';
 import { ColumnMeta } from '../data-table/types';
-import { TableContainer } from '../lenses/base/components/table-container';
 
 type ProductAssetRelationships =
   ProductFieldsFragmentFragment['productAssetRelationships'];
@@ -118,6 +117,13 @@ export function ProductAssetRelationshipsTable({
           exact: true,
           refetchType: 'all'
         });
+        if (rootId) {
+          queryClient.invalidateQueries({
+            queryKey: ['validation-logs', rootId],
+            exact: true,
+            refetchType: 'all'
+          });
+        }
         return true;
       } catch (error) {
         console.error('Failed to upsert product asset relationship:', error);

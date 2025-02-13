@@ -139,6 +139,13 @@ export function UrlsTable({
           exact: true,
           refetchType: 'all'
         });
+        if (rootId) {
+          queryClient.invalidateQueries({
+            queryKey: ['validation-logs', rootId],
+            exact: true,
+            refetchType: 'all'
+          });
+        }
         return true;
       } catch (error) {
         console.error('Failed to upsert URL:', error);
