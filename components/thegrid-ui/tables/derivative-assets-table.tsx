@@ -14,8 +14,7 @@ import { type ColumnMeta } from '../data-table/types';
 import { TableContainer } from '../lenses/base/components/table-container';
 import { AssetsDictionaryQuery } from './product-asset-relationships-table';
 
-type DerivativeAssets =
-  AssetFieldsFragmentFragment['derivativeAssets'];
+type DerivativeAssets = AssetFieldsFragmentFragment['derivativeAssets'];
 type DerivativeAsset = NonNullable<DerivativeAssets>[number];
 
 type DerivativeAssetsTableProps = {
@@ -39,27 +38,32 @@ export function DerivativeAssetsTable({
   });
   const assetsDictionaryOptions = useMemo(() => {
     return (
-      assetsDictionaryData?.assets?.map(item => ({
-        value: item.id,
-        label: item.name
-      }))?.sort((a, b) => a.label.localeCompare(b.label)) ?? []
+      assetsDictionaryData?.assets
+        ?.map(item => ({
+          value: item.id,
+          label: item.name
+        }))
+        ?.sort((a, b) => a.label.localeCompare(b.label)) ?? []
     );
   }, [assetsDictionaryData]);
 
-  const columns: ColumnDef<DerivativeAsset, any>[] = useMemo(() => [
-    {
-      accessorKey: 'asset.name',
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Asset" />
-      ),
-      meta: {
+  const columns: ColumnDef<DerivativeAsset, any>[] = useMemo(
+    () => [
+      {
+        accessorKey: 'asset.name',
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Asset" />
+        ),
+        meta: {
           type: 'tag',
           isEditable: true,
           options: assetsDictionaryOptions,
           field: 'derivativeAsset.id'
         } satisfies ColumnMeta
-      },
-  ], [assetsDictionaryOptions]);
+      }
+    ],
+    [assetsDictionaryOptions]
+  );
 
   const client = useRestApiClient();
   const derivativeAssetsApi = useDerivativeAssetsApi(client);
@@ -70,30 +74,24 @@ export function DerivativeAssetsTable({
     columns,
     pageCount: 1,
     getRowId: row => row.id,
-    onCellSubmit: async (data) => {
-        try {
-          await derivativeAssetsApi.upsert({
-            ...data,
-            baseAssetId: assetId
-          });
-          queryClient.invalidateQueries({
-            queryKey: ['profile', rootId],
-            exact: true,
-            refetchType: 'all'
-          });
-          return true;
-        } catch (error) {
-          console.error('Failed to upsert derivative asset:', error);
-          return false;
-        }
+    onCellSubmit: async data => {
+      try {
+        await derivativeAssetsApi.upsert({
+          ...data,
+          baseAssetId: assetId
+        });
+        queryClient.invalidateQueries({
+          queryKey: ['profile', rootId],
+          exact: true,
+          refetchType: 'all'
+        });
+        return true;
+      } catch (error) {
+        console.error('Failed to upsert derivative asset:', error);
+        return false;
       }
-    });
+    }
+  });
 
-  return (
-    <TableContainer title="Derivative Assets">
-      <div className="space-y-4">
-        <DataTable table={table} hideFooter />
-      </div>
-    </TableContainer>
-  );
+  return <DataTable table={table} hideFooter />;
 }

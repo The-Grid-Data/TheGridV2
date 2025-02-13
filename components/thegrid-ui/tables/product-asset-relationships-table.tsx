@@ -20,21 +20,22 @@ type ProductAssetRelationships =
 type ProductAssetRelationship = NonNullable<ProductAssetRelationships>[number];
 
 export const AssetsDictionaryQuery = graphql(`
-    query getAssetsDictionary {
-      assets {
-        id
-        name
-      }
+  query getAssetsDictionary {
+    assets {
+      id
+      name
     }
-  `);
+  }
+`);
 
 const assetSupportTypeData = getTgsData('assets.assetSupportTypes');
-const assetSupportTypeOptions = assetSupportTypeData.isDataValid && assetSupportTypeData.is_enum === 'true'
-  ? assetSupportTypeData.possible_values.map(value => ({
-      label: value.name,
-      value: value.id
-    }))
-  : [];
+const assetSupportTypeOptions =
+  assetSupportTypeData.isDataValid && assetSupportTypeData.is_enum === 'true'
+    ? assetSupportTypeData.possible_values.map(value => ({
+        label: value.name,
+        value: value.id
+      }))
+    : [];
 
 type ProductAssetRelationshipsTableProps = {
   productAssetRelationships?: ProductAssetRelationships;
@@ -47,45 +48,51 @@ export function ProductAssetRelationshipsTable({
   productId,
   rootId
 }: ProductAssetRelationshipsTableProps) {
-  const { data: assetsDictionaryData, isLoading: assetsDictionaryLoading } = useQuery({
-    queryKey: ['assets-dictionary'],
-    queryFn: () => execute(AssetsDictionaryQuery)
-  });
+  const { data: assetsDictionaryData, isLoading: assetsDictionaryLoading } =
+    useQuery({
+      queryKey: ['assets-dictionary'],
+      queryFn: () => execute(AssetsDictionaryQuery)
+    });
   const assetsDictionaryOptions = useMemo(() => {
     return (
-      assetsDictionaryData?.assets?.map(item => ({
-        value: item.id,
-        label: item.name
-      }))?.sort((a, b) => a.label.localeCompare(b.label)) ?? []
+      assetsDictionaryData?.assets
+        ?.map(item => ({
+          value: item.id,
+          label: item.name
+        }))
+        ?.sort((a, b) => a.label.localeCompare(b.label)) ?? []
     );
   }, [assetsDictionaryData]);
 
-  const columns: ColumnDef<ProductAssetRelationship>[] = useMemo(() => [
-    {
-      accessorKey: 'asset.name',
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Asset" />
-      ),
-      meta: {
-        type: 'tag',
-        isEditable: true,
-        options: assetsDictionaryOptions,
-        field: 'asset.id'
-      } satisfies ColumnMeta
-    },
-    {
-      accessorKey: 'assetSupportType.name',
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Support Type" />
-      ),
-      meta: {
-        type: 'tag',
-        isEditable: true,
-        options: assetSupportTypeOptions,
-        field: 'typeOfSupport.id'
-      } satisfies ColumnMeta
-    }
-  ], [assetsDictionaryOptions]);
+  const columns: ColumnDef<ProductAssetRelationship>[] = useMemo(
+    () => [
+      {
+        accessorKey: 'asset.name',
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Asset" />
+        ),
+        meta: {
+          type: 'tag',
+          isEditable: true,
+          options: assetsDictionaryOptions,
+          field: 'asset.id'
+        } satisfies ColumnMeta
+      },
+      {
+        accessorKey: 'assetSupportType.name',
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Support Type" />
+        ),
+        meta: {
+          type: 'tag',
+          isEditable: true,
+          options: assetSupportTypeOptions,
+          field: 'typeOfSupport.id'
+        } satisfies ColumnMeta
+      }
+    ],
+    [assetsDictionaryOptions]
+  );
 
   const productAssetRelationshipsData = useMemo(() => {
     return productAssetRelationships ?? [];
@@ -100,7 +107,7 @@ export function ProductAssetRelationshipsTable({
     columns,
     pageCount: 1,
     getRowId: row => row.id,
-    onCellSubmit: async (data) => {
+    onCellSubmit: async data => {
       try {
         await productAssetRelationshipsApi.upsert({
           ...data,
@@ -119,11 +126,5 @@ export function ProductAssetRelationshipsTable({
     }
   });
 
-  return (
-    <TableContainer title="Related Assets">
-      <div className="space-y-4">
-        <DataTable table={table} hideFooter />
-      </div>
-    </TableContainer>
-  );
+  return <DataTable table={table} hideFooter />;
 }

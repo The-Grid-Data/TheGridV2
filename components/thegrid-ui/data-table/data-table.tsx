@@ -97,14 +97,20 @@ export function DataTable<TData>({
   };
 
   // Handle cell submission to reset empty row state
-  const handleCellSubmit = async (data: { id: string } & Record<string, any>) => {
+  const handleCellSubmit = async (
+    data: { id: string } & Record<string, any>
+  ) => {
     if (!onCellSubmit) return false;
 
-    const success = await onCellSubmit(data);
-    if (success && !data.id) {
-      setHasEmptyRow(false);
+    try {
+      const success = await onCellSubmit(data);
+      if (success && !data.id) {
+        setHasEmptyRow(false);
+      }
+      return success;
+    } catch (error) {
+      return false;
     }
-    return success;
   };
 
   return (
@@ -170,6 +176,7 @@ export function DataTable<TData>({
                       </TableCell>
                       {row.getVisibleCells().map(cell => (
                         <DataTableCell
+                          isNewRow={row.id === ''}
                           key={cell.id}
                           cell={cell}
                           onSubmit={handleCellSubmit}
@@ -191,6 +198,7 @@ export function DataTable<TData>({
                   >
                     {row.getVisibleCells().map(cell => (
                       <DataTableCell
+                        isNewRow={row.id === ''}
                         key={cell.id}
                         cell={cell}
                         onSubmit={handleCellSubmit}
