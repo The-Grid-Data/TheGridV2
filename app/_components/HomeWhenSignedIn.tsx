@@ -65,16 +65,22 @@ export const HomeWhenSignedIn = () => {
             <Changelog
               entries={[
                 {
-                  date: 'February 16, 2024',
+                    date: '-',
+                    title: 'Known issues',
+                    description:
+                      'Slowness of table saves, we are  looking intoa fix. It does still save correct. Also socials not avaiable.'
+                },
+                {
+                    date: 'February 13, 2024',
+                    title: 'Enabled product and asset deployments and a very nice overhaul of product and asset form modals. Clean up various small issues.',
+                    description:
+                      'Redesigned the tables with improved styling, clearer information hierarchy, and more detailed results.'
+                },
+                {
+                  date: 'February 12, 2024',
                   title: 'Improved validation logs table',
                   description:
                     'Redesigned the tables with improved styling, clearer information hierarchy, and more detailed results.'
-                },
-                {
-                  date: 'February 11, 2024',
-                  title: 'Known issues',
-                  description:
-                    'Unable to edit product + asset deployments, product supports and URLs. This functionality is coming very soon.'
                 },
                 {
                   date: 'February 11, 2024',
