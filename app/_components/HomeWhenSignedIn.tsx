@@ -65,16 +65,16 @@ export const HomeWhenSignedIn = () => {
             <Changelog
               entries={[
                 {
-                    date: '-',
-                    title: 'Known issues',
+                    date: 'Known issues',
+                    title: 'Slowness on save',
                     description:
                       'Slowness of table saves, we are  looking intoa fix. It does still save correct. Also socials not avaiable.'
                 },
                 {
                     date: 'February 13, 2024',
-                    title: 'Enabled product and asset deployments and a very nice overhaul of product and asset form modals. Clean up various small issues.',
+                    title: 'Enable Product and Asset extra information',
                     description:
-                      'Redesigned the tables with improved styling, clearer information hierarchy, and more detailed results.'
+                      'Enabled product and asset deployments, realationships and supports + a very nice overhaul of product and asset form modals. Cleaned up various small issues.'
                 },
                 {
                   date: 'February 12, 2024',
