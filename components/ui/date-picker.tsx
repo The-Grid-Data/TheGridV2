@@ -1,16 +1,31 @@
-"use client"
+'use client';
 
-import { format } from "date-fns"
-import { CalendarIcon } from "lucide-react"
+import { format, parseISO, isValid } from 'date-fns';
+import { CalendarIcon } from 'lucide-react';
 
-import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
+import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
 import {
   Popover,
   PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
-import { cn } from "@/lib/utils"
+  PopoverTrigger
+} from '@/components/ui/popover';
+import { cn } from '@/lib/utils';
+
+export function formatDateString(dateString: string | Date): string {
+  const date = new Date(dateString);
+  return format(date, 'yyyy-MM-dd');
+}
+
+const parseAndValidateDate = (dateString?: string | null): Date | undefined => {
+  if (!dateString || dateString === '0000-00-00') return undefined;
+  const parsed = parseISO(dateString);
+  return isValid(parsed) ? parsed : undefined;
+};
+
+const formatDisplayDate = (date: Date | undefined): React.ReactNode => {
+  return date ? format(date, 'PPP') : <span>Pick a date</span>;
+};
 
 export interface DatePickerProps {
   value?: string | null;
@@ -19,9 +34,13 @@ export interface DatePickerProps {
   className?: string;
 }
 
-export function DatePicker({ value, onChange, error, className }: DatePickerProps) {
-  const isValidDate = value && value !== '0000-00-00' && !isNaN(new Date(value).getTime());
-  const date = isValidDate ? new Date(value) : undefined;
+export function DatePicker({
+  value,
+  onChange,
+  error,
+  className
+}: DatePickerProps) {
+  const date = parseAndValidateDate(value);
 
   return (
     <Popover>
@@ -29,24 +48,26 @@ export function DatePicker({ value, onChange, error, className }: DatePickerProp
         <Button
           variant="outline"
           className={cn(
-            "w-full justify-start text-left font-normal",
-            !date && "text-muted-foreground",
-            error && "border-destructive",
+            'w-full justify-start text-left font-normal',
+            !date && 'text-muted-foreground',
+            error && 'border-destructive focus:ring-destructive',
             className
           )}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
-          {date ? format(date, "PPP") : <span>Pick a date</span>}
+          {formatDisplayDate(date)}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">
         <Calendar
           mode="single"
           selected={date}
-          onSelect={(newDate) => onChange?.(newDate ? format(newDate, "yyyy-MM-dd") : null)}
+          onSelect={newDate =>
+            onChange?.(newDate ? formatDateString(newDate) : null)
+          }
           initialFocus
         />
       </PopoverContent>
     </Popover>
-  )
+  );
 }

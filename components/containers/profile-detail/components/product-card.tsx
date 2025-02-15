@@ -142,7 +142,12 @@ export const ProductCard = ({
             <EditProductOverlay
               product={product}
               triggerNode={
-                <Button variant="ghost" size="icon" type="button">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  type="button"
+                  className="1ProductEdit"
+                >
                   <Edit className="h-4 w-4" />
                 </Button>
               }
@@ -180,6 +185,7 @@ export const ProductCard = ({
                 <div className="flex gap-2">
                   <DeepLinkBadge
                     icon={<Package size={16} />}
+                    target="_blank"
                     href={
                       supportsProduct.supportsProduct?.root?.slug &&
                       paths.profile.detail(
@@ -207,6 +213,7 @@ export const ProductCard = ({
                 <div className="flex gap-2">
                   <DeepLinkBadge
                     icon={<Banknote size={16} />}
+                    target="_blank"
                     href={
                       relationship.asset?.root?.slug &&
                       paths.profile.detail(relationship.asset?.root?.slug, {

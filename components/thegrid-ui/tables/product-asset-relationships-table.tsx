@@ -132,5 +132,12 @@ export function ProductAssetRelationshipsTable({
     }
   });
 
-  return <DataTable table={table} hideFooter />;
+  return (
+    <DataTable
+      table={table}
+      hideFooter
+      displayAddRowButton
+      addRowButtonLabel="Add asset"
+    />
+  );
 }

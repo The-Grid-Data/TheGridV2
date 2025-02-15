@@ -168,6 +168,8 @@ export function DeploymentsTable({
       <DataTable
         table={table}
         hideFooter
+        displayAddRowButton
+        addRowButtonLabel="Add deployment"
         renderSubRow={row => (
           <DeploymentSubRow deployment={row.original} rootId={rootId} />
         )}

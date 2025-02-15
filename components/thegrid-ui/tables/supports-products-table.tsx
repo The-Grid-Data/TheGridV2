@@ -103,5 +103,12 @@ export function SupportsProductsTable({
     }
   });
 
-  return <DataTable table={table} hideFooter />;
+  return (
+    <DataTable
+      table={table}
+      hideFooter
+      displayAddRowButton
+      addRowButtonLabel="Add Product"
+    />
+  );
 }

@@ -140,7 +140,9 @@ export function ValidationLogsTable({ rootId }: ValidationLogsTableProps) {
   return (
     <div className="mx-auto max-w-[90vw] px-4 py-8">
       <div className="mb-8 space-y-2">
-        <h2 className="text-2xl font-bold tracking-tight">Validation Logs</h2>
+        <h2 className="validationTitle text-2xl font-bold tracking-tight">
+          Validation Logs
+        </h2>
         <p className="text-base text-muted-foreground">
           View and monitor validation status updates for your profile data
         </p>

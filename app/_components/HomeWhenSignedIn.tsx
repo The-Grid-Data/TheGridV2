@@ -36,7 +36,7 @@ export const HomeWhenSignedIn = () => {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <section className="flex flex-col items-center space-y-8 py-16 md:py-24">
           <div className="max-w-4xl space-y-6 text-center">
-            <h1 className="scroll-m-20 text-balance text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+            <h1 className="homeTitle scroll-m-20 text-balance text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
               Manage the {profile?.name} profile
             </h1>
             <p className="mx-auto max-w-2xl text-lg font-light text-muted-foreground">
@@ -65,16 +65,16 @@ export const HomeWhenSignedIn = () => {
             <Changelog
               entries={[
                 {
-                    date: 'Known issues',
-                    title: 'Slowness on save',
-                    description:
-                      'Slowness of table saves, we are  looking intoa fix. It does still save correct. Also socials not avaiable.'
+                  date: 'Known issues',
+                  title: 'Slow saving',
+                  description:
+                    'Tables are saving slowly - we are working on a fix. Data still saves correctly. Social media links currently unavailable.'
                 },
                 {
-                    date: 'February 13, 2024',
-                    title: 'Enable Product and Asset extra information',
-                    description:
-                      'Enabled product and asset deployments, realationships and supports + a very nice overhaul of product and asset form modals. Cleaned up various small issues.'
+                  date: 'February 13, 2024',
+                  title: 'Enable Product and Asset extra information',
+                  description:
+                    'Enabled product and asset deployments, realationships and supports + a very nice overhaul of product and asset form modals. Cleaned up various small issues.'
                 },
                 {
                   date: 'February 12, 2024',

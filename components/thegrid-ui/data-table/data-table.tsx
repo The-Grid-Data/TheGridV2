@@ -15,7 +15,7 @@ import {
   TableRow
 } from '@/components/ui/table';
 import { cn } from '@/lib/utils';
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronDown, ChevronUp, Plus } from 'lucide-react';
 import { Fragment } from 'react';
 import { DataTableCell } from './data-table-cell';
 import { DataTablePagination } from './data-table-pagination';
@@ -56,6 +56,18 @@ interface DataTableProps<TData> extends React.HTMLAttributes<HTMLDivElement> {
    */
   filterFields?: DataTableFilterField<TData>[];
 
+  /**
+   * Enable/disable adding new rows
+   * @default true
+   */
+  displayAddRowButton?: boolean;
+
+  /**
+   * Label for the add row button
+   * @default "Add row"
+   */
+  addRowButtonLabel?: string;
+
   renderSubRow?: (row: Row<TData>) => React.ReactNode;
 }
 
@@ -65,6 +77,8 @@ export function DataTable<TData>({
   children,
   className,
   renderSubRow,
+  displayAddRowButton = false,
+  addRowButtonLabel = 'Add row',
   hideFooter = false,
   hideToolbar = false,
   filterFields = [],
@@ -86,7 +100,7 @@ export function DataTable<TData>({
   };
 
   const onAddRow = () => {
-    if (!setData || hasEmptyRow) return;
+    if (!setData || hasEmptyRow || !displayAddRowButton) return;
 
     const newRow = {
       id: ''
@@ -113,6 +127,19 @@ export function DataTable<TData>({
     }
   };
 
+  const addButton = (
+    <Button
+      onClick={onAddRow}
+      variant="outline"
+      size="sm"
+      className="h-8"
+      disabled={hasEmptyRow}
+    >
+      <Plus className="mr-2 size-4" />
+      {addRowButtonLabel}
+    </Button>
+  );
+
   return (
     <div
       className={cn('w-full space-y-2.5 overflow-auto', className)}
@@ -123,7 +150,6 @@ export function DataTable<TData>({
         <DataTableToolbar
           table={table}
           filterFields={filterFields}
-          onAddRow={onAddRow}
           disableAddRow={hasEmptyRow}
         />
       )}
@@ -211,14 +237,40 @@ export function DataTable<TData>({
                 )
               )
             ) : (
+              <>
+                <TableRow>
+                  <TableCell
+                    className="h-24"
+                    colSpan={
+                      table.getAllColumns().length + (renderSubRow ? 1 : 0)
+                    }
+                  >
+                    <div className="flex items-center justify-center gap-2 text-center">
+                      <span>No results.</span>
+                      {addButton}
+                    </div>
+                  </TableCell>
+                </TableRow>
+                {displayAddRowButton && (
+                  <TableRow>
+                    <TableCell
+                      colSpan={
+                        table.getAllColumns().length + (renderSubRow ? 1 : 0)
+                      }
+                      className="text-center"
+                    ></TableCell>
+                  </TableRow>
+                )}
+              </>
+            )}
+            {table.getRowModel().rows?.length > 0 && displayAddRowButton && (
               <TableRow>
                 <TableCell
                   colSpan={
                     table.getAllColumns().length + (renderSubRow ? 1 : 0)
                   }
-                  className="h-24 text-center"
                 >
-                  No results.
+                  {addButton}
                 </TableCell>
               </TableRow>
             )}
