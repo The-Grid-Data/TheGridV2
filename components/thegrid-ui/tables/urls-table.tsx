@@ -154,5 +154,13 @@ export function UrlsTable({
     }
   });
 
-  return <DataTable table={table} hideFooter filterFields={[]} />;
+  return (
+    <DataTable
+      table={table}
+      hideFooter
+      filterFields={[]}
+      displayAddRowButton
+      addRowButtonLabel="Add URL"
+    />
+  );
 }

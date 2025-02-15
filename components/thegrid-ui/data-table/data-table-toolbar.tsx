@@ -38,10 +38,6 @@ interface DataTableToolbarProps<TData>
    */
   filterFields?: DataTableFilterField<TData>[];
   /**
-   * Optional callback for adding a new row
-   */
-  onAddRow?: () => void;
-  /**
    * Whether the add row button should be disabled
    * @default false
    */
@@ -51,7 +47,6 @@ interface DataTableToolbarProps<TData>
 export function DataTableToolbar<TData>({
   table,
   filterFields = [],
-  onAddRow,
   disableAddRow = false,
   children,
   className,
@@ -122,17 +117,6 @@ export function DataTableToolbar<TData>({
         )}
       </div>
       <div className="flex items-center gap-2">
-        {onAddRow && (
-          <Button
-            onClick={onAddRow}
-            variant="outline"
-            size="sm"
-            className="h-8"
-            disabled={disableAddRow}
-          >
-            Add row
-          </Button>
-        )}
         {children}
         <DataTableViewOptions table={table} />
       </div>

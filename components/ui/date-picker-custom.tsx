@@ -36,7 +36,6 @@ export function DatePickerCustom({ value, onChange, label }: DatePickerCustom) {
           initialFocus
         />
       </div>
-
       <DatePickerFooter value={value} onChange={onChange} />
     </FilterContainer>
   );

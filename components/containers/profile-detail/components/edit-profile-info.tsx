@@ -45,21 +45,18 @@ export type EditProfileInfoProps = {
   profile: FragmentType<typeof ProfileInfoFragment>;
 };
 
-export const EditProfileInfo = ({
-  profile,
-}: EditProfileInfoProps) => {
+export const EditProfileInfo = ({ profile }: EditProfileInfoProps) => {
   const profileData = useFragment(ProfileInfoFragment, profile);
 
   return (
     <EditProfileInfoOverlay
       lensData={profileData}
       triggerNode={
-        <Button size="lg" className="ml-auto">
+        <Button size="lg" className="mainProfileEdit ml-auto">
           <Edit className="mr-2 h-4 w-4" />
           Edit Profile Info & Links
         </Button>
       }
     />
-
   );
 };
