@@ -65,7 +65,13 @@ export const HomeWhenSignedIn = () => {
             <Changelog
               entries={[
                 {
-                  date: 'Known issues',
+                  date: 'February 15, 2024',
+                  title: 'UX/UI improvements',
+                  description:
+                    'Fixed DatePicker one day off issue, moved add row button to the bottom of each table, + other minor UI improvements.'
+                },
+                {
+                  date: 'February 14, 2024',
                   title: 'Slow saving',
                   description:
                     'Tables are saving slowly - we are working on a fix. Data still saves correctly. Social media links currently unavailable.'
