@@ -29,7 +29,8 @@ const urlTypeOptions =
   urlTypeData.isDataValid && urlTypeData.is_enum === 'true'
     ? urlTypeData.possible_values.map(value => ({
         label: value.name,
-        value: value.id
+        value: value.id,
+        description: value.definition
       }))
     : [];
 

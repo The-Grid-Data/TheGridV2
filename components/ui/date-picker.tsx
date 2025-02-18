@@ -60,6 +60,9 @@ export function DatePicker({
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">
         <Calendar
+          captionLayout="dropdown-buttons"
+          fromYear={1800}
+          toYear={2025}
           mode="single"
           selected={date}
           onSelect={newDate =>

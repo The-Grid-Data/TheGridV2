@@ -75,7 +75,10 @@ export function PolymorphicOverlay({
     return (
       <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogTrigger asChild>{triggerNode}</DialogTrigger>
-        <DialogContent className={cn(sizeConfig.width, sizeConfig.desktopHeight)}>
+        <DialogContent
+          onInteractOutside={e => e.preventDefault()}
+          className={cn(sizeConfig.width, sizeConfig.desktopHeight)}
+        >
           <DialogHeader className="px-6 py-4">
             <div className="flex items-center justify-between">
               <DialogTitle>{title}</DialogTitle>

@@ -23,6 +23,7 @@ export const AssetsDictionaryQuery = graphql(`
     assets {
       id
       name
+      description
     }
   }
 `);
@@ -32,7 +33,8 @@ const assetSupportTypeOptions =
   assetSupportTypeData.isDataValid && assetSupportTypeData.is_enum === 'true'
     ? assetSupportTypeData.possible_values.map(value => ({
         label: value.name,
-        value: value.id
+        value: value.id,
+        description: value.definition
       }))
     : [];
 
@@ -57,7 +59,8 @@ export function ProductAssetRelationshipsTable({
       assetsDictionaryData?.assets
         ?.map(item => ({
           value: item.id,
-          label: item.name
+          label: item.name,
+          description: item.description
         }))
         ?.sort((a, b) => a.label.localeCompare(b.label)) ?? []
     );
