@@ -30,7 +30,8 @@ const deploymentTypeOptions =
   deploymentTypeData.isDataValid && deploymentTypeData.is_enum === 'true'
     ? deploymentTypeData.possible_values.map(value => ({
         label: value.name,
-        value: value.id
+        value: value.id,
+        description: value.definition
       }))
     : [];
 
@@ -39,15 +40,17 @@ const isOfStandardOptions =
   isOfStandardData.isDataValid && isOfStandardData.is_enum === 'true'
     ? isOfStandardData.possible_values.map(value => ({
         label: value.name,
-        value: value.id
+        value: value.id,
+        description: value.definition
       }))
     : [];
 
 export const ProductsLayersDictionaryQuery = graphql(`
   query getProductsLayersDictionary {
-    products(where: { productTypeId: { _in: [15, 16, 17] } }) {
+    products {
       id
       name
+      description
     }
   }
 `);
@@ -74,7 +77,8 @@ export function DeploymentsTable({
       productsLayersDictionaryData?.products
         ?.map(item => ({
           value: item.id,
-          label: item.name
+          label: item.name,
+          description: item.description
         }))
         ?.sort((a, b) => a.label.localeCompare(b.label)) ?? []
     );

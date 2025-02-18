@@ -3417,12 +3417,12 @@ export type GetTagsOptionsQuery = { __typename?: 'Query', tags?: Array<{ __typen
 export type GetProductsLayersDictionaryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetProductsLayersDictionaryQuery = { __typename?: 'Query', products?: Array<{ __typename?: 'Products', id: string, name: string }> | null };
+export type GetProductsLayersDictionaryQuery = { __typename?: 'Query', products?: Array<{ __typename?: 'Products', id: string, name: string, description: string }> | null };
 
 export type GetAssetsDictionaryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAssetsDictionaryQuery = { __typename?: 'Query', assets?: Array<{ __typename?: 'Assets', id: string, name: string }> | null };
+export type GetAssetsDictionaryQuery = { __typename?: 'Query', assets?: Array<{ __typename?: 'Assets', id: string, name: string, description: string }> | null };
 
 export type GetValidationLogQueryVariables = Exact<{
   where?: InputMaybe<ValidationBoolExp>;
@@ -4675,9 +4675,10 @@ export const GetTagsOptionsDocument = new TypedDocumentString(`
     `) as unknown as TypedDocumentString<GetTagsOptionsQuery, GetTagsOptionsQueryVariables>;
 export const GetProductsLayersDictionaryDocument = new TypedDocumentString(`
     query getProductsLayersDictionary {
-  products(where: {productTypeId: {_in: [15, 16, 17]}}) {
+  products {
     id
     name
+    description
   }
 }
     `) as unknown as TypedDocumentString<GetProductsLayersDictionaryQuery, GetProductsLayersDictionaryQueryVariables>;
@@ -4686,6 +4687,7 @@ export const GetAssetsDictionaryDocument = new TypedDocumentString(`
   assets {
     id
     name
+    description
   }
 }
     `) as unknown as TypedDocumentString<GetAssetsDictionaryQuery, GetAssetsDictionaryQueryVariables>;

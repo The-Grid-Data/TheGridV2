@@ -146,13 +146,7 @@ export function DataTable<TData>({
       {...props}
     >
       {children}
-      {!hideToolbar && (
-        <DataTableToolbar
-          table={table}
-          filterFields={filterFields}
-          disableAddRow={hasEmptyRow}
-        />
-      )}
+
       <div className="overflow-hidden rounded-md border">
         <Table>
           <TableHeader>
@@ -278,6 +272,13 @@ export function DataTable<TData>({
         </Table>
       </div>
       <div className="flex flex-col gap-2.5">
+        {!hideToolbar && (
+          <DataTableToolbar
+            table={table}
+            filterFields={filterFields}
+            disableAddRow={hasEmptyRow}
+          />
+        )}
         {!hideFooter && <DataTablePagination table={table} />}
         {table.getFilteredSelectedRowModel().rows.length > 0 && floatingBar}
       </div>

@@ -43,7 +43,8 @@ export function SupportsProductsTable({
       productsLayersDictionaryData?.products
         ?.map(item => ({
           value: item.id,
-          label: item.name
+          label: item.name,
+          description: item.description
         }))
         ?.sort((a, b) => a.label.localeCompare(b.label)) ?? []
     );

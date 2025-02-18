@@ -9,7 +9,7 @@ import { useClerkContext } from '@/providers/clerk-provider';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { Changelog } from './changelog';
-
+import changelog from '@/lib/data/changelog.json';
 export const HomeWhenSignedIn = () => {
   const { isLoading: isClerkLoading, profileMetadata } = useClerkContext();
 
@@ -62,45 +62,7 @@ export const HomeWhenSignedIn = () => {
           </div>
 
           <div className="w-full max-w-4xl pt-8">
-            <Changelog
-              entries={[
-                {
-                  date: 'February 15, 2024',
-                  title: 'UX/UI improvements',
-                  description:
-                    'Fixed DatePicker one day off issue, moved add row button to the bottom of each table, + other minor UI improvements.'
-                },
-                {
-                  date: 'February 14, 2024',
-                  title: 'Slow saving',
-                  description:
-                    'Tables are saving slowly - we are working on a fix. Data still saves correctly. Social media links currently unavailable.'
-                },
-                {
-                  date: 'February 13, 2024',
-                  title: 'Enable Product and Asset extra information',
-                  description:
-                    'Enabled product and asset deployments, realationships and supports + a very nice overhaul of product and asset form modals. Cleaned up various small issues.'
-                },
-                {
-                  date: 'February 12, 2024',
-                  title: 'Improved validation logs table',
-                  description:
-                    'Redesigned the tables with improved styling, clearer information hierarchy, and more detailed results.'
-                },
-                {
-                  date: 'February 11, 2024',
-                  title: 'Other changes',
-                  description:
-                    'Updated edit log load. Updated logo upload to work on black background.'
-                },
-                {
-                  date: 'February 9, 2024',
-                  title: 'Initial push',
-                  description: 'First release of the platform'
-                }
-              ]}
-            />
+            <Changelog entries={changelog} />
           </div>
         </section>
 
