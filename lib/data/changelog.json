@@ -1,5 +1,10 @@
 [
   {
+    "date": "February 18, 2024",
+    "title": "Bug fixes",
+    "description": "Add loading state to tables & fix add smart contracts button"
+  },
+  {
     "date": "February 17, 2024",
     "title": "Bug fixes & UX/UI improvements",
     "description": "Added month/year dropdowns to date pickers, improved product tables, moved action buttons to table footers, and prevented accidental dialog closes, show description in dropdown options"

@@ -268,7 +268,12 @@ export function DeploymentSubRow({
 
   return (
     <div className="bg-none p-2">
-      <DataTable table={subTable} hideFooter />
+      <DataTable
+        table={subTable}
+        hideFooter
+        displayAddRowButton
+        addRowButtonLabel="Add contract"
+      />
     </div>
   );
 }

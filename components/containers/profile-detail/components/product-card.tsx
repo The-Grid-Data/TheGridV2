@@ -233,6 +233,8 @@ export const ProductCard = ({
           separator: false,
           children: (
             <CollapsibleList
+              className="w-full flex-1 flex-col items-start"
+              wrapperClassName="w-full"
               items={product.productDeployments}
               renderEmpty={() => <span className="text-sm">-</span>}
               renderItem={deployment => (

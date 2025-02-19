@@ -22,6 +22,7 @@ import { DataTablePagination } from './data-table-pagination';
 import { DataTableToolbar } from './data-table-toolbar';
 import { getCommonPinningStyles } from './lib/data-table';
 import type { DataTableFilterField, DataTableMeta } from './types';
+import { Progress } from '@/components/ui/progress';
 
 interface DataTableProps<TData> extends React.HTMLAttributes<HTMLDivElement> {
   /**
@@ -86,6 +87,7 @@ export function DataTable<TData>({
 }: DataTableProps<TData>) {
   const [openRows, setOpenRows] = React.useState<Record<string, boolean>>({});
   const [hasEmptyRow, setHasEmptyRow] = React.useState(false);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
 
   // Get editable config from table meta
   const meta = table.options.meta as DataTableMeta<TData>;
@@ -110,12 +112,12 @@ export function DataTable<TData>({
     setHasEmptyRow(true);
   };
 
-  // Handle cell submission to reset empty row state
   const handleCellSubmit = async (
     data: { id: string } & Record<string, any>
   ) => {
     if (!onCellSubmit) return false;
 
+    setIsSubmitting(true);
     try {
       const success = await onCellSubmit(data);
       if (success && !data.id) {
@@ -124,6 +126,8 @@ export function DataTable<TData>({
       return success;
     } catch (error) {
       return false;
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -148,6 +152,7 @@ export function DataTable<TData>({
       {children}
 
       <div className="overflow-hidden rounded-md border">
+        {isSubmitting && <Progress indeterminate />}
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map(headerGroup => (

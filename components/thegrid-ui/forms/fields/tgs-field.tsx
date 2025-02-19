@@ -74,21 +74,24 @@ export function TgsField({
                 isRequired={isRequired}
                 infoTooltipText={tgsData.description}
               >
-                <SingleCombobox
-                  {...field}
-                  placeholder={placeholder}
-                  onValueChange={field.onChange}
-                  value={field.value}
-                  error={fieldState.error?.message}
-                  options={tgsData.possible_values
-                    .map(value => ({
-                      id: value.id,
-                      label: value.name,
-                      value: value.id,
-                      description: value.definition
-                    }))
-                    .sort((a, b) => a.label.localeCompare(b.label))}
-                />
+                <>
+                  {field.value}
+                  <SingleCombobox
+                    {...field}
+                    placeholder={placeholder}
+                    onValueChange={field.onChange}
+                    value={field.value}
+                    error={fieldState.error?.message}
+                    options={tgsData.possible_values
+                      .map(value => ({
+                        id: value.id,
+                        label: value.name,
+                        value: value.id,
+                        description: value.definition
+                      }))
+                      .sort((a, b) => a.label.localeCompare(b.label))}
+                  />
+                </>
               </FieldWrapper>
             )}
           />
