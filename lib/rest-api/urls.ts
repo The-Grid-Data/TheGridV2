@@ -10,6 +10,24 @@ export type UpsertUrlInput = Partial<Urls> & {
 };
 const TABLE_NAME = 'urls';
 
+// TODO: remove table ids hardcoding
+export const LENS_NAME_TO_TABLE_ID = {
+  products: '15',
+  assets: '14',
+  entities: '13',
+  socials: '11',
+  profileInfos: '7'
+};
+
+// TODO: remove url type ids hardcoding
+export const LENS_NAME_TO_URL_TYPE_ID = {
+  profileInfos: ['2', '3', '4', '5', 'id1737127021-McZQIPuJSeS7xJRGFEtvBw'],
+  products: ['4', '6', 'id1737127021-McZQIPuJSeS7xJRGFEtvBw'],
+  assets: ['4', 'id1737127021-McZQIPuJSeS7xJRGFEtvBw'],
+  entities: ['7', 'id1737127021-McZQIPuJSeS7xJRGFEtvBw'],
+  socials: ['8', 'id1737127021-McZQIPuJSeS7xJRGFEtvBw']
+};
+
 export const createUrlsApi = (client: RestClient) => {
   const create = async (input: CreateUrlInput) => {
     return client.create(TABLE_NAME, input);
