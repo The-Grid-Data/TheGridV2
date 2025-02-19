@@ -148,9 +148,9 @@ function OptionList({
             >
               <div>
                 <div className="text font-medium">{option.label}</div>
-                {option.description !== null && (
+                {option.description && (
                   <div className="text text-sm text-muted-foreground">
-                    {option.description || 'No description provided'}
+                    {option.description}
                   </div>
                 )}
               </div>

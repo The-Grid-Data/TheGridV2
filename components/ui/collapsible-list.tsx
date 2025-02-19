@@ -1,19 +1,24 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
+import { cn } from '@/lib/utils';
 
 interface CollapsibleListProps<T> {
   items?: T[] | null;
   renderItem: (item: T) => React.ReactNode;
   renderEmpty?: () => React.ReactNode;
   initialVisibleCount?: number;
+  className?: string;
+  wrapperClassName?: string;
 }
 
 export const CollapsibleList = <T extends unknown>({
   items,
   renderItem,
   renderEmpty = () => null,
-  initialVisibleCount = 3
+  initialVisibleCount = 3,
+  className,
+  wrapperClassName
 }: CollapsibleListProps<T>) => {
   // Move useState outside of conditional
   const [showAll, setShowAll] = useState(false);
@@ -23,7 +28,7 @@ export const CollapsibleList = <T extends unknown>({
   const visibleItems = showAll ? items : items.slice(0, initialVisibleCount);
 
   return (
-    <div className="flex flex-wrap items-center gap-2">
+    <div className={cn('flex flex-wrap items-center gap-2', className)}>
       <AnimatePresence>
         {visibleItems.map((item, index) => (
           <motion.div
@@ -32,6 +37,7 @@ export const CollapsibleList = <T extends unknown>({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
+            className={cn(wrapperClassName)}
           >
             {renderItem(item)}
           </motion.div>
