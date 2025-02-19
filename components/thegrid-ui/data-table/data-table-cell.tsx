@@ -1,14 +1,14 @@
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { SingleCombobox } from '@/components/ui/single-combobox';
 import { TableCell } from '@/components/ui/table';
 import { cn } from '@/lib/utils';
 import { Cell, flexRender } from '@tanstack/react-table';
+import { Loader2, Pencil, Save, X } from 'lucide-react';
 import * as React from 'react';
 import { getCommonPinningStyles } from './lib/data-table';
 import { type ColumnMeta } from './types';
-import { Loader2, Pencil, Save, X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { SingleCombobox } from '@/components/ui/single-combobox';
 
 interface DataTableCellProps<TData> {
   cell: Cell<TData, unknown>;
@@ -155,8 +155,8 @@ export function DataTableCell<TData>({
               }}
               onKeyDown={handleKeyDown}
               className={cn(
-                'h-6',
-                'rounded-sm',
+                'h-8',
+                'rounded-md',
                 error && 'border-destructive focus-visible:ring-destructive'
               )}
               disabled={isSubmitting}

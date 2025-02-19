@@ -1,17 +1,20 @@
 'use client';
 
+import { SocialsTable } from '@/components/thegrid-ui/tables/socials-table';
 import { UrlsTable } from '@/components/thegrid-ui/tables/urls-table';
 import { ControlledOverlay } from '@/components/ui/controlled-overlay';
+import { ProfileInfoFragmentFragment } from '@/lib/graphql/generated/graphql';
 import { EditLensOverlayProps } from '../../base/types';
 import { EditProfileInfoForm } from './edit-profileInfo-form';
-
 export function EditProfileInfoOverlay({
   lensData,
   triggerNode
 }: EditLensOverlayProps) {
+  const profileInfoData = lensData as ProfileInfoFragmentFragment;
+
   return (
     <ControlledOverlay
-      title={`Edit ${lensData?.name}`}
+      title={`Edit ${profileInfoData?.name}`}
       triggerNode={triggerNode}
       size="full"
       render={({ closeDialog }) => (
@@ -29,7 +32,7 @@ export function EditProfileInfoOverlay({
                   </p>
                 </div>
                 <EditProfileInfoForm
-                  lensData={lensData}
+                  lensData={profileInfoData}
                   onSuccess={closeDialog}
                   onCancel={closeDialog}
                 />
@@ -38,26 +41,48 @@ export function EditProfileInfoOverlay({
           </div>
 
           {/* Right Column - Related Data */}
-          <div className="w-1/2 space-y-4">
-            <section className="rounded-lg border bg-card p-6 shadow-sm">
-              <div className="space-y-4">
-                <div className="border-b pb-4">
-                  <h2 className="text-lg font-medium tracking-tight">
-                    Profile URLs
-                  </h2>
-                  <p className="text-sm text-muted-foreground">
-                    Associated links and references for this profile
-                  </p>
+          <div className="flex w-1/2 flex-col gap-4">
+            <div className="space-y-4">
+              <section className="rounded-lg border bg-card p-6 shadow-sm">
+                <div className="space-y-4">
+                  <div className="border-b pb-4">
+                    <h2 className="text-lg font-medium tracking-tight">
+                      Profile URLs
+                    </h2>
+                    <p className="text-sm text-muted-foreground">
+                      Associated links and references for this profile
+                    </p>
+                  </div>
+                  <UrlsTable
+                    urls={profileInfoData?.urls ?? []}
+                    rootId={profileInfoData?.rootId ?? ''}
+                    lensName="profileInfos"
+                    lensRowId={profileInfoData?.id ?? '' }
+                  />
                 </div>
-                <UrlsTable
-                  urls={lensData?.urls ?? []}
-                  rootId={lensData?.rootId ?? ''}
-                  lensName="profileInfos"
-                  lensRowId={lensData?.id ?? '' }
-                />
-              </div>
-            </section>
+              </section>
+            </div>
+
+            <div className="space-y-4">
+              <section className="rounded-lg border bg-card p-6 shadow-sm">
+                <div className="space-y-4">
+                  <div className="border-b pb-4">
+                    <h2 className="text-lg font-medium tracking-tight">
+                      Socials
+                    </h2>
+                    <p className="text-sm text-muted-foreground">
+                      Social media profiles and links for this profile
+                    </p>
+                  </div>
+                  <SocialsTable
+                    socials={profileInfoData?.root?.socials ?? []}
+                    rootId={profileInfoData?.rootId ?? ''}
+                  />
+                </div>
+              </section>
+            </div>
           </div>
+
         </div>
 
       )}

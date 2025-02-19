@@ -118,7 +118,7 @@ export function DataTable<TData>({
 
     try {
       const success = await onCellSubmit(data);
-      if (success && !data.id) {
+      if (success) {
         setHasEmptyRow(false);
       }
       return success;

@@ -29,6 +29,19 @@ export const ProfileInfoFragment = graphql(`
       name
       definition
     }
+    root {
+      socials {
+        id
+        name
+        socialType {
+          name
+        }
+        urls(order_by: { urlTypeId: Asc }) {
+          id
+          url
+        }
+      }
+    }
     urls(order_by: { urlTypeId: Asc }) {
       id
       url
