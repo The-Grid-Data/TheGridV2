@@ -13,6 +13,7 @@ export const createEntitiesApi = (client: RestClient) => {
 
   const update = async (input: UpdateEntityInput) => {
     const { id, ...data } = input;
+    console.log('update input', input);
     return client.update(TABLE_NAME, id, data);
   };
 

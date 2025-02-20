@@ -6,6 +6,7 @@ import {
 import * as React from 'react';
 
 import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
 import {
   Table,
   TableBody,
@@ -22,7 +23,6 @@ import { DataTablePagination } from './data-table-pagination';
 import { DataTableToolbar } from './data-table-toolbar';
 import { getCommonPinningStyles } from './lib/data-table';
 import type { DataTableFilterField, DataTableMeta } from './types';
-import { Progress } from '@/components/ui/progress';
 
 interface DataTableProps<TData> extends React.HTMLAttributes<HTMLDivElement> {
   /**
@@ -236,10 +236,10 @@ export function DataTable<TData>({
                 )
               )
             ) : (
-              <>
+              <Fragment key="no-results">
                 <TableRow>
                   <TableCell
-                    className="h-24"
+                    className="h-24 bg-background"
                     colSpan={
                       table.getAllColumns().length + (renderSubRow ? 1 : 0)
                     }
@@ -250,21 +250,12 @@ export function DataTable<TData>({
                     </div>
                   </TableCell>
                 </TableRow>
-                {displayAddRowButton && (
-                  <TableRow>
-                    <TableCell
-                      colSpan={
-                        table.getAllColumns().length + (renderSubRow ? 1 : 0)
-                      }
-                      className="text-center"
-                    ></TableCell>
-                  </TableRow>
-                )}
-              </>
+              </Fragment>
             )}
             {table.getRowModel().rows?.length > 0 && displayAddRowButton && (
               <TableRow>
                 <TableCell
+                  className="bg-background"
                   colSpan={
                     table.getAllColumns().length + (renderSubRow ? 1 : 0)
                   }
