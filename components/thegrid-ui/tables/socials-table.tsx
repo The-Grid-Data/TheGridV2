@@ -2,13 +2,13 @@
 
 import { DataTable } from '@/components/thegrid-ui/data-table/data-table';
 import { useDataTable } from '@/components/thegrid-ui/data-table/hooks/use-data-table';
+import { useTableCellUpdater } from '@/hooks/use-table-cell-updater';
 import {
   ProfileInfoFragmentFragment
 } from '@/lib/graphql/generated/graphql';
 import { useRestApiClient } from '@/lib/rest-api/client';
 import { useSocialsApi } from '@/lib/rest-api/socials';
 import { getTgsData } from '@/lib/tgs';
-import { useQueryClient } from '@tanstack/react-query';
 import { type ColumnDef } from '@tanstack/react-table';
 import React from 'react';
 import { DataTableColumnHeader } from '../data-table/data-table-column-header';
@@ -37,7 +37,7 @@ export function SocialsTable({
 }: SocialsTableProps) {
   const client = useRestApiClient();
   const socialsApi = useSocialsApi(client);
-  const queryClient = useQueryClient();
+  const { updatingCellId, handleCellSubmit } = useTableCellUpdater({ rootId });
 
   const columns: ColumnDef<Social, any>[] = React.useMemo(
     () => [
@@ -63,7 +63,8 @@ export function SocialsTable({
           type: 'tag',
           isEditable: true,
           options: socialTypeOptions,
-          field: 'socialType.id'
+          field: 'socialType.id',
+          dbColumn: 'socialTypeId'
         } satisfies ColumnMeta
       }
     ],
@@ -76,26 +77,14 @@ export function SocialsTable({
     pageCount: 1,
     getRowId: row => `${row.id}::${row.urls?.[0]?.id}`,
     onCellSubmit: async data => {
-      try {
-        const result = await socialsApi.upsert({
-          ...data,
+      return handleCellSubmit(data, async (inputData) => {
+        return socialsApi.upsert({
+          ...inputData,
           rootId
         });
-        if (!result) {
-          throw new Error('Failed to upsert Social');
-        }
-        queryClient.invalidateQueries({
-          queryKey: ['profile', rootId],
-          exact: true,
-          refetchType: 'all'
-        });
-        return true;
-      } catch (error) {
-        console.error('Failed to upsert Social:', error);
-        return false;
-      }
-    }
+      });
+    },
   });
 
-  return <DataTable table={table} hideFooter filterFields={[]} />;
+  return <DataTable table={table} hideFooter filterFields={[]} updatingCellId={updatingCellId} />;
 }

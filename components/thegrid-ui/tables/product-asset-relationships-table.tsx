@@ -2,13 +2,14 @@
 
 import { DataTable } from '@/components/thegrid-ui/data-table/data-table';
 import { useDataTable } from '@/components/thegrid-ui/data-table/hooks/use-data-table';
+import { useTableCellUpdater } from '@/hooks/use-table-cell-updater';
 import { execute } from '@/lib/graphql/execute';
 import { graphql } from '@/lib/graphql/generated/gql';
 import { ProductFieldsFragmentFragment } from '@/lib/graphql/generated/graphql';
 import { useRestApiClient } from '@/lib/rest-api/client';
 import { useProductAssetRelationshipsApi } from '@/lib/rest-api/product-asset-relationships';
 import { getTgsData } from '@/lib/tgs';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { type ColumnDef } from '@tanstack/react-table';
 import { useMemo } from 'react';
 import { DataTableColumnHeader } from '../data-table/data-table-column-header';
@@ -77,7 +78,8 @@ export function ProductAssetRelationshipsTable({
           type: 'tag',
           isEditable: true,
           options: assetsDictionaryOptions,
-          field: 'asset.id'
+          field: 'asset.id',
+          dbColumn: 'assetId'
         } satisfies ColumnMeta
       },
       {
@@ -89,7 +91,8 @@ export function ProductAssetRelationshipsTable({
           type: 'tag',
           isEditable: true,
           options: assetSupportTypeOptions,
-          field: 'typeOfSupport.id'
+          field: 'typeOfSupport.id',
+          dbColumn: 'typeOfSupportId'
         } satisfies ColumnMeta
       }
     ],
@@ -102,7 +105,7 @@ export function ProductAssetRelationshipsTable({
 
   const client = useRestApiClient();
   const productAssetRelationshipsApi = useProductAssetRelationshipsApi(client);
-  const queryClient = useQueryClient();
+  const { updatingCellId, handleCellSubmit } = useTableCellUpdater({ rootId });
 
   const table = useDataTable({
     data: productAssetRelationshipsData,
@@ -110,28 +113,13 @@ export function ProductAssetRelationshipsTable({
     pageCount: 1,
     getRowId: row => row.id,
     onCellSubmit: async data => {
-      try {
-        await productAssetRelationshipsApi.upsert({
-          ...data,
+      return handleCellSubmit(data, async (inputData) => {
+        const result = await productAssetRelationshipsApi.upsert({
+          ...inputData,
           productId
         });
-        queryClient.invalidateQueries({
-          queryKey: ['profile', rootId],
-          exact: true,
-          refetchType: 'all'
-        });
-        if (rootId) {
-          queryClient.invalidateQueries({
-            queryKey: ['validation-logs', rootId],
-            exact: true,
-            refetchType: 'all'
-          });
-        }
-        return true;
-      } catch (error) {
-        console.error('Failed to upsert product asset relationship:', error);
-        return false;
-      }
+        return !!result;
+      });
     }
   });
 
@@ -141,6 +129,7 @@ export function ProductAssetRelationshipsTable({
       hideFooter
       displayAddRowButton
       addRowButtonLabel="Add asset"
+      updatingCellId={updatingCellId}
     />
   );
 }

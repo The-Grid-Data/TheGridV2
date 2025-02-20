@@ -14,11 +14,13 @@ interface DataTableCellProps<TData> {
   cell: Cell<TData, unknown>;
   onSubmit?: (data: { id: string } & Record<string, any>) => Promise<boolean>;
   isNewRow?: boolean;
+  isLoading?: boolean;
 }
 
 export function DataTableCell<TData>({
   cell,
   onSubmit,
+  isLoading,
   isNewRow
 }: DataTableCellProps<TData>) {
   const [isEditing, setIsEditing] = React.useState(isNewRow);
@@ -57,7 +59,7 @@ export function DataTableCell<TData>({
   };
 
   const handleSubmit = async (submitValue?: string) => {
-    if (!onSubmit) return;
+    if (!onSubmit) return false;
 
     const valueToSubmit = submitValue ?? value;
     if (!validate(valueToSubmit)) {
@@ -66,7 +68,7 @@ export function DataTableCell<TData>({
 
     setIsSubmitting(true);
     try {
-      let field = columnMeta?.field || cell.column.id;
+      let field = columnMeta?.dbColumn || columnMeta?.field || cell.column.id;
 
       // Transform field.id to database format
       if (field.endsWith('.id')) {
@@ -98,6 +100,15 @@ export function DataTableCell<TData>({
   };
 
   const renderContent = () => {
+    // Show loader when submitting or loading
+    if (isSubmitting || isLoading) {
+      return (
+        <div className="flex items-center justify-start">
+          <Loader2 className="h-4 w-4 animate-spin" />
+        </div>
+      );
+    }
+
     // Tag type field editing
     if (isEditing && columnMeta?.type === 'tag' && columnMeta.options) {
       let currentValue;
@@ -119,9 +130,10 @@ export function DataTableCell<TData>({
             options={columnMeta.options}
             onValueChange={async newValue => {
               if (newValue) {
-                setValue(newValue);
-                await handleSubmit(newValue);
-                setIsEditing(false);
+                const success = await handleSubmit(newValue);
+                if (success) {
+                  setIsEditing(false);
+                }
               }
             }}
             className="h-8"
@@ -186,13 +198,20 @@ export function DataTableCell<TData>({
       return <div className="h-6">&nbsp;</div>;
     }
 
-    // Tag type field rendering
-    if (columnMeta?.type === 'tag') {
-      return <Badge variant="secondary">{String(cell.getValue())}</Badge>;
-    }
-
-    // Other type fields rendering
-    return flexRender(cell.column.columnDef.cell, cell.getContext());
+    // Default state (not editing, not loading)
+    const content = (
+      <div className="relative flex items-center">
+        {columnMeta?.type === 'tag' ? (
+          <Badge variant="secondary">{String(cell.getValue())}</Badge>
+        ) : (
+          flexRender(cell.column.columnDef.cell, cell.getContext())
+        )}
+        {isEditable && (
+          <Pencil className="ml-2 h-4 w-4 text-muted-foreground opacity-70 group-hover:opacity-100" />
+        )}
+      </div>
+    );
+    return content;
   };
 
   return (
@@ -217,18 +236,8 @@ export function DataTableCell<TData>({
         }
       }}
     >
-      <div className="relative">
+      <div className="relative w-full">
         {renderContent()}
-        {isEditable && !isEditing && (
-          <button className="absolute right-2 top-1/2 -translate-y-1/2 opacity-70 group-hover:opacity-100">
-            <Pencil className="h-4 w-4 text-muted-foreground" />
-          </button>
-        )}
-        {isSubmitting && (
-          <div className="absolute inset-0 flex items-center justify-start bg-background pl-2">
-            <Loader2 className="h-4 w-4 animate-spin" />
-          </div>
-        )}
       </div>
     </TableCell>
   );

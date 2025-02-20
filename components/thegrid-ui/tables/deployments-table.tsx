@@ -2,6 +2,7 @@
 
 import { DataTable } from '@/components/thegrid-ui/data-table/data-table';
 import { useDataTable } from '@/components/thegrid-ui/data-table/hooks/use-data-table';
+import { useTableCellUpdater } from '@/hooks/use-table-cell-updater';
 import { execute } from '@/lib/graphql/execute';
 import { graphql } from '@/lib/graphql/generated';
 import {
@@ -12,7 +13,7 @@ import { useRestApiClient } from '@/lib/rest-api/client';
 import { useSmartContractDeploymentsApi } from '@/lib/rest-api/smart-contract-deployments';
 import { useSmartContractsApi } from '@/lib/rest-api/smart-contracts';
 import { getTgsData } from '@/lib/tgs';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { type ColumnDef } from '@tanstack/react-table';
 import { useMemo } from 'react';
 import { DataTableColumnHeader } from '../data-table/data-table-column-header';
@@ -95,7 +96,8 @@ export function DeploymentsTable({
           type: 'tag',
           isEditable: true,
           options: deploymentTypeOptions,
-          field: 'deploymentType.id'
+          field: 'deploymentType.id',
+          dbColumn: 'deploymentTypeId'
         } satisfies ColumnMeta
       },
       {
@@ -107,7 +109,8 @@ export function DeploymentsTable({
           type: 'tag',
           isEditable: true,
           options: productsLayersDictionaryOptions,
-          field: 'deployedOn.id'
+          field: 'deployedOn.id',
+          dbColumn: 'deployedOnId'
         } satisfies ColumnMeta
       },
       {
@@ -119,7 +122,8 @@ export function DeploymentsTable({
           type: 'tag',
           isEditable: true,
           options: isOfStandardOptions,
-          field: 'isOfStandard.id'
+          field: 'isOfStandard.id',
+          dbColumn: 'isOfStandardId'
         } satisfies ColumnMeta
       }
     ],
@@ -136,7 +140,7 @@ export function DeploymentsTable({
     lensName,
     lensRecordId
   );
-  const queryClient = useQueryClient();
+  const { updatingCellId, handleCellSubmit } = useTableCellUpdater({ rootId });
 
   const table = useDataTable({
     data: deploymentsData,
@@ -145,26 +149,11 @@ export function DeploymentsTable({
     enableExpanding: true,
     getRowId: row => row.smartContractDeployment?.id ?? row.id,
     onCellSubmit: async data => {
-      try {
-        await smartContractDeploymentsApi.upsert(data);
-        queryClient.invalidateQueries({
-          queryKey: ['profile', rootId],
-          exact: true,
-          refetchType: 'all'
-        });
-        if (rootId) {
-          queryClient.invalidateQueries({
-            queryKey: ['validation-logs', rootId],
-            exact: true,
-            refetchType: 'all'
-          });
-        }
-        return true;
-      } catch (error) {
-        console.error('Failed to upsert smart contract deployment:', error);
-        return false;
-      }
-    }
+      return handleCellSubmit(data, async (inputData) => {
+        const result = await smartContractDeploymentsApi.upsert(inputData);
+        return !!result;
+      });
+    },
   });
 
   return (
@@ -174,6 +163,7 @@ export function DeploymentsTable({
         hideFooter
         displayAddRowButton
         addRowButtonLabel="Add deployment"
+        updatingCellId={updatingCellId}
         renderSubRow={row => (
           <DeploymentSubRow deployment={row.original} rootId={rootId} />
         )}
@@ -195,7 +185,7 @@ export function DeploymentSubRow({
 
   const client = useRestApiClient();
   const smartContractsApi = useSmartContractsApi(client);
-  const queryClient = useQueryClient();
+  const { updatingCellId, handleCellSubmit } = useTableCellUpdater({ rootId });
 
   const subColumns = useMemo(
     () => [
@@ -239,29 +229,14 @@ export function DeploymentSubRow({
     pageCount: 1,
     getRowId: row => row.id,
     onCellSubmit: async data => {
-      try {
+      return handleCellSubmit(data, async (inputData) => {
         const input = {
-          ...data,
+          ...inputData,
           deploymentId: deployment.smartContractDeployment?.id
         };
-        await smartContractsApi.upsert(input);
-        queryClient.invalidateQueries({
-          queryKey: ['profile', rootId],
-          exact: true,
-          refetchType: 'all'
-        });
-        if (rootId) {
-          queryClient.invalidateQueries({
-            queryKey: ['validation-logs', rootId],
-            exact: true,
-            refetchType: 'all'
-          });
-        }
-        return true;
-      } catch (error) {
-        console.error('Failed to upsert smart contract:', error);
-        return false;
-      }
+        const result = await smartContractsApi.upsert(input);
+        return !!result;
+      });
     },
     enableExpanding: false
   });
@@ -273,6 +248,7 @@ export function DeploymentSubRow({
         hideFooter
         displayAddRowButton
         addRowButtonLabel="Add contract"
+        updatingCellId={updatingCellId}
       />
     </div>
   );

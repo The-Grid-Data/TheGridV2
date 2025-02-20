@@ -2,6 +2,7 @@
 
 import { DataTable } from '@/components/thegrid-ui/data-table/data-table';
 import { useDataTable } from '@/components/thegrid-ui/data-table/hooks/use-data-table';
+import { useTableCellUpdater } from '@/hooks/use-table-cell-updater';
 import {
   AssetFieldsFragmentFragment,
   EntityFieldsFragmentFragment,
@@ -11,7 +12,6 @@ import {
 import { useRestApiClient } from '@/lib/rest-api/client';
 import { LENS_NAME_TO_TABLE_ID, LENS_NAME_TO_URL_TYPE_ID, useUrlsApi } from '@/lib/rest-api/urls';
 import { getTgsData } from '@/lib/tgs';
-import { useQueryClient } from '@tanstack/react-query';
 import { type ColumnDef } from '@tanstack/react-table';
 import React from 'react';
 import { DataTableColumnHeader } from '../data-table/data-table-column-header';
@@ -51,7 +51,7 @@ export function UrlsTable({
 }: UrlsTableProps) {
   const client = useRestApiClient();
   const urlsApi = useUrlsApi(client);
-  const queryClient = useQueryClient();
+  const { updatingCellId, handleCellSubmit } = useTableCellUpdater({ rootId });
 
   // Filter URL type options based on lens name
   const filteredUrlTypeOptions = React.useMemo(() => {
@@ -94,7 +94,8 @@ export function UrlsTable({
           type: 'tag',
           isEditable: true,
           options: filteredUrlTypeOptions,
-          field: 'urlType.id'
+          field: 'urlType.id',
+          dbColumn: 'urlTypeId',
         } satisfies ColumnMeta
       }
     ],
@@ -107,36 +108,15 @@ export function UrlsTable({
     pageCount: 1,
     getRowId: row => row.id,
     onCellSubmit: async data => {
-      try {
+      return handleCellSubmit(data, async (inputData) => {
         const result = await urlsApi.upsert({
-          ...data,
-          tableId:
-            LENS_NAME_TO_TABLE_ID[
-              lensName as keyof typeof LENS_NAME_TO_TABLE_ID
-            ],
+          ...inputData,
+          tableId: LENS_NAME_TO_TABLE_ID[lensName as keyof typeof LENS_NAME_TO_TABLE_ID],
           rowId: lensRowId
         });
-        if (!result.success) {
-          throw new Error('Failed to upsert URL');
-        }
-        queryClient.invalidateQueries({
-          queryKey: ['profile', rootId],
-          exact: true,
-          refetchType: 'all'
-        });
-        if (rootId) {
-          queryClient.invalidateQueries({
-            queryKey: ['validation-logs', rootId],
-            exact: true,
-            refetchType: 'all'
-          });
-        }
-        return true;
-      } catch (error) {
-        console.error('Failed to upsert URL:', error);
-        return false;
-      }
-    }
+        return result.success;
+      });
+    },
   });
 
   return (
@@ -144,6 +124,7 @@ export function UrlsTable({
       table={table}
       hideFooter
       filterFields={[]}
+      updatingCellId={updatingCellId}
       displayAddRowButton
       addRowButtonLabel="Add URL"
     />

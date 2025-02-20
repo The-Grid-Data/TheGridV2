@@ -1,4 +1,5 @@
 import {
+  Cell,
   flexRender,
   Row,
   type Table as TanstackTable
@@ -22,7 +23,7 @@ import { DataTableCell } from './data-table-cell';
 import { DataTablePagination } from './data-table-pagination';
 import { DataTableToolbar } from './data-table-toolbar';
 import { getCommonPinningStyles } from './lib/data-table';
-import type { DataTableFilterField, DataTableMeta } from './types';
+import type { ColumnMeta, DataTableFilterField, DataTableMeta } from './types';
 
 interface DataTableProps<TData> extends React.HTMLAttributes<HTMLDivElement> {
   /**
@@ -69,6 +70,12 @@ interface DataTableProps<TData> extends React.HTMLAttributes<HTMLDivElement> {
    */
   addRowButtonLabel?: string;
 
+  /**
+   * ID of the cell that is currently being updated
+   * @default null
+   */
+  updatingCellId?: string | null;
+
   renderSubRow?: (row: Row<TData>) => React.ReactNode;
 }
 
@@ -83,6 +90,7 @@ export function DataTable<TData>({
   hideFooter = false,
   hideToolbar = false,
   filterFields = [],
+  updatingCellId = null,
   ...props
 }: DataTableProps<TData>) {
   const [openRows, setOpenRows] = React.useState<Record<string, boolean>>({});
@@ -144,6 +152,13 @@ export function DataTable<TData>({
     </Button>
   );
 
+  const getIsLoadingCell = (updatingCellId: string | null, cell: Cell<TData, unknown>) => {
+    const columnMeta = cell.column.columnDef.meta as ColumnMeta | undefined;
+    const cellId = `${cell.row.id}::${columnMeta?.dbColumn || cell.column.id}`;
+    const result = updatingCellId === cellId;
+    return result;
+  };
+
   return (
     <div
       className={cn('w-full space-y-2.5 overflow-auto', className)}
@@ -204,6 +219,7 @@ export function DataTable<TData>({
                           isNewRow={row.id === ''}
                           key={cell.id}
                           cell={cell}
+                          isLoading={getIsLoadingCell(updatingCellId, cell)}
                           onSubmit={handleCellSubmit}
                         />
                       ))}
@@ -229,6 +245,7 @@ export function DataTable<TData>({
                         isNewRow={row.id === ''}
                         key={cell.id}
                         cell={cell}
+                        isLoading={getIsLoadingCell(updatingCellId, cell)}
                         onSubmit={handleCellSubmit}
                       />
                     ))}

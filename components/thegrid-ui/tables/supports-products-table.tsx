@@ -2,11 +2,12 @@
 
 import { DataTable } from '@/components/thegrid-ui/data-table/data-table';
 import { useDataTable } from '@/components/thegrid-ui/data-table/hooks/use-data-table';
+import { useTableCellUpdater } from '@/hooks/use-table-cell-updater';
 import { execute } from '@/lib/graphql/execute';
 import { ProductFieldsFragmentFragment } from '@/lib/graphql/generated/graphql';
 import { useRestApiClient } from '@/lib/rest-api/client';
 import { useSupportsProductsApi } from '@/lib/rest-api/supports-products';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { type ColumnDef } from '@tanstack/react-table';
 import { useMemo } from 'react';
 import { DataTableColumnHeader } from '../data-table/data-table-column-header';
@@ -62,7 +63,8 @@ export function SupportsProductsTable({
           type: 'tag',
           isEditable: true,
           options: productsLayersDictionaryOptions,
-          field: 'supportsProduct.id'
+          field: 'supportsProduct.id',
+          dbColumn: 'supportsProductId'
         } satisfies ColumnMeta
       }
     ],
@@ -71,7 +73,7 @@ export function SupportsProductsTable({
 
   const client = useRestApiClient();
   const supportsProductsApi = useSupportsProductsApi(client);
-  const queryClient = useQueryClient();
+  const { updatingCellId, handleCellSubmit } = useTableCellUpdater({ rootId });
 
   const table = useDataTable({
     data,
@@ -79,28 +81,13 @@ export function SupportsProductsTable({
     pageCount: 1,
     getRowId: row => row.id,
     onCellSubmit: async data => {
-      try {
-        await supportsProductsApi.upsert({
-          ...data,
+      return handleCellSubmit(data, async (inputData) => {
+        const result = await supportsProductsApi.upsert({
+          ...inputData,
           productId
         });
-        queryClient.invalidateQueries({
-          queryKey: ['profile', rootId],
-          exact: true,
-          refetchType: 'all'
-        });
-        if (rootId) {
-          queryClient.invalidateQueries({
-            queryKey: ['validation-logs', rootId],
-            exact: true,
-            refetchType: 'all'
-          });
-        }
-        return true;
-      } catch (error) {
-        console.error('Failed to upsert product support:', error);
-        return false;
-      }
+        return !!result;
+      });
     }
   });
 
@@ -110,6 +97,7 @@ export function SupportsProductsTable({
       hideFooter
       displayAddRowButton
       addRowButtonLabel="Add Product"
+      updatingCellId={updatingCellId}
     />
   );
 }

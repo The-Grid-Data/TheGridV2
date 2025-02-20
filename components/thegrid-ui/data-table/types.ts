@@ -44,6 +44,7 @@ export interface ColumnMeta {
   validation?: (value: any) => boolean | string; // return string for error message
   options?: { label: string; value: string }[];
   field?: string; // The actual field to update, if different from the accessor
+  dbColumn?: string; // The database column to update, if different from the accessor
 }
 
 export interface DataTableMeta<TData> {
