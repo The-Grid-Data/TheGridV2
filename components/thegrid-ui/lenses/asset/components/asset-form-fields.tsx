@@ -24,6 +24,7 @@ export function AssetFormFields() {
           placeholder={assetFields.assetType.placeholder}
           tgsField={assetFields.assetType.tgsField}
           isRequired={assetFields.assetType.required}
+          fieldName="assets.assetType"
         />
         <TgsField
           label={assetFields.assetStatus.label}
@@ -37,6 +38,7 @@ export function AssetFormFields() {
         placeholder={assetFields.description.placeholder}
         tgsField={assetFields.description.tgsField}
         isRequired={assetFields.description.required}
+        fieldName="assets.description"
       />
     </div>
   );

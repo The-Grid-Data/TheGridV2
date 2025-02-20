@@ -67,7 +67,7 @@ export function TgsField({
       <>
         {isEnum && (
           <FormField
-            name={tgsField ?? fieldName}
+            name={fieldName ?? tgsField}
             render={({ field, fieldState }) => (
               <FieldWrapper
                 label={label}
@@ -96,7 +96,7 @@ export function TgsField({
 
         {isText && (
           <FormField
-            name={tgsField ?? fieldName}
+            name={fieldName ?? tgsField}
             render={({ field, fieldState }) => (
               <FieldWrapper
                 label={label}
@@ -115,7 +115,7 @@ export function TgsField({
 
         {isTextArea && (
           <FormField
-            name={tgsField ?? fieldName}
+            name={fieldName ?? tgsField}
             render={({ field, fieldState }) => (
               <FieldWrapper
                 label={label}
@@ -134,7 +134,7 @@ export function TgsField({
 
         {isToggle && (
           <FormField
-            name={tgsField ?? fieldName}
+            name={fieldName ?? tgsField}
             render={({ field, fieldState }) => (
               <FieldWrapper
                 label={label}
@@ -159,7 +159,7 @@ export function TgsField({
 
         {isImage && (
           <FormField
-            name={tgsField ?? fieldName}
+            name={fieldName ?? tgsField}
             render={({ field }) => {
               const handleFileChange = async (file: File) => {
                 try {
@@ -192,7 +192,7 @@ export function TgsField({
 
         {isDate && (
           <FormField
-            name={tgsField ?? fieldName}
+            name={fieldName ?? tgsField}
             render={({ field, fieldState }) => (
               <FieldWrapper
                 label={label}
