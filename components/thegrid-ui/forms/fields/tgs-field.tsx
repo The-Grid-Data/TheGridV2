@@ -10,14 +10,14 @@ import {
   FormLabel,
   FormMessage
 } from '@/components/ui/form';
+import { InfoIconTooltip } from '@/components/ui/info-icon';
 import { Input } from '@/components/ui/input';
+import { SingleCombobox } from '@/components/ui/single-combobox';
 import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
 import { uploadToS3 } from '@/lib/s3-upload';
 import { getTgsData, TgsFieldNames } from '@/lib/tgs';
 import { useState } from 'react';
-import { SingleCombobox } from '@/components/ui/single-combobox';
-import { InfoIconTooltip } from '@/components/ui/info-icon';
 
 type TgsSFieldProps = {
   label: string;
@@ -74,24 +74,21 @@ export function TgsField({
                 isRequired={isRequired}
                 infoTooltipText={tgsData.description}
               >
-                <>
-                  {field.value}
-                  <SingleCombobox
-                    {...field}
-                    placeholder={placeholder}
-                    onValueChange={field.onChange}
-                    value={field.value}
-                    error={fieldState.error?.message}
-                    options={tgsData.possible_values
-                      .map(value => ({
-                        id: value.id,
-                        label: value.name,
-                        value: value.id,
-                        description: value.definition
-                      }))
-                      .sort((a, b) => a.label.localeCompare(b.label))}
-                  />
-                </>
+                <SingleCombobox
+                  {...field}
+                  placeholder={placeholder}
+                  onValueChange={field.onChange}
+                  value={field.value}
+                  error={fieldState.error?.message}
+                  options={tgsData.possible_values
+                    .map(value => ({
+                      id: value.id,
+                      label: value.name,
+                      value: value.id,
+                      description: value.definition
+                    }))
+                    .sort((a, b) => a.label.localeCompare(b.label))}
+                />
               </FieldWrapper>
             )}
           />
