@@ -24,6 +24,7 @@ export function EntityFormFields() {
           placeholder={entityFields.entityType.placeholder}
           tgsField={entityFields.entityType.tgsField}
           isRequired={entityFields.entityType.required}
+          fieldName="entities.entityType"
         />
       </div>
       <div className="flex flex-row gap-4 [&>*]:w-1/2">
