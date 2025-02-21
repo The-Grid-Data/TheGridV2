@@ -1,6 +1,11 @@
 [
   {
-    "date": "February 19, 2024",
+    "date": "February 21, 2024",
+    "title": "Bug fixes",
+    "description": "Fix issue with entity form fields (entityType) not being saved"
+  },
+  {
+    "date": "February 20, 2024",
     "title": "Bug fixes",
     "description": "Fix issue with asset form fields (description, assetType) not being saved"
   },
